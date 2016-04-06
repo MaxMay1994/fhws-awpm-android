@@ -1,7 +1,6 @@
 # android-awpf
-## issus
-- 
-### activities
+
+## activities
 - startbildschirm 
 - login
 - anzeige kurse
@@ -14,7 +13,7 @@
  -- anzeige erfolgreich angemeldeter kurs
   --- funktion ical erstellen
 
-### funktionen
+## funktionen
 
 - login check
 - login popup
