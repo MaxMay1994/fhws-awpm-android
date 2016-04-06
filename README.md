@@ -4,14 +4,14 @@
 - startbildschirm 
 - login
 - anzeige kurse
- -- alle
- -- filter(studiengang(mit/ohne login), ort)
- -- suchfunktion(tag)
+ - alle
+ - filter(studiengang(mit/ohne login), ort)
+ - suchfunktion(tag)
 - kursanmeldung
 - profil
- -- history
- -- anzeige erfolgreich angemeldeter kurs
-  --- funktion ical erstellen
+ - history
+ - anzeige erfolgreich angemeldeter kurs
+  - funktion ical erstellen
 
 ## funktionen
 
