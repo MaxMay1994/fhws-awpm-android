@@ -26,6 +26,8 @@
 - listen filtern
 - pushmitteilung bei zulosung
 - history was belegt wurde mit semester
+- 
+
 ## frameworks
-- RESTlet
--
+- retrofit
+- standard android frameworks
