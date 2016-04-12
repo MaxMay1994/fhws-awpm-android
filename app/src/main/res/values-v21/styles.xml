@@ -1,9 +1,22 @@
-<resources>>
+<resources>
 
-    <style name="AppTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <item name="colorPrimary">#ff8800</item>
+        <item name="colorPrimaryDark">#f18000</item>
+        <item name="colorAccent">#ff8800</item>
+
     </style>
+
+    <style name="Toolbarstyle" parent="Theme.AppCompat">
+
+        <item name="popupTheme">@style/Theme.AppCompat.Light</item>
+
+        <item name="colorPrimary">#ff8800</item>
+        <item name="colorPrimaryDark">#f18000</item>
+        <item name="colorAccent">#fff</item>
+
+    </style>
+
 </resources>
