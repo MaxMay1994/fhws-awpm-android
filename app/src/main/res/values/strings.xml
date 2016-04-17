@@ -8,4 +8,15 @@
     <string name="info_links">Links zu den Informationsseiten der Fakultät für angewandte Natur- und Geisteswissenschaften</string>
     <string name="info_link_wue">Abteilung Würzburg</string>
     <string name="info_link_sw">Abteilung Schweinfurt</string>
+
+    // http strings
+    <string name="fang_SW"></string>
+    <string name="fang_WUE"></string>
+    <string name="datum">hier datum rein</string>
+
+    // strings timeframes fragmente
+    <string name="active">Aktiv !</string>
+    <string name="notActive">Inaktiv !</string>
+    <string name="regWindow">Zeitraum :</string>
+    <string name="catchUpWindow">Nachmeldung :</string>
 </resources>

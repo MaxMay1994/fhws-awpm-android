@@ -25,6 +25,12 @@
             android:name=".Course_Details"
             android:label="Course_Details"
             android:theme="@style/AppTheme"></activity>
+        <activity
+            android:name=".TimeframesActivity"
+            android:label="AWPM"
+            android:theme="@style/AppTheme">
+
+        </activity>
     </application>
 
 </manifest>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/active"
+        android:id="@+id/hauptAktivButton"
+        android:background="#6ff70d"
+        android:layout_marginRight="5dp"
+        android:layout_alignTop="@+id/hauptInaktivButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/hauptInaktivButton"
+        android:layout_marginEnd="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/notActive"
+        android:id="@+id/hauptInaktivButton"
+        android:background="#f90909"
+        android:layout_alignTop="@+id/mainStartDate"
+        android:layout_alignLeft="@+id/hauptAktivButton"
+        android:layout_alignStart="@+id/hauptAktivButton"
+        android:layout_above="@+id/mainEndDate" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/active"
+        android:id="@+id/nebenAktivButton"
+        android:background="#6ff70d"
+        android:layout_alignLeft="@+id/nebenInaktivButton"
+        android:layout_alignStart="@+id/nebenInaktivButton"
+        android:layout_alignBottom="@+id/nebenInaktivButton"
+        android:layout_alignTop="@+id/nebenInaktivButton" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/notActive"
+        android:id="@+id/nebenInaktivButton"
+        android:background="#f90909"
+        android:layout_alignTop="@+id/backupStartDate"
+        android:layout_alignLeft="@+id/hauptInaktivButton"
+        android:layout_alignStart="@+id/hauptInaktivButton"
+        android:layout_alignBottom="@+id/backupBis" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/datum"
+        android:id="@+id/mainStartDate"
+        android:layout_marginTop="95dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/mainEndDate"
+        android:layout_alignStart="@+id/mainEndDate"
+        android:textSize="14dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="bis"
+        android:id="@+id/mainBis"
+        android:gravity="center"
+        android:textSize="14dp"
+        android:layout_below="@+id/mainStartDate"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_alignStart="@+id/textView3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hier datum rein"
+        android:id="@+id/mainEndDate"
+        android:layout_below="@+id/mainBis"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="36dp"
+        android:layout_marginStart="36dp"
+        android:textSize="14dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hier datum rein"
+        android:id="@+id/backupStartDate"
+        android:layout_below="@+id/mainEndDate"
+        android:layout_alignLeft="@+id/mainEndDate"
+        android:layout_alignStart="@+id/mainEndDate"
+        android:layout_marginTop="158dp"
+        android:textSize="14dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="bis"
+        android:id="@+id/backupBis"
+        android:gravity="center"
+        android:layout_below="@+id/backupStartDate"
+        android:layout_alignLeft="@+id/mainBis"
+        android:layout_alignStart="@+id/mainBis"
+        android:textSize="14dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="hier datum rein"
+        android:id="@+id/backupEndDate"
+        android:layout_below="@+id/nebenAktivButton"
+        android:layout_alignLeft="@+id/backupStartDate"
+        android:layout_alignStart="@+id/backupStartDate"
+        android:textSize="14dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Normale Anmeldung"
+        android:id="@+id/textView3"
+        android:layout_marginTop="36dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nachmeldung"
+        android:id="@+id/textView5"
+        android:layout_above="@+id/nebenAktivButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="33dp"
+        android:textStyle="bold"
+        android:textSize="20dp" />
+
+</RelativeLayout>
