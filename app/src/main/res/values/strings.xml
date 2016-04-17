@@ -2,4 +2,10 @@
     <string name="app_name">AWPM</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_course__details">Course_Details</string>
+
+    // strings info fragment
+    <string name="global_info">Die folgenden Informationen werden ohne Gewähr für deren Aktualität und Vollständigkeit zur Verfügung gestellt. Bitte beachten Sie auch die jeweiligen Aushänge der Fakultät für angewandte Natur- und Geisteswissenschaften</string>
+    <string name="info_links">Links zu den Informationsseiten der Fakultät für angewandte Natur- und Geisteswissenschaften</string>
+    <string name="info_link_wue">Abteilung Würzburg</string>
+    <string name="info_link_sw">Abteilung Schweinfurt</string>
 </resources>
