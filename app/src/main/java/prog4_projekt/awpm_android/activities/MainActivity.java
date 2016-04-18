@@ -1,24 +1,20 @@
-package prog4_projekt.awpm_android;
+package prog4_projekt.awpm_android.activities;
 
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
+import prog4_projekt.awpm_android.R;
+import prog4_projekt.awpm_android.adapter.ViewPaperAdapterMainActivity;
 
-/**
- * Created by florianduenow on 17.04.16.
- */
-public class TimeframesActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity {
+
+    Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tabLayout;
-    Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +26,7 @@ public class TimeframesActivity extends AppCompatActivity {
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
-        ViewPaperAdapter_Timeframes viewPaperAdapter = new ViewPaperAdapter_Timeframes(getSupportFragmentManager());
+        ViewPaperAdapterMainActivity viewPaperAdapter = new ViewPaperAdapterMainActivity(getSupportFragmentManager());
         viewPager.setAdapter(viewPaperAdapter);
 
         tabLayout = (TabLayout) findViewById(R.id.tablayout);

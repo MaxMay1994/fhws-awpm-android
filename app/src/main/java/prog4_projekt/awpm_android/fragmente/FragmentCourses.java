@@ -1,27 +1,28 @@
-package prog4_projekt.awpm_android;
+package prog4_projekt.awpm_android.fragmente;
 
 
-import android.app.ExpandableListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import prog4_projekt.awpm_android.activities.CourseDetailsActivity;
+import prog4_projekt.awpm_android.R;
+import prog4_projekt.awpm_android.adapter.ExpandableListAdapterCourses;
+
 
 public class FragmentCourses extends Fragment implements ExpandableListView.OnChildClickListener{
 
     private View view;
-    private ExpandableListAdapter expandableListAdapter;
+    private ExpandableListAdapterCourses expandableListAdapter;
     private ExpandableListView exListView;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
@@ -46,13 +47,13 @@ public class FragmentCourses extends Fragment implements ExpandableListView.OnCh
         exListView = (ExpandableListView) view.findViewById(R.id.lvExp);
         prepareListData();
 
-        expandableListAdapter = new ExpandableListAdapter(getActivity(), listDataHeader, listDataChild);
+        expandableListAdapter = new ExpandableListAdapterCourses(getActivity(), listDataHeader, listDataChild);
 
         exListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 
-                Intent intent = new Intent(FragmentCourses.this.getActivity(), Course_Details.class);
+                Intent intent = new Intent(FragmentCourses.this.getActivity(), CourseDetailsActivity.class);
                 startActivity(intent);
                 return false;
             }

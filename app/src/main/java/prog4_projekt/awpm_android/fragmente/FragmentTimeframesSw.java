@@ -1,4 +1,5 @@
-package prog4_projekt.awpm_android;
+package prog4_projekt.awpm_android.fragmente;
+
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,10 +15,12 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+import prog4_projekt.awpm_android.R;
+
 /**
  * Created by florianduenow on 17.04.16.
  */
-public class FragmentTimeframesWue extends android.support.v4.app.Fragment {
+public class FragmentTimeframesSw extends android.support.v4.app.Fragment {
     View view;
     String dateString, dayString, monthString, yearString, hourString, minuteString, mainStartString, mainEndString,backupStartString, backupEndString;
     int dayInt, monthInt, yearInt, hourInt, minuteInt;
@@ -29,7 +32,7 @@ public class FragmentTimeframesWue extends android.support.v4.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_timeframes_wue, null);
+        view = inflater.inflate(R.layout.fragment_timeframes_sw, null);
 
         //aktuelles datum holen, strings erstellen und in int umformen
         Date today = new Date();
@@ -43,10 +46,11 @@ public class FragmentTimeframesWue extends android.support.v4.app.Fragment {
         //zeitfenster haupt- und nachmeldezeitraum
         //GregorianCalendar befuellen
         //WICHTIG !!! hier month = monat-1 !!!!
-        setMainStartTimframe(2016,2,15,8,0);
-        setMainEndTimeframe(2016,2,21,12,0);
-        setBackupStartTimeframe(2016,2,21,18,0);
-        setBackupEndTimeframe(2016,2,22,23,0);
+        setMainStartTimframe(2016,2,15,0,0);
+        setMainEndTimeframe(2016,2,18,14,0);
+        setBackupStartTimeframe(2016,2,22,14,0);
+        setBackupEndTimeframe(2016,3,22,12,0);
+
 
         //zeitfenster haupt- nachmeldezeitraum
         //textviews erstellen und befuellen

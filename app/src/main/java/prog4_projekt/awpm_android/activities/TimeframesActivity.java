@@ -1,27 +1,22 @@
-package prog4_projekt.awpm_android;
+package prog4_projekt.awpm_android.activities;
 
-import android.database.DataSetObserver;
 import android.support.design.widget.TabLayout;
+import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import prog4_projekt.awpm_android.R;
+import prog4_projekt.awpm_android.adapter.ViewPaperAdapterTimeframes;
 
-public class MainActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
+/**
+ * Created by florianduenow on 17.04.16.
+ */
+public class TimeframesActivity extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
-
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
-        ViewPaperAdapter viewPaperAdapter = new ViewPaperAdapter(getSupportFragmentManager());
+        ViewPaperAdapterTimeframes viewPaperAdapter = new ViewPaperAdapterTimeframes(getSupportFragmentManager());
         viewPager.setAdapter(viewPaperAdapter);
 
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
