@@ -4,6 +4,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import prog4_projekt.awpm_android.fragmente.FragmentTimeframesSw;
+import prog4_projekt.awpm_android.fragmente.FragmentTimeframesWue;
+
 /**
  * Created by florianduenow on 17.04.16.
  */

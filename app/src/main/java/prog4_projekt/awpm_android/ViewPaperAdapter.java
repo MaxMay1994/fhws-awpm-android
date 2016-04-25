@@ -4,6 +4,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import prog4_projekt.awpm_android.fragmente.FragmentCourses;
+import prog4_projekt.awpm_android.fragmente.FragmentInformations;
+import prog4_projekt.awpm_android.fragmente.FragmentProfile;
+
 public class ViewPaperAdapter extends FragmentPagerAdapter{
 
     String[] title = {"Infos","Kurse","Profil"};
