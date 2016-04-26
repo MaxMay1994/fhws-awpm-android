@@ -1,0 +1,64 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:backgroundTintMode="screen"
+    android:weightSum="1">
+
+    <TextView
+        android:background="#ff8c00"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:scaleType="center"
+        android:text="@string/login_text"
+        android:gravity="center"
+        android:height="40dp" />
+    <EditText
+        android:id="@+id/k_nummer"
+        android:inputType="textEmailAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="4dp"
+        android:hint="@string/k_num_hint" />
+    <EditText
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="8dp"
+        android:hint="@string/pwd_hint"
+        android:id="@+id/password" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:id="@+id/login_confirmation"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/login_cancel"
+            android:layout_toStartOf="@+id/login_cancel" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="105dp"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:id="@+id/login_cancel"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+</LinearLayout>

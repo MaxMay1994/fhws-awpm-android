@@ -84,6 +84,7 @@ public class FragmentTimeframesSw extends android.support.v4.app.Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+    //erstellt Buttons
     public void generateButtons(){
         mainAktivButton = (Button) view.findViewById(R.id.hauptAktivButton);
         mainInaktivButton = (Button) view.findViewById(R.id.hauptInaktivButton);
@@ -91,6 +92,7 @@ public class FragmentTimeframesSw extends android.support.v4.app.Fragment {
         backupInaktivButton = (Button) view.findViewById(R.id.nebenInaktivButton);
 
     }
+    //erstellt DateStrings aus Date()
     public void formDateStrings(Date date){
         SimpleDateFormat formDate = new SimpleDateFormat("dd.MM.yyyy HH.mm", Locale.getDefault());
         SimpleDateFormat formDay = new SimpleDateFormat("dd", Locale.getDefault());
@@ -105,24 +107,23 @@ public class FragmentTimeframesSw extends android.support.v4.app.Fragment {
         yearString = formYear.format(date);
         hourString = formHour.format(date);
         minuteString = formMinute.format(date);
-
     }
+    //erstellt Int werte aus den DateStrings
     public void makeDateInt(){
-
         dayInt = Integer.parseInt(dayString);
         monthInt = Integer.parseInt(monthString);
         yearInt = Integer.parseInt(yearString);
         hourInt = Integer.parseInt(hourString);
         minuteInt = Integer.parseInt(minuteString);
-
     }
+    //erstellt Textviews
     public void generateTextViews(){
         txtMainStart = (TextView) view.findViewById(R.id.mainStartDate);
         txtMainEnd = (TextView) view.findViewById(R.id.mainEndDate);
         txtBackupStart = (TextView) view.findViewById(R.id.backupStartDate);
         txtBackupEnd = (TextView) view.findViewById(R.id.backupEndDate);
-
     }
+    //setzt die DateStrings in die TextViews
     public void setTextViews(){
         txtMainStart.setText(mainStartString);
         txtMainEnd.setText(mainEndString);

@@ -19,4 +19,12 @@
     <string name="notActive">Inaktiv !</string>
     <string name="regWindow">Zeitraum :</string>
     <string name="catchUpWindow">Nachmeldung :</string>
+
+    //login strings
+    <string name="login_text">Login notwendig</string>
+    <string name="k_num_hint">K-Nummer</string>
+    <string name="pwd_hint">Passwort</string>
+    <string name="login">Login</string>
+    <string name="cancel">Abbrechen</string>
+
 </resources>

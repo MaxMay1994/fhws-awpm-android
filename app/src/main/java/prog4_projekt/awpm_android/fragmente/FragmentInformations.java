@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
 import prog4_projekt.awpm_android.R;
+
 import prog4_projekt.awpm_android.activities.TimeframesActivity;
 
 public class FragmentInformations extends Fragment {
@@ -33,6 +33,7 @@ public class FragmentInformations extends Fragment {
             @Override
             public void onClick(View arg0)
             {
+                //aufruf externer browser
                 Uri uri = Uri.parse("http://fang.fhws.de/studium/allgemeinwissenschaftliche_wahlpflichtfaecher/angebote_in_wuerzburg/informationen.html");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
@@ -43,6 +44,7 @@ public class FragmentInformations extends Fragment {
             @Override
             public void onClick(View arg0)
             {
+                //aufruf externer browser
                 Uri uri = Uri.parse("http://fang.fhws.de/studium/allgemeinwissenschaftliche_wahlpflichtfaecher/angebote_in_schweinfurt/informationen.html");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
@@ -51,6 +53,7 @@ public class FragmentInformations extends Fragment {
         zeitraum.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                //startet neue activity
                 Intent intent = new Intent(getActivity(), TimeframesActivity.class);
                 startActivity(intent);
             }

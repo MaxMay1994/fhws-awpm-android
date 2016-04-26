@@ -82,6 +82,7 @@ public class FragmentTimeframesWue extends android.support.v4.app.Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+    //erstellt buttons
     public void generateButtons(){
         mainAktivButton = (Button) view.findViewById(R.id.hauptAktivButton);
         mainInaktivButton = (Button) view.findViewById(R.id.hauptInaktivButton);
@@ -89,6 +90,7 @@ public class FragmentTimeframesWue extends android.support.v4.app.Fragment {
         backupInaktivButton = (Button) view.findViewById(R.id.nebenInaktivButton);
 
     }
+    //erstellt aus Date() verschiedene Strings
     public void formDateStrings(Date date){
         SimpleDateFormat formDate = new SimpleDateFormat("dd.MM.yyyy HH.mm", Locale.getDefault());
         SimpleDateFormat formDay = new SimpleDateFormat("dd", Locale.getDefault());
@@ -105,6 +107,7 @@ public class FragmentTimeframesWue extends android.support.v4.app.Fragment {
         minuteString = formMinute.format(date);
 
     }
+    //erstellt aus den DateStrings Int werte
     public void makeDateInt(){
 
         dayInt = Integer.parseInt(dayString);
@@ -112,21 +115,22 @@ public class FragmentTimeframesWue extends android.support.v4.app.Fragment {
         yearInt = Integer.parseInt(yearString);
         hourInt = Integer.parseInt(hourString);
         minuteInt = Integer.parseInt(minuteString);
-
     }
+    //erstellt die TextViews
     public void generateTextViews(){
         txtMainStart = (TextView) view.findViewById(R.id.mainStartDate);
         txtMainEnd = (TextView) view.findViewById(R.id.mainEndDate);
         txtBackupStart = (TextView) view.findViewById(R.id.backupStartDate);
         txtBackupEnd = (TextView) view.findViewById(R.id.backupEndDate);
-
     }
+    //setzt die Strings in die TextViews
     public void setTextViews(){
         txtMainStart.setText(mainStartString);
         txtMainEnd.setText(mainEndString);
         txtBackupStart.setText(backupStartString);
         txtBackupEnd.setText(backupEndString);
     }
+
     //WICHTIG !!! hier month = monat-1 !!!!
     public void setMainEndTimeframe(int year,int month, int day, int hour,int minute){
         mainEnd = new GregorianCalendar();
