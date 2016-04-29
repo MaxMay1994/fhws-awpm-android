@@ -30,7 +30,9 @@ public class FragmentCourses extends Fragment{
    private View view;
 
     RecyclerViewAdapter adapter;
+    RecyclerViewAdapter adapter1;
     RecyclerView recyclerView;
+    RecyclerView rv;
     public List<Modules> modulesList;
     Call<List<Modules>> call;
     String string;
@@ -41,6 +43,11 @@ public class FragmentCourses extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_courses, null);
+        rv = (RecyclerView) view.findViewById(R.id.recyclerView);
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter1 = new RecyclerViewAdapter(getContext());
+        rv.setAdapter(adapter1);
+        adapter1.notifyDataSetChanged();
         return view;
     }
 
@@ -49,6 +56,21 @@ public class FragmentCourses extends Fragment{
         super.onViewCreated(view, savedInstanceState);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        call = ServiceAdapter.getService().getAllModules();
+        call.enqueue(new Callback<List<Modules>>() {
+            @Override
+            public void onResponse(Call<List<Modules>> call, Response<List<Modules>> response) {
+                modulesList = response.body();
+                adapter = new RecyclerViewAdapter(getActivity(), modulesList);
+                recyclerView.setAdapter(adapter);
+            }
+
+            @Override
+            public void onFailure(Call<List<Modules>> call, Throwable t) {
+                //Toast.makeText(getContext(), "Bitte erneut laden", Toast.LENGTH_LONG).show();
+            }
+        });
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener(){
                     @Override public void onItemClick(View view, int position){
@@ -58,31 +80,11 @@ public class FragmentCourses extends Fragment{
                         string = modulesList.get(position).getContent();
                         extras.putString("Titel", title);
                         extras.putString("Informationen", string);
-                       // Log.i("MSG:", string);
-                        //Log.i("Titel:", title);
-                       // intent.putExtra("Title", title);
-                        //intent.putExtra("Informationen", string);
                         intent.putExtras(extras);
                         view.getContext().startActivity(intent);
                     }
                 })
         );
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        call = ServiceAdapter.getService().getAllModules();
-         call.enqueue(new Callback<List<Modules>>() {
-            @Override
-            public void onResponse(Call<List<Modules>> call, Response<List<Modules>> response) {
-                modulesList = response.body();
-                adapter = new RecyclerViewAdapter(getActivity(), modulesList);
-                recyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onFailure(Call<List<Modules>> call, Throwable t) {
-                Toast.makeText(getContext(), "Bitte erneut laden", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
 }

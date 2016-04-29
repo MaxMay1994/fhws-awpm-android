@@ -37,8 +37,6 @@ public class CourseDetailsActivity extends AppCompatActivity {
         if(extras!=null){
             String title = extras.getString("Titel");
             String text = extras.getString("Informationen");
-           // Log.i("Titel", title);
-           // getActionBar().setTitle(title);
             toolTitle.setText(title);
             information.setText(text);
             information.setMovementMethod(new ScrollingMovementMethod());

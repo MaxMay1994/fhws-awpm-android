@@ -22,16 +22,6 @@ public class ModuleViewHolder extends RecyclerView.ViewHolder {
         this.textview1 = (TextView) itemView.findViewById(R.id.subject);
         this.textview2 = (TextView) itemView.findViewById(R.id.lecturer);
 
-       /* itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int position = getLayoutPosition();
-                Log.i("Position", String.valueOf(position));
-                Intent intent = new Intent(v.getContext(), CourseDetailsActivity.class);
-                intent.putExtra("...", position);
-                v.getContext().startActivity(intent);
 
-            }
-        });*/
     }
 }

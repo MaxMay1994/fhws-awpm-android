@@ -19,6 +19,9 @@ package prog4_projekt.awpm_android.adapter;
         List<Modules> mList;
         LayoutInflater inflater;
         RecyclerView rv;
+        public RecyclerViewAdapter(Context context){
+            this.context = context;
+        }
 
         public RecyclerViewAdapter(Context context, List<Modules> mList){
             this.context = context;
@@ -41,7 +44,8 @@ package prog4_projekt.awpm_android.adapter;
         public void onBindViewHolder(ModuleViewHolder holder, int position) {
             Modules module = mList.get(position);
             holder.textview1.setText(module.getName());
-            holder.textview2.setText(module.getTeacher()+ ",  "+ module.getRoom().getBuilding().getLocation().getName()+", " +module.getRoom().getBuilding().getName());
+            holder.textview2.setText(module.getTeacher()+ ",  "+ module.getRoom().getBuilding().getLocation().getName()+", "
+                    +module.getRoom().getBuilding().getName());
 
         }
 
