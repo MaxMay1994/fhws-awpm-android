@@ -2,6 +2,7 @@ package prog4_projekt.awpm_android.adapter;
 
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,17 +17,21 @@ public class ModuleViewHolder extends RecyclerView.ViewHolder {
     TextView textview2;
 
 
-    public ModuleViewHolder(View itemView) {
+    public ModuleViewHolder(final View itemView) {
         super(itemView);
         this.textview1 = (TextView) itemView.findViewById(R.id.subject);
         this.textview2 = (TextView) itemView.findViewById(R.id.lecturer);
 
-        itemView.setOnClickListener(new View.OnClickListener() {
+       /* itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int position = getLayoutPosition();
+                Log.i("Position", String.valueOf(position));
                 Intent intent = new Intent(v.getContext(), CourseDetailsActivity.class);
+                intent.putExtra("...", position);
                 v.getContext().startActivity(intent);
+
             }
-        });
+        });*/
     }
 }

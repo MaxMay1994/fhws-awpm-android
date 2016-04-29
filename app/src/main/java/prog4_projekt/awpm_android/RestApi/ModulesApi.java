@@ -10,4 +10,5 @@ public interface ModulesApi {
 
     @GET("api/modules")Call<List<Modules>> getAllModules(); // für pagination @Path("page") int page
 
+
 }

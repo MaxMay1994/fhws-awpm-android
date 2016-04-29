@@ -24,8 +24,8 @@
 
         <activity
             android:name=".activities.CourseDetailsActivity"
-            android:label="Course_Details"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme"
+            android:label="@string/title_activity_course__details"></activity>
         <activity
             android:name=".activities.TimeframesActivity"
             android:label="AWPM"

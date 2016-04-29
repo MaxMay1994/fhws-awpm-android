@@ -20,7 +20,7 @@ public class ServiceAdapter {
 
     public static ModulesApi getService(){
         if(serviceAdapter == null) {
-            serviceAdapter = new ServiceAdapter();
+            serviceAdapter =  new ServiceAdapter();
         }
         return modulesApi;
     }
