@@ -5,24 +5,25 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceAdapter {
 
-    Retrofit retrofit;
-    static ModulesApi modulesApi;
-    static ServiceAdapter serviceAdapter;
+    private static String baseUrl = "https://awpm.kraus.xyz/";
+    private static Retrofit retrofit;
+    private static AwpmApi awpmApi;
+    private static ServiceAdapter serviceAdapter;
 
     private ServiceAdapter(){
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://awpm.kraus.xyz/")
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        modulesApi = retrofit.create(ModulesApi.class);
+        awpmApi = retrofit.create(AwpmApi.class);
 
     }
 
-    public static ModulesApi getService(){
+    public static AwpmApi getService(){
         if(serviceAdapter == null) {
             serviceAdapter =  new ServiceAdapter();
         }
-        return modulesApi;
+        return awpmApi;
     }
 
 
