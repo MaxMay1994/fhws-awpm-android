@@ -16,7 +16,7 @@ import prog4_projekt.awpm_android.adapter.ViewPaperAdapterTimeframes;
 public class TimeframesActivity extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
-    Toolbar toolbar;
+    Toolbar toolbar ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
