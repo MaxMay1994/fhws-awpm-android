@@ -5,17 +5,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.widget.TextView;
 
-import com.github.ivbaranov.mfb.MaterialFavoriteButton;
-
-import org.w3c.dom.Text;
-
 import prog4_projekt.awpm_android.R;
-import prog4_projekt.awpm_android.RestApi.Modules.Modules;
-import prog4_projekt.awpm_android.adapter.ModuleViewHolder;
-import prog4_projekt.awpm_android.fragmente.FragmentCourses;
 
 
 public class CourseDetailsActivity extends AppCompatActivity {

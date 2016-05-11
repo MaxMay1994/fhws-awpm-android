@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.v7.widget.CardView android:id="@+id/card_view"
+<android.support.v7.widget.CardView android:id="@+id/card_view_ballot"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -11,22 +10,27 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:clickable="false"
     android:contextClickable="false">
-    <!--card_view:contentPadding="20dp" -->
+    <!--card_view:contentPadding="20dp"
+
+
+
+
+     -->
 
 
     <TextView
-        android:id="@+id/cardTitle"
+        android:id="@+id/cardTitle_ballot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:maxLength="25"
         android:textColor="#000000"
         android:textSize="18dp"
         android:text="Title"
-         />
+        />
     <!--android:layout_margin="@dimen/activity_horizontal_margin" -->
 
     <TextView
-        android:id="@+id/cardSubtitle"
+        android:id="@+id/cardSubtitle_ballot"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -35,9 +39,21 @@
         android:text="Subtitle" />
     <!--android:layout_marginLeft="16dp" -->
     <!--android:layout_marginTop="50dp" -->
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/imageReorder"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_reorder_black_24dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+
+        />
+    </RelativeLayout>
 
 
-
-    </android.support.v7.widget.CardView>
+</android.support.v7.widget.CardView>
 
 

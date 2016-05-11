@@ -1,14 +1,17 @@
 
-package prog4_projekt.awpm_android.RestApi.Modules;
+package prog4_projekt.awpm_android.RestApi.Module;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Tag {
+public class Building {
 
     @SerializedName("id")
     @Expose
     private int id;
+    @SerializedName("location")
+    @Expose
+    private Location location;
     @SerializedName("name")
     @Expose
     private String name;
@@ -29,6 +32,24 @@ public class Tag {
      */
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * 
+     * @return
+     *     The location
+     */
+    public Location getLocation() {
+        return location;
+    }
+
+    /**
+     * 
+     * @param location
+     *     The location
+     */
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     /**

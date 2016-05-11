@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 
+import java.util.Calendar;
+
 import prog4_projekt.awpm_android.R;
 import prog4_projekt.awpm_android.adapter.ViewPaperAdapterMainActivity;
 
@@ -20,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         toolbar = (Toolbar) findViewById(R.id.tollbar);
         setSupportActionBar(toolbar);

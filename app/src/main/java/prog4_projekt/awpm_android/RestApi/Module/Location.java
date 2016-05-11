@@ -1,38 +1,17 @@
 
-package prog4_projekt.awpm_android.RestApi.Modules;
+package prog4_projekt.awpm_android.RestApi.Module;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Room {
+public class Location {
 
-    @SerializedName("building")
-    @Expose
-    private Building building;
     @SerializedName("id")
     @Expose
     private int id;
     @SerializedName("name")
     @Expose
     private String name;
-
-    /**
-     * 
-     * @return
-     *     The building
-     */
-    public Building getBuilding() {
-        return building;
-    }
-
-    /**
-     * 
-     * @param building
-     *     The building
-     */
-    public void setBuilding(Building building) {
-        this.building = building;
-    }
 
     /**
      * 
