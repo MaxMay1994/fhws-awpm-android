@@ -1,11 +1,11 @@
 
-package prog4_projekt.awpm_android.RestApi.Modules;
+package prog4_projekt.awpm_android.RestApi.Module;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class SubjectAreas {
+public class SubjectArea {
 
     @SerializedName("code")
     @Expose

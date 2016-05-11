@@ -10,7 +10,7 @@ import prog4_projekt.awpm_android.fragmente.FragmentProfile;
 
 public class ViewPaperAdapterMainActivity extends FragmentPagerAdapter{
 
-    String[] title = {"Infos","Kurse","Profil"};
+    String[] title = {"Infos","Katalog","Wahlzettel"};
 
     public ViewPaperAdapterMainActivity(FragmentManager fm) {
         super(fm);

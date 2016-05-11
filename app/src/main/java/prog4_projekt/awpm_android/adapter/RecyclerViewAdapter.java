@@ -9,21 +9,21 @@ package prog4_projekt.awpm_android.adapter;
     import java.util.List;
 
     import prog4_projekt.awpm_android.R;
-    import prog4_projekt.awpm_android.RestApi.Modules.Modules;
+    import prog4_projekt.awpm_android.RestApi.Module.Module;
 
 /**
      * Created by Ich on 22.04.2016.
      */
     public class RecyclerViewAdapter extends RecyclerView.Adapter<ModuleViewHolder> {
         Context context;
-        List<Modules> mList;
+        List<Module> mList;
         LayoutInflater inflater;
         RecyclerView rv;
         public RecyclerViewAdapter(Context context){
             this.context = context;
         }
 
-        public RecyclerViewAdapter(Context context, List<Modules> mList){
+        public RecyclerViewAdapter(Context context, List<Module> mList){
             this.context = context;
             this.mList = mList;
         }
@@ -43,7 +43,7 @@ package prog4_projekt.awpm_android.adapter;
 
         @Override
         public void onBindViewHolder(ModuleViewHolder holder, int position) {
-            Modules module = mList.get(position);
+            Module module = mList.get(position);
             holder.textview1.setText(module.getName());
             holder.textview2.setText(module.getTeacher()+ ",  "+ module.getRoom().getBuilding().getLocation().getName()+", "
                     +module.getRoom().getBuilding().getName());

@@ -1,5 +1,5 @@
 
-package prog4_projekt.awpm_android.RestApi.Modules;
+package prog4_projekt.awpm_android.RestApi.Module;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -7,14 +7,14 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Modules {
+public class Module {
 
     @SerializedName("blocked")
     @Expose
     private boolean blocked;
     @SerializedName("blocked_for")
     @Expose
-    private List<SubjectAreas> blockedFor = new ArrayList<SubjectAreas>();
+    private List<SubjectArea> blockedFor = new ArrayList<SubjectArea>();
     @SerializedName("comment")
     @Expose
     private Object comment;
@@ -67,6 +67,13 @@ public class Modules {
     @Expose
     private boolean voted;
 
+    public Module(String name, String teacher){
+        this.name = name;
+        this.teacher = teacher;
+    }
+
+    public Module(){}
+
     /**
      * 
      * @return
@@ -90,7 +97,7 @@ public class Modules {
      * @return
      *     The blockedFor
      */
-    public List<SubjectAreas> getBlockedFor() {
+    public List<SubjectArea> getBlockedFor() {
         return blockedFor;
     }
 
@@ -99,7 +106,7 @@ public class Modules {
      * @param blockedFor
      *     The blocked_for
      */
-    public void setBlockedFor(List<SubjectAreas> blockedFor) {
+    public void setBlockedFor(List<SubjectArea> blockedFor) {
         this.blockedFor = blockedFor;
     }
 

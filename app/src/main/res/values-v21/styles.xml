@@ -3,9 +3,9 @@
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
-        <item name="colorPrimary">#ff8800</item>
-        <item name="colorPrimaryDark">#f18000</item>
-        <item name="colorAccent">#ff8800</item>
+        <item name="colorPrimary">#FB8C00</item>
+        <item name="colorPrimaryDark">#F57C00</item>
+        <item name="colorAccent">#8fd400</item>
 
     </style>
 
@@ -13,8 +13,8 @@
 
         <item name="popupTheme">@style/Theme.AppCompat.Light</item>
 
-        <item name="colorPrimary">#ff8800</item>
-        <item name="colorPrimaryDark">#f18000</item>
+        <item name="colorPrimary">#FB8C00</item>
+        <item name="colorPrimaryDark">#F57C00</item>
         <item name="colorAccent">#fff</item>
 
     </style>
