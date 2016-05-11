@@ -5,7 +5,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class BlockedFor {
+public class SubjectAreas {
 
     @SerializedName("code")
     @Expose

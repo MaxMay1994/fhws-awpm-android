@@ -14,7 +14,7 @@ public class Modules {
     private boolean blocked;
     @SerializedName("blocked_for")
     @Expose
-    private List<BlockedFor> blockedFor = new ArrayList<BlockedFor>();
+    private List<SubjectAreas> blockedFor = new ArrayList<SubjectAreas>();
     @SerializedName("comment")
     @Expose
     private Object comment;
@@ -90,7 +90,7 @@ public class Modules {
      * @return
      *     The blockedFor
      */
-    public List<BlockedFor> getBlockedFor() {
+    public List<SubjectAreas> getBlockedFor() {
         return blockedFor;
     }
 
@@ -99,7 +99,7 @@ public class Modules {
      * @param blockedFor
      *     The blocked_for
      */
-    public void setBlockedFor(List<BlockedFor> blockedFor) {
+    public void setBlockedFor(List<SubjectAreas> blockedFor) {
         this.blockedFor = blockedFor;
     }
 

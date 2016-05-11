@@ -10,25 +10,86 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".activities.CourseDetailsActivity"
-    tools:showIn="@layout/activity_course__details">
+    tools:showIn="@layout/activity_course__details"
+    >
 
-    <Switch
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="wählen"
-        android:id="@+id/switch1"
-        android:layout_centerVertical="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Als Favorit markieren"
+        android:layout_gravity="bottom"
+        android:id="@+id/textView2"
+        android:layout_above="@+id/view"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:checked="false" />
+        />
 
-    <Switch
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="als Favorit markieren"
-        android:id="@+id/switch2"
-        android:layout_alignTop="@+id/switch1"
+        android:text="Information"
+        android:id="@+id/Course_details"
+        android:textSize="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/textView2"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:checked="false" />
+    />
+
+    <Switch
+             android:layout_width="78dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/switch1"
+            android:layout_below="@+id/textView2"
+            android:layout_gravity="bottom"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:checked="false"
+            android:layout_alignBottom="@+id/view"
+            android:layout_toEndOf="@+id/textView2"
+        />
+
+    <com.github.ivbaranov.mfb.MaterialFavoriteButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                app:mfb_animate_favorite="true"
+                app:mfb_animate_unfavorite="false"
+                app:mfb_padding="6"
+                app:mfb_favorite_image="@drawable/ic_star_black_24dp"
+                app:mfb_not_favorite_image="@drawable/ic_star_border_black_24dp"
+                app:mfb_rotation_duration="400"
+                app:mfb_rotation_angle="360"
+                app:mfb_bounce_duration="300"
+                app:mfb_color="black"
+                app:mfb_type="star"
+
+
+                android:layout_marginBottom="28dp"
+                android:id="@+id/view"
+
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+    />
+
+
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Wählen"
+            android:layout_gravity="bottom"
+            android:id="@+id/textView4"
+            android:layout_above="@+id/switch1"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+        />
+
+
+
 </RelativeLayout>
