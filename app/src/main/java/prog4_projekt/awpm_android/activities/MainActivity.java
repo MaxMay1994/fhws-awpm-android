@@ -1,47 +1,40 @@
 package prog4_projekt.awpm_android.activities;
 
-import android.app.Dialog;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
 
+
+import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
 import prog4_projekt.awpm_android.adapter.ViewPaperAdapterMainActivity;
 import prog4_projekt.awpm_android.fragmente.FragmentLoginDialog;
-import prog4_projekt.awpm_android.fragmente.FragmentWarningDialog;
 
 public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     ViewPager viewPager;
     TabLayout tabLayout;
-    Boolean logdin = false;
+    public SharedPreferences sharedPref ;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.tollbar);
+
         setSupportActionBar(toolbar);
 
-        final Button log = (Button) findViewById(R.id.login);
-
-        log.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                showLoginDialog(log);
-            }
-        });
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
 
@@ -70,41 +63,51 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
-    public void showLoginDialog(Button log){
-        if(logdin == false){
-        final FragmentLoginDialog dialog = new FragmentLoginDialog();
-        dialog.show(getSupportFragmentManager(), "log");
-            setLogin();
-            switchTextOnButton(log);
 
 
-        }
-        else{
-            FragmentWarningDialog dialog2 = new FragmentWarningDialog();
-            dialog2.show(getSupportFragmentManager(), "Nolog");
-        }
+    }
 
-    }
-    public void setLogin(){
-        if(logdin == false){
-            logdin = true;
-        }
-        else{
-            logdin = false;
-        }
-    }
-    public boolean getLogin(){
-        return logdin;
-    }
-    public void switchTextOnButton(Button log){
-        if(logdin){
-            log.setText("Logout");
-        }
-        else{
-            log.setText("Login");
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
 
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+        int id = item.getItemId();
+
+        if (id == R.id.action_login) {
+            if( MySharedPreference.getBooleanIsLoged(sharedPref) == true){
+               LoginActivity.userLogout(sharedPref, getSupportFragmentManager());
+                invalidateOptionsMenu();
+            }
+            if( MySharedPreference.getBooleanIsLoged(sharedPref) == false && MySharedPreference.getStringToken(sharedPref) ==null){
+                final FragmentLoginDialog dialog = new FragmentLoginDialog();
+                dialog.show(getSupportFragmentManager(), "log");
+                invalidateOptionsMenu();
+            }
+            // if(MySharedPreference.getBooleanIsLoged(sharedPref) == false && MySharedPreference.getStringToken(sharedPref)!=null){
+            //   LoginActivity.standardLogin(sharedPref, getSupportFragmentManager());
+            //  invalidateOptionsMenu();
+            //}
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        menu.clear();
+        if(MySharedPreference.getBooleanIsLoged(sharedPref) == true){
+            menu.add(0,R.id.action_login,0,"Logout");
+        }
+        if(MySharedPreference.getBooleanIsLoged(sharedPref) == false){
+            menu.add(0,R.id.action_login,0,"Login");
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
 }

@@ -1,5 +1,6 @@
 package prog4_projekt.awpm_android.RestApi;
 
+import prog4_projekt.awpm_android.LoginInterface;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -12,7 +13,7 @@ public class ServiceAdapter {
 
     private ServiceAdapter(){
         retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl("https://awpm.kraus.xyz/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         awpmApi = retrofit.create(AwpmApi.class);
@@ -24,6 +25,13 @@ public class ServiceAdapter {
             serviceAdapter =  new ServiceAdapter();
         }
         return awpmApi;
+    }
+    public static LoginInterface getLoginService(){
+        if(serviceAdapter == null) {
+            serviceAdapter = new ServiceAdapter();
+        }
+        LoginInterface basicLogin = ServiceAdapter.serviceAdapter.retrofit.create(LoginInterface.class);
+        return basicLogin;
     }
 
 

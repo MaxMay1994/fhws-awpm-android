@@ -30,21 +30,5 @@
          android:id="@+id/viewpager"
          />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/btn_height_small"
-        android:text="Login"
-        android:layout_gravity="right"
-
-        android:textColor="@color/abc_input_method_navigation_guard"
-        android:layout_marginRight="41dp"
-        android:layout_marginEnd="41dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="false"
-        android:layout_alignParentEnd="true"
-        android:layout_alignBottom="@+id/tollbar"
-        android:background="#ffffff"
-        android:id="@+id/login" />
-
 
 </RelativeLayout>

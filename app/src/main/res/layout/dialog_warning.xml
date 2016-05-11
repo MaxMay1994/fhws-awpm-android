@@ -4,14 +4,19 @@
     android:orientation="vertical"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:backgroundTintMode="screen">
+    android:gravity="center_horizontal"
+    android:padding="10dp"
+    android:backgroundTint="#ffffff">
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="79dp"
-        android:text="Sie sind bereits eingelogged"
-        android:id="@+id/textView2"
+        android:layout_height="wrap_content"
+        android:text="@string/missingKNum"
+        android:id="@+id/wrong"
         android:textStyle="bold"
         android:textSize="20dp"
-        android:gravity="center" />
+        android:gravity="center"
+        android:backgroundTint="#ffffff"
+        android:padding="10dp"
+        android:textColor="@color/abc_input_method_navigation_guard" />
 </LinearLayout>

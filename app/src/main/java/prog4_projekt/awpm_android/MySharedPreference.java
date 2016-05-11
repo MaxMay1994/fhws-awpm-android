@@ -1,6 +1,5 @@
 package prog4_projekt.awpm_android;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -9,84 +8,88 @@ import android.util.Log;
  */
 public class MySharedPreference {
 
-    public static final String valueFile = "MySavedData";
     public static final String tokenValue = "Token";
-    public static boolean isLoged;
-    public static boolean hasToken;
-    public MySharedPreference(){
-        super();
-    }
+    public static String isLoged;
 
-    public void saveStringToken(Context context, String text) {
-        SharedPreferences settings;
-        SharedPreferences.Editor editor;
 
-        settings = context.getSharedPreferences(valueFile, Context.MODE_PRIVATE);
-        editor = settings.edit();
+
+    public static String is401 ;
+    public static String is500 ;
+    public static String isFailed;
+
+
+
+
+
+    public static void saveStringToken(SharedPreferences pref, String text) {
+
+        SharedPreferences.Editor editor = pref.edit();
 
         editor.putString(tokenValue, text);
-
-
-        editor.commit();
-    }
-    public void saveBooleanIsLoged(Context context, boolean status){
-        SharedPreferences settings;
-        SharedPreferences.Editor editor;
-
-        settings = context.getSharedPreferences(valueFile, Context.MODE_PRIVATE);
-        editor = settings.edit();
-        editor.putBoolean(String.valueOf(isLoged), status);
         editor.commit();
 
-    }
-    public void saveBooleanHasToken (Context context, boolean status){
-        SharedPreferences settings;
-        SharedPreferences.Editor editor;
+        Log.i("002", "savedStringToken= "+ text);
 
-        settings = context.getSharedPreferences(valueFile, Context.MODE_PRIVATE);
-        editor = settings.edit();
-        Log.i("200", "Token status saved = "+ status);
-        editor.putBoolean(String.valueOf(hasToken), status);
+
+    }
+    public static void saveBooleanIsLoged(SharedPreferences pref, boolean status){
+
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(isLoged, status);
+
         editor.commit();
 
     }
-    public boolean getBooleanHasToken(Context context){
-        SharedPreferences settings;
-        boolean status;
-        settings = context.getSharedPreferences(valueFile, Context.MODE_PRIVATE);
-        status = settings.getBoolean(String.valueOf(hasToken), false);
-        Log.i("200", "Token status returned = "+ status);
+    public static void saveBooleanIs401(SharedPreferences pref, boolean status){
 
-        return status;
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(String.valueOf(is401), status);
+
+        editor.commit();
+
     }
+    public static void saveBooleanIs500(SharedPreferences pref, boolean status){
 
-    public String getStringToken(Context context) {
-        SharedPreferences settings;
-        String text;
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(String.valueOf(is500), status);
 
-        settings = context.getSharedPreferences(valueFile, Context.MODE_PRIVATE);
-        text = settings.getString(tokenValue, null);
-        return text;
+        editor.commit();
+
     }
-    public boolean getBoleanIsLoged(Context context){
-        SharedPreferences settings;
+    public static void saveBooleanIsFailed(SharedPreferences pref, boolean status){
+
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(String.valueOf(isFailed), status);
+
+        editor.commit();
+
+    }
+    public static String getStringToken(SharedPreferences pref) {
+
+       return pref.getString(tokenValue, null);
+    }
+    public static boolean getBooleanIsLoged(SharedPreferences pref){
         boolean status;
 
-        settings = context.getSharedPreferences(valueFile, Context.MODE_PRIVATE);
-        status = settings.getBoolean(String.valueOf(isLoged), false);
+        status = pref.getBoolean(isLoged, false);
         return status;
     }
+    public static boolean getBooleanIs401(SharedPreferences pref){
+        boolean status;
 
+        status = pref.getBoolean(is401, false);
+        return status;
+    }
+    public static boolean getBooleanIs500(SharedPreferences pref){
+        boolean status;
 
+        status = pref.getBoolean(is500, false);
+        return status;
+    }
+    public static boolean getBooleanIsFailed(SharedPreferences pref){
+        boolean status;
 
-    public void removeValue(Context context) {
-        SharedPreferences settings;
-        SharedPreferences.Editor editor;
-
-        settings = context.getSharedPreferences(valueFile, Context.MODE_PRIVATE);
-        editor = settings.edit();
-
-        editor.remove(tokenValue);
-        editor.commit();
+        status = pref.getBoolean(isFailed, false);
+        return status;
     }
 }

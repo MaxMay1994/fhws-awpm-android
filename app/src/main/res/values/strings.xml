@@ -27,4 +27,17 @@
     <string name="login">Login</string>
     <string name="cancel">Abbrechen</string>
 
+    //warning strings
+    <string name="missingPwd">Passowort fehlt</string>
+    <string name="missingKNum">K-Nummer fehlt</string>
+    <string name="missinBoth">K-Nummer und Passwort fehlen</string>
+    <string name="serverError">Verbindung gestört! Bitte erneut versuchen</string>
+    <string name="unauthorizedLogin">Login/Logout ungültig!</string>
+    <string name="failedLogout">Logout fehlgeschlagen!</string>
+    <string name="failedConnection">Verbindung fehlgeschlagen!</string>
+
+    //file strings
+    <string name="awpm_saved_data">awpm_saved_data</string>
+
+
 </resources>
