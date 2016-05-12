@@ -76,11 +76,11 @@ public class CourseDetailsActivity extends AppCompatActivity {
             public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
                 if(favorite){
                     passedModule.setVoted(true);
-                    Toast.makeText(getApplicationContext(), "Modul wurde als 'Favorit' markiert", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "AWPM als 'Favorit' markiert", Toast.LENGTH_LONG).show();
                 }
                 else{
                     passedModule.setVoted(false);
-                    Toast.makeText(getApplicationContext(), "Modul nicht mehr als 'Favorit' markiert", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "AWPM nicht als 'Favorit' markiert", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -90,11 +90,11 @@ public class CourseDetailsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     passedModule.setFavorite(true);
-                    Toast.makeText(getApplicationContext(), "Modul wurde als 'gewählt' markiert", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "AWPM wurde gewählt!", Toast.LENGTH_LONG).show();
                 }
                 else{
                     passedModule.setFavorite(false);
-                    Toast.makeText(getApplicationContext(), "Modul wurde als 'nicht gewählt' markiert", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "AWPM wurde als 'nicht gewählt' markiert!", Toast.LENGTH_LONG).show();
                 }
             }
         });
