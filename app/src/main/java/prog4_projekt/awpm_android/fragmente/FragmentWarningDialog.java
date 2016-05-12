@@ -22,22 +22,15 @@ public class FragmentWarningDialog extends DialogFragment {
     View view;
 
     public void onViewCreated(View view, Bundle savedInstanceState){
-
         super.onCreate(savedInstanceState);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.dialog_warning, null));
-
         builder.create();
-
-
     }
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.dialog_warning, null);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-
-
 
         if (String.valueOf(getContext()).startsWith("prog4_projekt.awpm_android.activities.LoginActivity")) {
             if(LoginActivity.stringKNummer.isEmpty() && LoginActivity.stringPwd.isEmpty()) {
@@ -81,10 +74,7 @@ public class FragmentWarningDialog extends DialogFragment {
                 connectionFailed();
                 return view;
             }
-
-
             return view;
-
     }
     @Override
     public void onDestroy(){

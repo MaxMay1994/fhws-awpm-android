@@ -23,64 +23,41 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     public SharedPreferences sharedPref ;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-
         setContentView(R.layout.activity_main);
-
         toolbar = (Toolbar) findViewById(R.id.tollbar);
-
         setSupportActionBar(toolbar);
-
-
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-
         ViewPaperAdapterMainActivity viewPaperAdapter = new ViewPaperAdapterMainActivity(getSupportFragmentManager());
         viewPager.setAdapter(viewPaperAdapter);
-
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setupWithViewPager(viewPager);
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-
                 viewPager.setCurrentItem(tab.getPosition());
-
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
-
-
-
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-
         getMenuInflater().inflate(R.menu.menu_main, menu);
-
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
-
         int id = item.getItemId();
-
         if (id == R.id.action_login) {
             if( MySharedPreference.getBooleanIsLoged(sharedPref) == true){
                LoginActivity.userLogout(sharedPref, getSupportFragmentManager());
@@ -91,10 +68,6 @@ public class MainActivity extends AppCompatActivity {
                 dialog.show(getSupportFragmentManager(), "log");
                 invalidateOptionsMenu();
             }
-            // if(MySharedPreference.getBooleanIsLoged(sharedPref) == false && MySharedPreference.getStringToken(sharedPref)!=null){
-            //   LoginActivity.standardLogin(sharedPref, getSupportFragmentManager());
-            //  invalidateOptionsMenu();
-            //}
         }
         return super.onOptionsItemSelected(item);
     }

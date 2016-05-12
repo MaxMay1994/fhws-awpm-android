@@ -57,7 +57,6 @@ public class FragmentLoginDialog extends DialogFragment {
                     FragmentWarningDialog error = new FragmentWarningDialog();
                     error.show(getFragmentManager(), null);
                 }
-
             }
         });
         Button loginCancel = (Button) view.findViewById(R.id.login_cancel);
@@ -67,17 +66,14 @@ public class FragmentLoginDialog extends DialogFragment {
                 FragmentLoginDialog.this.dismiss();
             }
         });
-
         return view;
     }
 public void onViewCreated(View view, Bundle savedInstanceState){
     super.onCreate(savedInstanceState);
-
     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
     LayoutInflater inflater = getActivity().getLayoutInflater();
     builder.setView(inflater.inflate(R.layout.dialog_login, null));
     builder.create();
-
 }
     public static String getKEingabe(){
         return stringKNummer;
