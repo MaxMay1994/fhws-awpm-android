@@ -39,9 +39,9 @@ public class FragmentCourses extends Fragment{
     RecyclerView rv;
     public List<Module> modulesList;
     Call<List<Module>> call;
-    String content, name, lecturer, start, end, examType;
+    String content, name, lecturer, start, end, examType, room, examNumber;
     int participants;
-    Room room;
+    boolean voted, favorite;
     Button filter;
 
     @Nullable
@@ -102,6 +102,10 @@ public class FragmentCourses extends Fragment{
                         start = moduleToPass.getStart();
                         end = moduleToPass.getEnd();
                         participants = moduleToPass.getParticipants();
+                        favorite = moduleToPass.isFavorite();
+                        voted = moduleToPass.isVoted();
+                        room = moduleToPass.getRoom().getName();
+                        examNumber = moduleToPass.getExamNumber();
                         extras.putString("name", name);
                         extras.putString("content", content);
                         extras.putString("examtype", examType);
@@ -109,6 +113,10 @@ public class FragmentCourses extends Fragment{
                         extras.putString("start", start);
                         extras.putString("end", end);
                         extras.putInt("participants", participants);
+                        extras.putBoolean("favorite", favorite);
+                        extras.putBoolean("voted", voted);
+                        extras.putString("room", room);
+                        extras.putString("examnumber", examNumber);
                         intent.putExtras(extras);
                         view.getContext().startActivity(intent);
                     }

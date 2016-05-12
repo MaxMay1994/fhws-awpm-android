@@ -31,6 +31,9 @@ public class CourseDetailsActivity extends AppCompatActivity {
     TextView toolTitle;
     MaterialFavoriteButton mfb;
     Switch wahlSwitch;
+    boolean moduleVoted;
+    boolean moduleFavorite;
+    Module passedModule;
 
 
     @Override
@@ -51,14 +54,19 @@ public class CourseDetailsActivity extends AppCompatActivity {
         String teacher = extras.getString("Teacher");
         String start = extras.getString("start");
         String end = extras.getString("end");
+        String room = extras.getString("room");
         int participants = extras.getInt("participants");
-        final Module passedModule = passedObject.getParcelableExtra("Object");
+        String examNumber = extras.getString("examnumber");
+        moduleVoted = extras.getBoolean("voted");
+        moduleFavorite = extras.getBoolean("favorite");
+        //passedModule = passedObject.getParcelableExtra("Object");
 
         if(extras!= null){
             toolTitle.setText(name);
             information.setText(getString(R.string.description)+ content  + getString(R.string.teacher)
             + teacher + getString(R.string.examType) + examType + getString(R.string.start) + start
-                    + getString(R.string.end) + end + getString(R.string.participants) + participants);
+                    + getString(R.string.end) + end + getString(R.string.participants) + participants //+numberVoted
+            + getString(R.string.location) + room + getString(R.string.examnumber) + examNumber);
             information.setMovementMethod(new ScrollingMovementMethod());
 
         }
@@ -75,11 +83,11 @@ public class CourseDetailsActivity extends AppCompatActivity {
             @Override
             public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
                 if(favorite){
-                   // passedModule.setVoted(true);
+                    moduleVoted = true;
                     Toast.makeText(getApplicationContext(), "AWPM als 'Favorit' markiert", Toast.LENGTH_LONG).show();
                 }
                 else{
-                   // passedModule.setVoted(false);
+                    moduleVoted = false;
                     Toast.makeText(getApplicationContext(), "AWPM nicht als 'Favorit' markiert", Toast.LENGTH_LONG).show();
                 }
             }
@@ -89,11 +97,11 @@ public class CourseDetailsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                   // passedModule.setFavorite(true);
+                    moduleFavorite = true;
                     Toast.makeText(getApplicationContext(), "AWPM wurde gewählt!", Toast.LENGTH_LONG).show();
                 }
                 else{
-                    //passedModule.setFavorite(false);
+                    moduleFavorite = false;
                     Toast.makeText(getApplicationContext(), "AWPM wurde als 'nicht gewählt' markiert!", Toast.LENGTH_LONG).show();
                 }
             }

@@ -24,7 +24,7 @@
 
     //strings CourseDetailsActivity
     <string name="description">Inhalt\n\n</string>
-    <string name="location">\n\nOrt:\u0020</string>
+    <string name="location">\n\nRaum:\u0020</string>
     <string name="appointments">\n\nTermine:\u0020</string>
     <string name="blocked">\n\nGesperrt:\u0020</string>
     <string name="examnumber">\n\nPrüfungs-#:\u0020</string>
