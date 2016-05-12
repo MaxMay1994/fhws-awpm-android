@@ -16,9 +16,12 @@ public class ModuleViewHolder extends RecyclerView.ViewHolder {
     TextView textview1;
     TextView textview2;
 
+
     public ModuleViewHolder(final View itemView) {
         super(itemView);
         this.textview1 = (TextView) itemView.findViewById(R.id.cardTitle);
         this.textview2 = (TextView) itemView.findViewById(R.id.cardSubtitle);
+
+
     }
 }

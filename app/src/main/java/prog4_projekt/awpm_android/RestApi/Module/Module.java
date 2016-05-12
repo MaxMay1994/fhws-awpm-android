@@ -1,4 +1,3 @@
-
 package prog4_projekt.awpm_android.RestApi.Module;
 
 import com.google.gson.annotations.Expose;
@@ -6,6 +5,8 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import prog4_projekt.awpm_android.RestApi.Module.Date;
 
 public class Module {
 
@@ -66,13 +67,6 @@ public class Module {
     @SerializedName("voted")
     @Expose
     private boolean voted;
-
-    public Module(String name, String teacher){
-        this.name = name;
-        this.teacher = teacher;
-    }
-
-    public Module(){}
 
     /**
      * 
