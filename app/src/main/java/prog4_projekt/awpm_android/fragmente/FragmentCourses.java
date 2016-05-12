@@ -3,6 +3,7 @@ package prog4_projekt.awpm_android.fragmente;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import prog4_projekt.awpm_android.RestApi.Module.Module;
+import prog4_projekt.awpm_android.RestApi.Module.Room;
 import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
 import prog4_projekt.awpm_android.R;
 import prog4_projekt.awpm_android.activities.CourseDetailsActivity;
@@ -37,8 +39,9 @@ public class FragmentCourses extends Fragment{
     RecyclerView rv;
     public List<Module> modulesList;
     Call<List<Module>> call;
-    String string;
-    String title;
+    String content, name, lecturer, start, end, examType;
+    int participants;
+    Room room;
     Button filter;
 
     @Nullable
@@ -85,12 +88,27 @@ public class FragmentCourses extends Fragment{
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener(){
                     @Override public void onItemClick(View view, int position){
+
+
                         Intent intent = new Intent(view.getContext(), CourseDetailsActivity.class);
+                        Module moduleToPass = modulesList.get(position);
+                        //intent.putExtra("Object", (Parcelable) moduleToPass);
+                        //Log.i("Teacher", modulesList.get(position).getTeacher());
                         Bundle extras = new Bundle();
-                        title = modulesList.get(position).getName();
-                        string = modulesList.get(position).getContent();
-                        extras.putString("Titel", title);
-                        extras.putString("Informationen", string);
+                        name = moduleToPass.getName();
+                        content = moduleToPass.getContent();
+                        examType = moduleToPass.getExamType();
+                        lecturer = moduleToPass.getTeacher();
+                        start = moduleToPass.getStart();
+                        end = moduleToPass.getEnd();
+                        participants = moduleToPass.getParticipants();
+                        extras.putString("name", name);
+                        extras.putString("content", content);
+                        extras.putString("examtype", examType);
+                        extras.putString("Teacher", lecturer);
+                        extras.putString("start", start);
+                        extras.putString("end", end);
+                        extras.putInt("participants", participants);
                         intent.putExtras(extras);
                         view.getContext().startActivity(intent);
                     }

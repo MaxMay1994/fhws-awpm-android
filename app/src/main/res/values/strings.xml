@@ -22,6 +22,19 @@
     <string name="catchUpWindow">Nachmeldung :</string>
     <string name="title_activity_settings">Settings</string>
 
+    //strings CourseDetailsActivity
+    <string name="description">Inhalt\n\n</string>
+    <string name="location">\n\nOrt:\u0020</string>
+    <string name="appointments">\n\nTermine:\u0020</string>
+    <string name="blocked">\n\nGesperrt:\u0020</string>
+    <string name="examnumber">\n\nPrüfungs-#:\u0020</string>
+    <string name="appearance">\n\nAnwesenheitspflicht:\u0020</string>
+    <string name="teacher">\n\nDozent:\u0020</string>
+    <string name="examType">\n\nPrüfung:\u0020</string>
+    <string name="participants">\n\nStimmen\u0020/\u0020max. Teilnehmerzahl\u0020</string>
+    <string name="start">\n\nStart der Veranstaltung:\u0020</string>
+    <string name="end">\nEnde der Veranstaltung:\u0020</string>
+
 
 
     <!-- Strings related to Settings -->

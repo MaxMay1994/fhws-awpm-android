@@ -25,7 +25,7 @@
         <activity
             android:name=".activities.CourseDetailsActivity"
             android:theme="@style/AppTheme"
-            android:label="@string/title_activity_course__details"></activity>
+            ></activity>
         <activity
             android:name=".activities.FilterActivity"
             android:theme="@style/AppTheme"

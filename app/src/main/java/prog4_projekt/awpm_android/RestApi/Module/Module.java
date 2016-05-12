@@ -1,14 +1,18 @@
 package prog4_projekt.awpm_android.RestApi.Module;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import prog4_projekt.awpm_android.RestApi.Module.Date;
 
-public class Module {
+public class Module implements Serializable, Parcelable{
 
     @SerializedName("blocked")
     @Expose
@@ -67,6 +71,9 @@ public class Module {
     @SerializedName("voted")
     @Expose
     private boolean voted;
+    @SerializedName("favorite")
+    @Expose
+    private boolean favorite;
 
     /**
      * 
@@ -410,4 +417,60 @@ public class Module {
         this.voted = voted;
     }
 
+    /**
+     *
+     * @return
+     * The favorite
+     */
+    public boolean isFavorite(){return favorite;}
+
+    /**
+     *
+     * @param favorite
+     *  the favorite
+     */
+    public void setFavorite(boolean favorite){ this.favorite = favorite; }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(content);
+        dest.writeString(name);
+        dest.writeString(examType);
+        dest.writeInt(participants);
+        dest.writeString(end);
+        dest.writeString(start);
+        dest.writeString(teacher);
+    }
+    protected Module(Parcel in){
+        content = in.readString();
+        name = in.readString();
+        examType = in.readString();
+        end = in.readString();
+        start = in.readString();
+        teacher = in.readString();
+        participants = in.readInt();
+
+    }
+    public Module() {
+
+    }
+
+    public static final Creator<Module> CREATOR = new Creator<Module>() {
+        @Override
+        public Module createFromParcel(Parcel in) {
+            return new Module(in);
+        }
+
+        @Override
+        public Module[] newArray(int size) {
+            return new Module[0];
+        }
+
+
+    };
 }
