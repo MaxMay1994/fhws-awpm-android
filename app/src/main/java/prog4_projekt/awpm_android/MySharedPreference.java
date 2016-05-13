@@ -9,13 +9,13 @@ import android.util.Log;
 public class MySharedPreference {
 
     public static final String tokenValue = "Token";
-    public static String isLoged;
+    public static boolean isLoged = false;
 
 
 
-    public static String is401 ;
-    public static String is500 ;
-    public static String isFailed;
+    public static String is401 = "false";
+    public static String is500 = "false";
+    public static String isFailed= "false";
 
 
 
@@ -35,31 +35,31 @@ public class MySharedPreference {
     public static void saveBooleanIsLoged(SharedPreferences pref, boolean status){
 
         SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean(isLoged, status);
+        editor.putBoolean("isLoged", status);
 
         editor.commit();
 
     }
-    public static void saveBooleanIs401(SharedPreferences pref, boolean status){
+    public static void saveBooleanIs401(SharedPreferences pref, String status){
 
         SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean(String.valueOf(is401), status);
+        editor.putString(is401, status);
 
         editor.commit();
 
     }
-    public static void saveBooleanIs500(SharedPreferences pref, boolean status){
+    public static void saveBooleanIs500(SharedPreferences pref, String status){
 
         SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean(String.valueOf(is500), status);
+        editor.putString(is500, status);
 
         editor.commit();
 
     }
-    public static void saveBooleanIsFailed(SharedPreferences pref, boolean status){
+    public static void saveBooleanIsFailed(SharedPreferences pref, String status){
 
         SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean(String.valueOf(isFailed), status);
+        editor.putString(isFailed, status);
 
         editor.commit();
 
@@ -69,27 +69,24 @@ public class MySharedPreference {
        return pref.getString(tokenValue, null);
     }
     public static boolean getBooleanIsLoged(SharedPreferences pref){
-        boolean status;
 
-        status = pref.getBoolean(isLoged, false);
-        return status;
+        return pref.getBoolean("isLoged", false);
+
     }
-    public static boolean getBooleanIs401(SharedPreferences pref){
-        boolean status;
+    public static String getBooleanIs401(SharedPreferences pref){
 
-        status = pref.getBoolean(is401, false);
-        return status;
+        return pref.getString(is401, "false");
     }
     public static boolean getBooleanIs500(SharedPreferences pref){
         boolean status;
 
-        status = pref.getBoolean(is500, false);
+        status = Boolean.parseBoolean(pref.getString(is500, "false"));
         return status;
     }
     public static boolean getBooleanIsFailed(SharedPreferences pref){
         boolean status;
 
-        status = pref.getBoolean(isFailed, false);
+        status = Boolean.parseBoolean(pref.getString(isFailed, "false"));
         return status;
     }
 }

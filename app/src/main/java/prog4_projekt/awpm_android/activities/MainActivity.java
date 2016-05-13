@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -36,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setupWithViewPager(viewPager);
+        Log.i("0012", "401 "+MySharedPreference.getBooleanIs401(sharedPref));
+        Log.i("0012", "500 "+MySharedPreference.getBooleanIs500(sharedPref));
+        Log.i("0012", "failed "+MySharedPreference.getBooleanIsFailed(sharedPref));
+        Log.i("0012", "isLoged "+MySharedPreference.getBooleanIsLoged(sharedPref));
+
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -63,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                LoginActivity.userLogout(sharedPref, getSupportFragmentManager());
                 invalidateOptionsMenu();
             }
-            if( MySharedPreference.getBooleanIsLoged(sharedPref) == false && MySharedPreference.getStringToken(sharedPref) ==null){
+            if( MySharedPreference.getBooleanIsLoged(sharedPref) == false){
                 final FragmentLoginDialog dialog = new FragmentLoginDialog();
                 dialog.show(getSupportFragmentManager(), "log");
                 invalidateOptionsMenu();
@@ -74,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu){
         menu.clear();
-        if(MySharedPreference.getBooleanIsLoged(sharedPref) == true){
+        if(String.valueOf(MySharedPreference.getBooleanIsLoged(sharedPref)).equals("true")){
             menu.add(0,R.id.action_login,0,"Logout");
         }
-        if(MySharedPreference.getBooleanIsLoged(sharedPref) == false){
+        if(String.valueOf(MySharedPreference.getBooleanIsLoged(sharedPref)).equals("false")){
             menu.add(0,R.id.action_login,0,"Login");
         }
         return super.onPrepareOptionsMenu(menu);

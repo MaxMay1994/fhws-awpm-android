@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,8 @@ public class FragmentWarningDialog extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.dialog_warning, null);
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String con = String.valueOf(getContext());
+        Log.i("003", "context bei aufruf = "+con);
 
         if (String.valueOf(getContext()).startsWith("prog4_projekt.awpm_android.activities.LoginActivity")) {
             if(LoginActivity.stringKNummer.isEmpty() && LoginActivity.stringPwd.isEmpty()) {
@@ -45,35 +48,42 @@ public class FragmentWarningDialog extends DialogFragment {
                 missingInputPwdWarning();
                 return view;
             }
-
-        }
-        if (String.valueOf(getContext()).startsWith("prog4_projekt.awpm_android.fragmente.FragmentLoginDialog")) {
-            if(LoginActivity.stringKNummer.isEmpty() && LoginActivity.stringPwd.isEmpty()) {
-                missingInputBothWarning();
-                return view;
-            }
-            if(LoginActivity.stringKNummer.isEmpty() && !LoginActivity.stringPwd.isEmpty()) {
-                missingInputKNummerWarning();
-                return view;
-            }
-            if(!LoginActivity.stringKNummer.isEmpty() && LoginActivity.stringPwd.isEmpty()) {
-                missingInputPwdWarning();
-                return view;
-            }
-        }
-
-            if(MySharedPreference.getBooleanIs401(sharedPref)){
+            if(MySharedPreference.getBooleanIs401(sharedPref).equals("true")){
                 unauthorizedLogin();
                 return view;
             }
-            if(MySharedPreference.getBooleanIs401(sharedPref)){
+            if(MySharedPreference.getBooleanIs500(sharedPref)){
                 serverWarning();
                 return view;
 
-            }if(MySharedPreference.getBooleanIs401(sharedPref)){
+            }if(MySharedPreference.getBooleanIsFailed(sharedPref)){
                 connectionFailed();
                 return view;
             }
+
+        }
+        if (String.valueOf(getContext()).startsWith("prog4_projekt.awpm_android.activities.MainActivity")) {
+            if(FragmentLoginDialog.stringKNummer.isEmpty() && FragmentLoginDialog.stringPwd.isEmpty()) {
+                missingInputBothWarning();
+                Log.i("003", "");
+
+                return view;
+            }
+            if(FragmentLoginDialog.stringKNummer.isEmpty() && !FragmentLoginDialog.stringPwd.isEmpty()) {
+                missingInputKNummerWarning();
+                Log.i("003", "missingInput");
+
+                return view;
+            }
+            if(!FragmentLoginDialog.stringKNummer.isEmpty() && FragmentLoginDialog.stringPwd.isEmpty()) {
+                missingInputPwdWarning();
+                Log.i("003", "missingInputPwd");
+
+                return view;
+            }
+        }
+
+
             return view;
     }
     @Override
