@@ -13,7 +13,7 @@ public class ServiceAdapter {
 
     private ServiceAdapter(){
         retrofit = new Retrofit.Builder()
-                .baseUrl("https://awpm.kraus.xyz/")
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         awpmApi = retrofit.create(AwpmApi.class);
@@ -26,6 +26,7 @@ public class ServiceAdapter {
         }
         return awpmApi;
     }
+
     public static LoginInterface getLoginService(){
         if(serviceAdapter == null) {
             serviceAdapter = new ServiceAdapter();
