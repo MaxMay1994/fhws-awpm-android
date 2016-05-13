@@ -18,6 +18,8 @@ import android.widget.EditText;
 
 
 import java.io.IOException;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import prog4_projekt.awpm_android.LoginInterface;
 import prog4_projekt.awpm_android.MySharedPreference;
@@ -63,82 +65,103 @@ public class LoginActivity extends AppCompatActivity {
                     EditText inputPwd = (EditText) findViewById(R.id.password);
                     Editable valuePwd = inputPwd.getText();
                     stringPwd = valuePwd.toString();
-                    if((stringKNummer.isEmpty() || stringPwd.isEmpty())|| stringKNummer.isEmpty() && stringPwd.isEmpty()){
-                        FragmentWarningDialog dialog = new FragmentWarningDialog();
-                        dialog.show(getSupportFragmentManager(), "log");
-                    }
-                    else {
+
+                    if(!stringKNummer.isEmpty() && !stringPwd.isEmpty()) {
+
                         try {
                             firstUse(stringKNummer, stringPwd, sharedPref, getSupportFragmentManager());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    }
-                    if(MySharedPreference.getBooleanIs401(sharedPref) || MySharedPreference.getBooleanIs500(sharedPref) || MySharedPreference.getBooleanIsFailed(sharedPref)) {
+
+
+                        if(MySharedPreference.getBooleanIs401(sharedPref).equals("true") || MySharedPreference.getBooleanIs500(sharedPref) || MySharedPreference.getBooleanIsFailed(sharedPref)){
                             FragmentWarningDialog dialog = new FragmentWarningDialog();
                             dialog.show(getSupportFragmentManager(), "log");
                         }
-                     else {
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
+                        else{
+                            Log.i("0010", "token "+MySharedPreference.getStringToken(sharedPref));
+
+                            Log.i("0010", "isloged "+String.valueOf(MySharedPreference.getBooleanIsLoged(sharedPref)));
+
+                            Log.i("0010", "401 "+String.valueOf(MySharedPreference.getBooleanIs401(sharedPref)));
+                            Log.i("0010", "500 "+String.valueOf(MySharedPreference.getBooleanIs500(sharedPref)));
+                            Log.i("0010", "failed "+String.valueOf(MySharedPreference.getBooleanIsFailed(sharedPref)));
+
+
+
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                    if(stringKNummer.isEmpty() || stringPwd.isEmpty()){
+                        FragmentWarningDialog dialog = new FragmentWarningDialog();
+                        dialog.show(getSupportFragmentManager(), "log");
                     }
                 }
             }
         });
     }
     public static void firstUse(String kNummer, String pwd, final SharedPreferences sharedPref, final FragmentManager manager) throws IOException {
-            getLoginCall(makeBase64Codierung(makeSendData(kNummer, pwd))).enqueue(new Callback<Login>() {
+
+
+        getLoginCall(makeBase64Codierung(makeSendData(kNummer, pwd))).enqueue(new Callback<Login>() {
                 @Override
                 public void onResponse(Call<Login> call, Response<Login> response) {
                     if (response.code() == 200) {
                         loginObject = response.body();
                         MySharedPreference.saveStringToken(sharedPref, loginObject.getToken());
                         MySharedPreference.saveBooleanIsLoged(sharedPref, true);
-                        MySharedPreference.saveBooleanIs401(sharedPref, false);
-                        MySharedPreference.saveBooleanIs500(sharedPref, false);
-                        MySharedPreference.saveBooleanIsFailed(sharedPref, false);
+                        MySharedPreference.saveBooleanIs401(sharedPref, "false");
+                        MySharedPreference.saveBooleanIs500(sharedPref, "false");
+                        MySharedPreference.saveBooleanIsFailed(sharedPref, "false");
 
-                        Log.i("001", response.message() + " " + response.code());
+                        Log.i("101", response.message() + " " + response.code());
                     }
                     if (response.code() == 401) {
-                        Log.i("001", response.message() + " " + response.code());
-                        MySharedPreference.saveBooleanIs401(sharedPref, true);
+                        Log.i("101", response.message() + " " + response.code());
+                        MySharedPreference.saveBooleanIs401(sharedPref, "true");
                     }
                     if (response.code() == 500) {
-                        MySharedPreference.saveBooleanIs500(sharedPref, true);
-                        Log.i("001", response.message() + " " + response.code());
+                        MySharedPreference.saveBooleanIs500(sharedPref, "true");
+                        Log.i("101", response.message() + " " + response.code());
                     }
                 }
                 @Override
                 public void onFailure(Call<Login> call, Throwable t) {
-                    Log.i("001", "login fail " + t.getMessage());
-                    MySharedPreference.saveBooleanIsFailed(sharedPref,true);
+                    Log.i("101", "login fail " + t.getMessage());
+
+                    MySharedPreference.saveBooleanIsFailed(sharedPref,"true");
+
                 }
             });
+
+
     }
     public static void  userLogout(final SharedPreferences sharedPref, final FragmentManager manager){
         getLogoutCall(makeBase64Codierung(makeTokenSendDataLogout(MySharedPreference.getStringToken(sharedPref)))).enqueue(new Callback<Login>() {
             @Override
             public void onResponse(Call<Login> call, Response<Login> response) {
                 if(response.code() == 204) {
-                    MySharedPreference.saveBooleanIs401(sharedPref,false);
-                    MySharedPreference.saveBooleanIs500(sharedPref,false);
-                    MySharedPreference.saveBooleanIsFailed(sharedPref,false);
+                    MySharedPreference.saveBooleanIs401(sharedPref,"false");
+                    MySharedPreference.saveBooleanIs500(sharedPref,"false");
+                    MySharedPreference.saveBooleanIsFailed(sharedPref,"false");
                     MySharedPreference.saveBooleanIsLoged(sharedPref, false);
+                    MySharedPreference.saveStringToken(sharedPref, null);
                 }
                 if(response.code() == 401){
-                    Log.i("001", response.message()+" "+response.code());
-                    MySharedPreference.saveBooleanIs401(sharedPref,true);
+                    Log.i("0011", response.message()+" "+response.code());
+                    MySharedPreference.saveBooleanIs401(sharedPref,"true");
                 }
                 if(response.code() == 500){
-                    Log.i("001", response.message()+" "+response.code());
-                    MySharedPreference.saveBooleanIs500(sharedPref,true);
+                    Log.i("0011", response.message()+" "+response.code());
+                    MySharedPreference.saveBooleanIs500(sharedPref,"true");
                 }
             }
             @Override
             public void onFailure(Call<Login> call, Throwable t) {
-                MySharedPreference.saveBooleanIsFailed(sharedPref,true);
-                Log.i("001", "logout False"+ t.getMessage());
+                MySharedPreference.saveBooleanIsFailed(sharedPref,"true");
+                Log.i("0011", "logout False"+ t.getMessage());
             }
         });
     }

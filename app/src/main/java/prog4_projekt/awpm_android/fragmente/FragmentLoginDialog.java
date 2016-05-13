@@ -44,7 +44,7 @@ public class FragmentLoginDialog extends DialogFragment {
                     Editable valuePwd = inputPwd.getText();
                     setStringPwd(valuePwd.toString());
 
-                if(!stringKNummer.equals(null) && !stringPwd.equals(null)) {
+                if(!stringKNummer.isEmpty() && !stringPwd.isEmpty()) {
                     try {
                         LoginActivity.firstUse(stringKNummer, stringPwd, sharedPref, getFragmentManager());
                     } catch (IOException e) {
@@ -53,7 +53,7 @@ public class FragmentLoginDialog extends DialogFragment {
 
                     FragmentLoginDialog.this.dismiss();
                 }
-                else{
+                if(stringKNummer.isEmpty() || stringPwd.isEmpty()){
                     FragmentWarningDialog error = new FragmentWarningDialog();
                     error.show(getFragmentManager(), null);
                 }
