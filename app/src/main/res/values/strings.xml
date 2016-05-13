@@ -34,6 +34,10 @@
     <string name="participants">\n\nStimmen\u0020/\u0020max. Teilnehmerzahl\u0020</string>
     <string name="start">\n\nStart der Veranstaltung:\u0020</string>
     <string name="end">\nEnde der Veranstaltung:\u0020</string>
+    <string name="favorite">"%1$s wurde als \'Favorit' markiert!"</string>
+    <string name="nonFavorite">"%1$s wurde als \'kein Favorit' markiert!"</string>
+    <string name="voted">"%1$s wurde als \'gewählt' markiert!"</string>
+    <string name="notvoted">"%1$s wurde als \'nicht gewählt' markiert!"</string>
 
 
 

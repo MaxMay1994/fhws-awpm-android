@@ -33,6 +33,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
     Switch wahlSwitch;
     boolean moduleVoted;
     boolean moduleFavorite;
+    String favMarked, notFavMarked, voteMarked, notVoteMarked;
     Module passedModule;
 
 
@@ -78,17 +79,22 @@ public class CourseDetailsActivity extends AppCompatActivity {
             information.setText(text);
             information.setMovementMethod(new ScrollingMovementMethod());
         }*/
+        Resources res = getResources();
+        favMarked = String.format(res.getString(R.string.favorite), name);
+        notFavMarked = String.format(res.getString(R.string.nonFavorite), name);
+        voteMarked = String.format(res.getString(R.string.voted), name);
+        notVoteMarked = String.format(res.getString(R.string.notvoted), name);
 
         mfb.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
             @Override
             public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
                 if(favorite){
-                    moduleVoted = true;
-                    Toast.makeText(getApplicationContext(), "AWPM als 'Favorit' markiert", Toast.LENGTH_LONG).show();
+                    moduleFavorite = true;
+                    Toast.makeText(getApplicationContext(), favMarked, Toast.LENGTH_LONG).show();
                 }
                 else{
-                    moduleVoted = false;
-                    Toast.makeText(getApplicationContext(), "AWPM nicht als 'Favorit' markiert", Toast.LENGTH_LONG).show();
+                    moduleFavorite = false;
+                    Toast.makeText(getApplicationContext(), notFavMarked, Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -97,17 +103,15 @@ public class CourseDetailsActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    moduleFavorite = true;
-                    Toast.makeText(getApplicationContext(), "AWPM wurde gewählt!", Toast.LENGTH_LONG).show();
+                    moduleVoted = true;
+                    Toast.makeText(getApplicationContext(), voteMarked, Toast.LENGTH_LONG).show();
                 }
                 else{
-                    moduleFavorite = false;
-                    Toast.makeText(getApplicationContext(), "AWPM wurde als 'nicht gewählt' markiert!", Toast.LENGTH_LONG).show();
+                    moduleVoted = false;
+                    Toast.makeText(getApplicationContext(), notVoteMarked, Toast.LENGTH_LONG).show();
                 }
             }
         });
-
-
     }
 
 }
