@@ -1,8 +1,10 @@
 package prog4_projekt.awpm_android.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,22 +21,26 @@ import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 
 import org.w3c.dom.Text;
 
+import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
 
 import prog4_projekt.awpm_android.RestApi.Module.Module;
 import prog4_projekt.awpm_android.adapter.ModuleViewHolder;
 import prog4_projekt.awpm_android.fragmente.FragmentCourses;
+import prog4_projekt.awpm_android.fragmente.FragmentLoginDialog;
 
 
 public class CourseDetailsActivity extends AppCompatActivity {
-    TextView information;
-    TextView toolTitle;
+    TextView information, info_content, toolTitle, dozent_header, dozent_content, location_header,
+            location_content, startDate_header, startDate_content, endDate_header, endDate_content,
+            examType_header, examType_content, examNumber_header, examNumber_content, participants_header, participants_content;
     MaterialFavoriteButton mfb;
     Switch wahlSwitch;
-    boolean moduleVoted;
-    boolean moduleFavorite;
+    boolean moduleVoted, moduleFavorite;
     String favMarked, notFavMarked, voteMarked, notVoteMarked;
-    Module passedModule;
+    SharedPreferences sharedPreferences;
+    //Module passedModule;
+    FragmentLoginDialog dialog;
 
 
     @Override
@@ -45,6 +51,22 @@ public class CourseDetailsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
         information = (TextView) findViewById(R.id.Course_details);
+        info_content = (TextView) findViewById(R.id.course_content);
+        dozent_header = (TextView) findViewById(R.id.dozent_header);
+        dozent_content = (TextView) findViewById(R.id.dozent_content);
+        location_header = (TextView) findViewById(R.id.location_header);
+        location_content = (TextView) findViewById(R.id.location_content);
+        startDate_header = (TextView) findViewById(R.id.startDate_header);
+        startDate_content = (TextView) findViewById(R.id.startDate_content);
+        endDate_header = (TextView) findViewById(R.id.endDate_header);
+        endDate_content = (TextView) findViewById(R.id.endDate_content);
+        examType_header = (TextView) findViewById(R.id.examType_header);
+        examType_content = (TextView) findViewById(R.id.examType_content);
+        examNumber_header = (TextView) findViewById(R.id.examNumber_header);
+        examNumber_content = (TextView) findViewById(R.id.examNumber_content);
+        participants_header = (TextView) findViewById(R.id.participants_header);
+        participants_content = (TextView) findViewById(R.id.participants_content);
+
         mfb = (MaterialFavoriteButton) findViewById(R.id.view);
         wahlSwitch = (Switch) findViewById(R.id.wahlswitch);
         Intent passedObject = getIntent();
@@ -55,6 +77,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
         String teacher = extras.getString("Teacher");
         String start = extras.getString("start");
         String end = extras.getString("end");
+        String city = extras.getString("city");
+        String location = extras.getString("location");
         String room = extras.getString("room");
         int participants = extras.getInt("participants");
         String examNumber = extras.getString("examnumber");
@@ -63,52 +87,69 @@ public class CourseDetailsActivity extends AppCompatActivity {
         //passedModule = passedObject.getParcelableExtra("Object");
 
         if(extras!= null){
-            toolTitle.setText(name);
-            information.setText(getString(R.string.description)+ content  + getString(R.string.teacher)
-            + teacher + getString(R.string.examType) + examType + getString(R.string.start) + start
-                    + getString(R.string.end) + end + getString(R.string.participants) + participants //+numberVoted
-            + getString(R.string.location) + room + getString(R.string.examnumber) + examNumber);
-            information.setMovementMethod(new ScrollingMovementMethod());
 
+            toolTitle.setText(name);
+            information.setText(getString(R.string.description));
+            info_content.setText(content); //+numberVoted);
+            dozent_header.setText(getString(R.string.teacher));
+            dozent_content.setText(teacher);
+            location_header.setText(getString(R.string.location));
+            location_content.setText(city+", "+location+", "+room);
+            startDate_header.setText(getString(R.string.start));
+            startDate_content.setText(start);
+            endDate_header.setText(getString(R.string.end));
+            endDate_content.setText(end);
+            examType_header.setText(getString(R.string.examType));
+            examType_content.setText(examType);
+            examNumber_header.setText(getString(R.string.examnumber));
+            examNumber_content.setText(examNumber);
+            participants_header.setText(getString(R.string.participants));
+            participants_content.setText("0 /" + String.valueOf(participants));
         }
-       /* Bundle extras = passedInf.getExtras();
-        if(extras!=null){
-            String title = extras.getString("Titel");
-            String text = extras.getString("Informationen");
-            toolTitle.setText(title);
-            information.setText(text);
-            information.setMovementMethod(new ScrollingMovementMethod());
-        }*/
+
         Resources res = getResources();
         favMarked = String.format(res.getString(R.string.favorite), name);
         notFavMarked = String.format(res.getString(R.string.nonFavorite), name);
         voteMarked = String.format(res.getString(R.string.voted), name);
         notVoteMarked = String.format(res.getString(R.string.notvoted), name);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        mfb.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
-            @Override
-            public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
-                if(favorite){
-                    moduleFavorite = true;
-                    Toast.makeText(getApplicationContext(), favMarked, Toast.LENGTH_LONG).show();
+
+
+            mfb.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
+                @Override
+                public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
+                    if(MySharedPreference.getBooleanIsLoged(sharedPreferences)) {
+
+                         if (favorite) {
+                            moduleFavorite = true;
+                            Toast.makeText(getApplicationContext(), favMarked, Toast.LENGTH_SHORT).show();
+                        } else {
+                            moduleFavorite = false;
+                            Toast.makeText(getApplicationContext(), notFavMarked, Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                         dialog = new FragmentLoginDialog();
+                         dialog.show(getSupportFragmentManager(), "log");
+                    }
                 }
-                else{
-                    moduleFavorite = false;
-                    Toast.makeText(getApplicationContext(), notFavMarked, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+            });
+
 
         wahlSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    moduleVoted = true;
-                    Toast.makeText(getApplicationContext(), voteMarked, Toast.LENGTH_LONG).show();
-                }
-                else{
-                    moduleVoted = false;
-                    Toast.makeText(getApplicationContext(), notVoteMarked, Toast.LENGTH_LONG).show();
+                if(MySharedPreference.getBooleanIsLoged(sharedPreferences)) {
+                    if (isChecked) {
+                        moduleVoted = true;
+                        Toast.makeText(getApplicationContext(), voteMarked, Toast.LENGTH_SHORT).show();
+                    } else {
+                        moduleVoted = false;
+                        Toast.makeText(getApplicationContext(), notVoteMarked, Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    dialog = new FragmentLoginDialog();
+                    dialog.show(getSupportFragmentManager(), "log");
                 }
             }
         });

@@ -39,7 +39,7 @@ public class FragmentCourses extends Fragment{
     RecyclerView rv;
     public List<Module> modulesList;
     Call<List<Module>> call;
-    String content, name, lecturer, start, end, examType, room, examNumber;
+    String content, name, lecturer, start, end, examType, room, examNumber, city, location;
     int participants;
     boolean voted, favorite;
     Button filter;
@@ -70,7 +70,7 @@ public class FragmentCourses extends Fragment{
         });
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         call = ServiceAdapter.getService().getAllModules();
         call.enqueue(new Callback<List<Module>>() {
             @Override
@@ -92,8 +92,7 @@ public class FragmentCourses extends Fragment{
 
                         Intent intent = new Intent(view.getContext(), CourseDetailsActivity.class);
                         Module moduleToPass = modulesList.get(position);
-                        //intent.putExtra("Object", (Parcelable) moduleToPass);
-                        //Log.i("Teacher", modulesList.get(position).getTeacher());
+
                         Bundle extras = new Bundle();
                         name = moduleToPass.getName();
                         content = moduleToPass.getContent();
@@ -104,6 +103,8 @@ public class FragmentCourses extends Fragment{
                         participants = moduleToPass.getParticipants();
                         favorite = moduleToPass.isFavorite();
                         voted = moduleToPass.isVoted();
+                        city = moduleToPass.getRoom().getBuilding().getLocation().getName();
+                        location = moduleToPass.getRoom().getBuilding().getName();
                         room = moduleToPass.getRoom().getName();
                         examNumber = moduleToPass.getExamNumber();
                         extras.putString("name", name);
@@ -115,6 +116,8 @@ public class FragmentCourses extends Fragment{
                         extras.putInt("participants", participants);
                         extras.putBoolean("favorite", favorite);
                         extras.putBoolean("voted", voted);
+                        extras.putString("city", city);
+                        extras.putString("location", location);
                         extras.putString("room", room);
                         extras.putString("examnumber", examNumber);
                         intent.putExtras(extras);

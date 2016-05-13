@@ -23,7 +23,7 @@ tools:showIn="@layout/activity_main">
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Filter"
+        android:text="Module Filtern"
         android:id="@+id/filter" />
 
 
@@ -33,9 +33,6 @@ tools:showIn="@layout/activity_main">
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/filter">
-
-
-
     </android.support.v7.widget.RecyclerView>
     </RelativeLayout>
 
