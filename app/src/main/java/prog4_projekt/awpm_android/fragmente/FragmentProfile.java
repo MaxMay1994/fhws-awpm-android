@@ -110,42 +110,56 @@ public class FragmentProfile extends Fragment {
                     public void onItemClick(View view, int position) {
 
 
-                        Intent intent = new Intent(view.getContext(), CourseDetailsActivity.class);
+                        sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+                        String authorization = "Basic " + Base64.encodeToString((MySharedPreference.getStringToken(sharedPref) + ":").getBytes(), Base64.NO_WRAP);
+
+                        Call<Module> call2 = ServiceAdapter.getService().getAuthoristModule(votedList.get(position).getId(),authorization);
+                        call2.enqueue(new Callback<Module>() {
+                            @Override
+                            public void onResponse(Call<Module> call, Response<Module> response) {
+
+                                Intent intent = new Intent(FragmentProfile.this.getContext(), CourseDetailsActivity.class);
+                                Module moduleToPass = response.body();
+                                Bundle extras = new Bundle();
+                                name = moduleToPass.getName();
+                                content = moduleToPass.getContent();
+                                examType = moduleToPass.getExamType();
+                                lecturer = moduleToPass.getTeacher();
+                                start = moduleToPass.getStart();
+                                end = moduleToPass.getEnd();
+                                participants = moduleToPass.getParticipants();
+                                favorite = moduleToPass.isFavorite();
+                                voted = moduleToPass.isVoted();
+                                city = moduleToPass.getRoom().getBuilding().getLocation().getName();
+                                location = moduleToPass.getRoom().getBuilding().getName();
+                                room = moduleToPass.getRoom().getName();
+                                examNumber = moduleToPass.getExamNumber();
+                                id = moduleToPass.getId();
+                                extras.putString("name", name);
+                                extras.putString("content", content);
+                                extras.putString("examtype", examType);
+                                extras.putString("Teacher", lecturer);
+                                extras.putString("start", start);
+                                extras.putString("end", end);
+                                extras.putInt("participants", participants);
+                                extras.putBoolean("favorite", favorite);
+                                extras.putBoolean("voted", voted);
+                                extras.putString("city", city);
+                                extras.putString("location", location);
+                                extras.putString("room", room);
+                                extras.putString("examnumber", examNumber);
+                                extras.putInt("id", id);
+                                intent.putExtras(extras);
+                                FragmentProfile.this.getContext().startActivity(intent);
 
 
-                        Module moduleToPass = votedList.get(position);
+                            }
 
-                        Bundle extras = new Bundle();
-                        name = moduleToPass.getName();
-                        content = moduleToPass.getContent();
-                        examType = moduleToPass.getExamType();
-                        lecturer = moduleToPass.getTeacher();
-                        start = moduleToPass.getStart();
-                        end = moduleToPass.getEnd();
-                        participants = moduleToPass.getParticipants();
-                        favorite = moduleToPass.isFavorite();
-                        voted = moduleToPass.isVoted();
-                        city = moduleToPass.getRoom().getBuilding().getLocation().getName();
-                        location = moduleToPass.getRoom().getBuilding().getName();
-                        room = moduleToPass.getRoom().getName();
-                        examNumber = moduleToPass.getExamNumber();
-                        id = moduleToPass.getId();
-                        extras.putString("name", name);
-                        extras.putString("content", content);
-                        extras.putString("examtype", examType);
-                        extras.putString("Teacher", lecturer);
-                        extras.putString("start", start);
-                        extras.putString("end", end);
-                        extras.putInt("participants", participants);
-                        extras.putBoolean("favorite", favorite);
-                        extras.putBoolean("voted", voted);
-                        extras.putString("city", city);
-                        extras.putString("location", location);
-                        extras.putString("room", room);
-                        extras.putString("examnumber", examNumber);
-                        extras.putInt("id", id);
-                        intent.putExtras(extras);
-                        view.getContext().startActivity(intent);
+                            @Override
+                            public void onFailure(Call<Module> call, Throwable t) {
+
+                            }
+                        });
                     }
                 })
         );
