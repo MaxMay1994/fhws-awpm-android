@@ -126,57 +126,61 @@ public class CourseDetailsActivity extends AppCompatActivity {
         notVoteMarked = String.format(res.getString(R.string.notvoted), name);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+        if(moduleVoted)
+            wahlSwitch.setChecked(true);
 
 
         authorization = "Basic " + Base64.encodeToString((MySharedPreference.getStringToken(sharedPreferences)+":").getBytes(), Base64.NO_WRAP);
 
-            mfb.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
-                @Override
-                public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
-                    if(MySharedPreference.getBooleanIsLoged(sharedPreferences)) {
+        mfb.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
+            @Override
+            public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
+                if (MySharedPreference.getBooleanIsLoged(sharedPreferences)) {
 
-                         if (!moduleFavorite) {
-                             if (favorite) {
+                    if (!moduleFavorite) {
+                        if (favorite) {
 
-                                 callFavorite = ServiceAdapter.getService().patchFavored(id, true, authorization);
-                                 callFavorite.enqueue(new Callback<Module>() {
-                                     @Override
-                                     public void onResponse(Call<Module> call, Response<Module> response) {
-                                         Log.i("Test", response.toString());
-                                     }
+                            callFavorite = ServiceAdapter.getService().patchFavored(id, true, authorization);
+                            callFavorite.enqueue(new Callback<Module>() {
+                                @Override
+                                public void onResponse(Call<Module> call, Response<Module> response) {
+                                    Log.i("Test", response.toString());
+                                }
 
-                                     @Override
-                                     public void onFailure(Call<Module> call, Throwable t) {
-                                         Log.i("Test", t.toString());
-                                     }
-                                 });
-                                 Toast.makeText(getApplicationContext(), favMarked, Toast.LENGTH_SHORT).show();
-                                 mfb.setFavorite(true);
-                             }
-
-                        } else {
-                            moduleFavorite = false;
-                             callFavorite = ServiceAdapter.getService().patchFavored(id, false, authorization);
-                             callFavorite.enqueue(new Callback<Module>() {
-                                 @Override
-                                 public void onResponse(Call<Module> call, Response<Module> response) {
-                                     Log.i("Test", response.toString());
-                                 }
-
-                                 @Override
-                                 public void onFailure(Call<Module> call, Throwable t) {
-                                     Log.i("Test", t.toString());
-                                 }
-                             });
-                            Toast.makeText(getApplicationContext(), notFavMarked, Toast.LENGTH_SHORT).show();
-                             mfb.setFavorite(false);
+                                @Override
+                                public void onFailure(Call<Module> call, Throwable t) {
+                                    Log.i("Test", t.toString());
+                                }
+                            });
+                            Toast.makeText(getApplicationContext(), favMarked, Toast.LENGTH_SHORT).show();
+                            mfb.setFavorite(true);
                         }
+
                     } else {
-                         dialog = new FragmentLoginDialog();
-                         dialog.show(getSupportFragmentManager(), "log");
+                        moduleFavorite = false;
+                        callFavorite = ServiceAdapter.getService().patchFavored(id, false, authorization);
+                        callFavorite.enqueue(new Callback<Module>() {
+                            @Override
+                            public void onResponse(Call<Module> call, Response<Module> response) {
+                                Log.i("Test", response.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Call<Module> call, Throwable t) {
+                                Log.i("Test", t.toString());
+                            }
+                        });
+                        Toast.makeText(getApplicationContext(), notFavMarked, Toast.LENGTH_SHORT).show();
+                        mfb.setFavorite(false);
+                    }
+                } else {
+                    dialog = new FragmentLoginDialog();
+                    dialog.show(getSupportFragmentManager(), "log");
                     }
                 }
             });
+
+
 
 
         wahlSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

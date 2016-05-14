@@ -28,6 +28,9 @@ public interface AwpmApi {
     @GET("api/modules/{id}")
     Call<Module> getModule(@Path("id") int id);
 
+    @GET("api/modules/{id}")
+    Call<Module> getAuthoristModule(@Path("id") int id,@Header("Authorization") String authorization);
+
     //Alle Locations und eine Location
     @GET("api/locations")
     Call<List<Building>> getAllLocations();
