@@ -71,7 +71,7 @@ public class FragmentCourses extends Fragment{
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        call = ServiceAdapter.getService().getAllModules();
+        call = ServiceAdapter.getService().getAllModules(1,10);
         call.enqueue(new Callback<List<Module>>() {
             @Override
             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {

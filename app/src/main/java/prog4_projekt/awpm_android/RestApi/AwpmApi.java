@@ -23,7 +23,7 @@ public interface AwpmApi {
 
     //Alle Module und ein ein Modul
     @GET("api/modules")
-    Call<List<Module>> getAllModules(); // für pagination @Path("page") int page
+    Call<List<Module>> getAllModules(@Query("page")int page, @Query("per_page") int perPage); // für pagination @Path("page") int page
 
     @GET("api/modules/{id}")
     Call<Module> getModule(@Path("id") int id);

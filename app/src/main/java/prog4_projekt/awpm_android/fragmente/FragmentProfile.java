@@ -52,34 +52,42 @@ public class FragmentProfile extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String token = "Basic " + Base64.encodeToString((MySharedPreference.getStringToken(sharedPref) + ":").getBytes(), Base64.NO_WRAP);
+        String authorization = "Basic " + Base64.encodeToString((MySharedPreference.getStringToken(sharedPref) + ":").getBytes(), Base64.NO_WRAP);
 
         recyclerViewC = (RecyclerView) view.findViewById(R.id.recyclerViewC);
         recyclerViewC.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        call = ServiceAdapter.getService().getVotedModules(true, token);
+        call = ServiceAdapter.getService().getVotedModules(true, authorization);
         call.enqueue(new Callback<List<Module>>() {
+
             @Override
             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
+
                 if(response.code() == 200) {
+
                     votedList = response.body();
                     adapter = new RecyclerViewAdapterBallot(getActivity(), votedList);
                     recyclerViewC.setAdapter(adapter);
 
                     if (response.body().size() == 0) {
+
                         nullVoted.setVisibility(View.VISIBLE);
                         sad.setVisibility(View.VISIBLE);
+
                     }
 
                     ItemTouchHelper.Callback callback =
                             new SimpleItemTouchHelperCallback(adapter);
                     ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
                     touchHelper.attachToRecyclerView(recyclerViewC);
+
                 }
                 if(response.code() == 401){
+
                     nullVoted.setText("Bitte Logen Sie sich ein");
                     nullVoted.setVisibility(View.VISIBLE);
                     sad.setVisibility(View.VISIBLE);
+
                 }
             }
 
