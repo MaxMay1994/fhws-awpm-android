@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Base64;
 import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -24,10 +25,15 @@ import org.w3c.dom.Text;
 import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
 
+import prog4_projekt.awpm_android.RestApi.AwpmApi;
 import prog4_projekt.awpm_android.RestApi.Module.Module;
+import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
 import prog4_projekt.awpm_android.adapter.ModuleViewHolder;
 import prog4_projekt.awpm_android.fragmente.FragmentCourses;
 import prog4_projekt.awpm_android.fragmente.FragmentLoginDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class CourseDetailsActivity extends AppCompatActivity {
@@ -39,7 +45,13 @@ public class CourseDetailsActivity extends AppCompatActivity {
     boolean moduleVoted, moduleFavorite;
     String favMarked, notFavMarked, voteMarked, notVoteMarked;
     SharedPreferences sharedPreferences;
-    //Module passedModule;
+    Module passedModule;
+    Call<Module> callVoted;
+    Call<Module> callFavorite;
+    int id;
+    String authorization;
+
+
     FragmentLoginDialog dialog;
 
 
@@ -66,7 +78,6 @@ public class CourseDetailsActivity extends AppCompatActivity {
         examNumber_content = (TextView) findViewById(R.id.examNumber_content);
         participants_header = (TextView) findViewById(R.id.participants_header);
         participants_content = (TextView) findViewById(R.id.participants_content);
-
         mfb = (MaterialFavoriteButton) findViewById(R.id.view);
         wahlSwitch = (Switch) findViewById(R.id.wahlswitch);
         Intent passedObject = getIntent();
@@ -82,6 +93,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         String room = extras.getString("room");
         int participants = extras.getInt("participants");
         String examNumber = extras.getString("examnumber");
+        id = extras.getInt("id");
         moduleVoted = extras.getBoolean("voted");
         moduleFavorite = extras.getBoolean("favorite");
         //passedModule = passedObject.getParcelableExtra("Object");
@@ -116,17 +128,48 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
 
 
+        authorization = "Basic" + Base64.encodeToString((MySharedPreference.getStringToken(sharedPreferences)+":").getBytes(), Base64.NO_WRAP);
+
             mfb.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
                 @Override
                 public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
                     if(MySharedPreference.getBooleanIsLoged(sharedPreferences)) {
 
-                         if (favorite) {
-                            moduleFavorite = true;
-                            Toast.makeText(getApplicationContext(), favMarked, Toast.LENGTH_SHORT).show();
+                         if (!moduleFavorite) {
+                             if (favorite) {
+
+                                 callFavorite = ServiceAdapter.getService().patchFavored(id, true, authorization);
+                                 callFavorite.enqueue(new Callback<Module>() {
+                                     @Override
+                                     public void onResponse(Call<Module> call, Response<Module> response) {
+                                         Log.i("Test", response.toString());
+                                     }
+
+                                     @Override
+                                     public void onFailure(Call<Module> call, Throwable t) {
+                                         Log.i("Test", t.toString());
+                                     }
+                                 });
+                                 Toast.makeText(getApplicationContext(), favMarked, Toast.LENGTH_SHORT).show();
+                                 mfb.setFavorite(true);
+                             }
+
                         } else {
                             moduleFavorite = false;
+                             callFavorite = ServiceAdapter.getService().patchFavored(id, false, authorization);
+                             callFavorite.enqueue(new Callback<Module>() {
+                                 @Override
+                                 public void onResponse(Call<Module> call, Response<Module> response) {
+                                     Log.i("Test", response.toString());
+                                 }
+
+                                 @Override
+                                 public void onFailure(Call<Module> call, Throwable t) {
+                                     Log.i("Test", t.toString());
+                                 }
+                             });
                             Toast.makeText(getApplicationContext(), notFavMarked, Toast.LENGTH_SHORT).show();
+                             mfb.setFavorite(false);
                         }
                     } else {
                          dialog = new FragmentLoginDialog();
@@ -141,11 +184,37 @@ public class CourseDetailsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(MySharedPreference.getBooleanIsLoged(sharedPreferences)) {
                     if (isChecked) {
-                        moduleVoted = true;
+
+                        callVoted = ServiceAdapter.getService().patchVoted( id, true, authorization);
+                        callVoted.enqueue(new Callback<Module>() {
+                            @Override
+                            public void onResponse(Call call, Response response) {
+                                Log.i("Test", response.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Call call, Throwable t) {
+                                Log.i("Test", t.toString());
+                            }
+                        });
                         Toast.makeText(getApplicationContext(), voteMarked, Toast.LENGTH_SHORT).show();
+                        wahlSwitch.setChecked(true);
                     } else {
                         moduleVoted = false;
+                        callVoted = ServiceAdapter.getService().patchVoted( id, false, authorization);
+                        callVoted.enqueue(new Callback<Module>() {
+                            @Override
+                            public void onResponse(Call call, Response response) {
+                                Log.i("Test", response.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Call call, Throwable t) {
+                                Log.i("Test", t.toString());
+                            }
+                        });
                         Toast.makeText(getApplicationContext(), notVoteMarked, Toast.LENGTH_SHORT).show();
+                        wahlSwitch.setChecked(false);
                     }
                 }else{
                     dialog = new FragmentLoginDialog();
@@ -154,5 +223,4 @@ public class CourseDetailsActivity extends AppCompatActivity {
             }
         });
     }
-
 }

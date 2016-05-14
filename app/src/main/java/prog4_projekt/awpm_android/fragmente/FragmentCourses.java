@@ -40,7 +40,7 @@ public class FragmentCourses extends Fragment{
     public List<Module> modulesList;
     Call<List<Module>> call;
     String content, name, lecturer, start, end, examType, room, examNumber, city, location;
-    int participants;
+    int participants, id;
     boolean voted, favorite;
     Button filter;
 
@@ -107,6 +107,7 @@ public class FragmentCourses extends Fragment{
                         location = moduleToPass.getRoom().getBuilding().getName();
                         room = moduleToPass.getRoom().getName();
                         examNumber = moduleToPass.getExamNumber();
+                        id = moduleToPass.getId();
                         extras.putString("name", name);
                         extras.putString("content", content);
                         extras.putString("examtype", examType);
@@ -120,6 +121,7 @@ public class FragmentCourses extends Fragment{
                         extras.putString("location", location);
                         extras.putString("room", room);
                         extras.putString("examnumber", examNumber);
+                        extras.putInt("id", id);
                         intent.putExtras(extras);
                         view.getContext().startActivity(intent);
                     }
