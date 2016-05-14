@@ -128,7 +128,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
 
 
-        authorization = "Basic" + Base64.encodeToString((MySharedPreference.getStringToken(sharedPreferences)+":").getBytes(), Base64.NO_WRAP);
+        authorization = "Basic " + Base64.encodeToString((MySharedPreference.getStringToken(sharedPreferences)+":").getBytes(), Base64.NO_WRAP);
 
             mfb.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
                 @Override
@@ -185,15 +185,15 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 if(MySharedPreference.getBooleanIsLoged(sharedPreferences)) {
                     if (isChecked) {
 
-                        callVoted = ServiceAdapter.getService().patchVoted( id, true, authorization);
+                        callVoted = ServiceAdapter.getService().patchVoted(id, true, authorization);
                         callVoted.enqueue(new Callback<Module>() {
                             @Override
-                            public void onResponse(Call call, Response response) {
+                            public void onResponse(Call<Module> call, Response<Module> response) {
                                 Log.i("Test", response.toString());
                             }
 
                             @Override
-                            public void onFailure(Call call, Throwable t) {
+                            public void onFailure(Call<Module> call, Throwable t) {
                                 Log.i("Test", t.toString());
                             }
                         });
@@ -204,12 +204,12 @@ public class CourseDetailsActivity extends AppCompatActivity {
                         callVoted = ServiceAdapter.getService().patchVoted( id, false, authorization);
                         callVoted.enqueue(new Callback<Module>() {
                             @Override
-                            public void onResponse(Call call, Response response) {
+                            public void onResponse(Call<Module> call, Response<Module> response) {
                                 Log.i("Test", response.toString());
                             }
 
                             @Override
-                            public void onFailure(Call call, Throwable t) {
+                            public void onFailure(Call<Module> call, Throwable t) {
                                 Log.i("Test", t.toString());
                             }
                         });
