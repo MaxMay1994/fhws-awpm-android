@@ -128,6 +128,9 @@ public class CourseDetailsActivity extends AppCompatActivity {
 
         if(moduleVoted)
             wahlSwitch.setChecked(true);
+        if(moduleFavorite)
+            mfb.setFavorite(true);
+
 
 
         authorization = "Basic " + Base64.encodeToString((MySharedPreference.getStringToken(sharedPreferences)+":").getBytes(), Base64.NO_WRAP);
