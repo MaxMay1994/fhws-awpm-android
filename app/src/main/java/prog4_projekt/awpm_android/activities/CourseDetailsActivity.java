@@ -172,7 +172,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                                 Log.i("FailTest", t.toString());
                             }
                         });
-                        Toast.makeText(getApplicationContext(), favMarked, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), favMarked, Toast.LENGTH_LONG).show();
                     } else {
 
                         callFavorite = ServiceAdapter.getService().patchFavored(id, false, authorization);
@@ -187,7 +187,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                                 Log.i("FailTest", t.toString());
                             }
                         });
-                        Toast.makeText(getApplicationContext(), notFavMarked, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), notFavMarked, Toast.LENGTH_LONG).show();
                     }
                 } else {
                     dialog = new FragmentLoginDialog();
@@ -218,7 +218,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                                 Log.i("FailTest", t.toString());
                             }
                         });
-                        Toast.makeText(getApplicationContext(), voteMarked, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), voteMarked, Toast.LENGTH_LONG).show();
                         Intent voteBack = new Intent(getApplicationContext(), MainActivity.class);
                         int id = 1;
                         voteBack.putExtra("id", id);
@@ -237,7 +237,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                                 Log.i("FailTest", t.toString());
                             }
                         });
-                        Toast.makeText(getApplicationContext(), notVoteMarked, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), notVoteMarked, Toast.LENGTH_LONG).show();
                         Intent voteBack = new Intent(getApplicationContext(), MainActivity.class);
                         int id = 1;
                         voteBack.putExtra("id", id);
