@@ -83,6 +83,7 @@ public class FragmentCourses extends Fragment{
                 modulesList = response.body();
                 adapter = new RecyclerViewAdapter(getActivity(), modulesList);
                 recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
