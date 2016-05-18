@@ -1,5 +1,6 @@
 package prog4_projekt.awpm_android.activities;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
     TabLayout tabLayout;
     public SharedPreferences sharedPref ;
+    Intent getFromDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         ViewPaperAdapterMainActivity viewPaperAdapter = new ViewPaperAdapterMainActivity(getSupportFragmentManager());
         viewPager.setAdapter(viewPaperAdapter);
+        getFromDetails = getIntent();
+        int id = getFromDetails.getIntExtra("id", 0);
+        if(id == 1) {
+            viewPager.setCurrentItem(1);
+        }
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setupWithViewPager(viewPager);

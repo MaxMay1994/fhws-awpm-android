@@ -71,7 +71,7 @@ public class Module implements Serializable, Parcelable{
     @SerializedName("voted")
     @Expose
     private boolean voted;
-    @SerializedName("favorite")
+    @SerializedName("favored")
     @Expose
     private boolean favorite;
 

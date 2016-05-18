@@ -9,6 +9,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="prog4_projekt.awpm_android.activities.FilterActivity">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="AWPF-Liste filtern"
+            android:layout_gravity="left"
+            android:textSize="20dp"
+            android:id="@+id/filtertoolbar_title"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

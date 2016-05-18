@@ -2,14 +2,18 @@ package prog4_projekt.awpm_android.RestApi;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import prog4_projekt.awpm_android.RestApi.Module.Building;
 import prog4_projekt.awpm_android.RestApi.Module.Date;
 import prog4_projekt.awpm_android.RestApi.Module.Module;
 import prog4_projekt.awpm_android.RestApi.Module.Tag;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.PATCH;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -19,10 +23,13 @@ public interface AwpmApi {
 
     //Alle Module und ein ein Modul
     @GET("api/modules")
-    Call<List<Module>> getAllModules(); // für pagination @Path("page") int page
+    Call<List<Module>> getAllModules(@Query("page")int page, @Query("per_page") int perPage); // für pagination @Path("page") int page
 
     @GET("api/modules/{id}")
     Call<Module> getModule(@Path("id") int id);
+
+    @GET("api/modules/{id}")
+    Call<Module> getAuthoristModule(@Path("id") int id,@Header("Authorization") String authorization);
 
     //Alle Locations und eine Location
     @GET("api/locations")
@@ -117,10 +124,10 @@ public interface AwpmApi {
 
     //true: Modul wählen | false: Modul entwählen
     @PATCH("api/modules/{id}")
-    void patchVoted(@Query("voted") boolean voted,@Path("id") int id, @Header("Authorization") String authorization);
+    Call<Module> patchVoted(@Path("id") int id, @Query("voted") boolean voted,  @Header("Authorization") String authorization);
 
     //true: Modul favorisieren | false: Modul entfavorisieren
     @PATCH("api/modules/{id}")
-    void patchFavored(@Query("favored") boolean favored,@Path("id") int id, @Header("Authorization") String authorization);
+    Call<Module> patchFavored(@Path("id") int id, @Query("favored") boolean favored, @Header("Authorization") String authorization);
 
 }
