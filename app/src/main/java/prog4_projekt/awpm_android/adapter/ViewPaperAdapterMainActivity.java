@@ -10,7 +10,7 @@ import prog4_projekt.awpm_android.fragmente.FragmentProfile;
 
 public class ViewPaperAdapterMainActivity extends FragmentPagerAdapter{
 
-    String[] title = {"Infos","Katalog","Wahlzettel"};
+    String[] title = {"Katalog","Wahlzettel","Info`s"};
 
     public ViewPaperAdapterMainActivity(FragmentManager fm) {
         super(fm);
@@ -19,9 +19,9 @@ public class ViewPaperAdapterMainActivity extends FragmentPagerAdapter{
     @Override
     public Fragment getItem(int position) {
         switch (position){
-            case 0: return new FragmentInformations();
-            case 1: return new FragmentCourses();
-            case 2: return new FragmentProfile();
+            case 2: return new FragmentInformations();
+            case 0: return new FragmentCourses();
+            case 1: return new FragmentProfile();
         }
         return null;
     }

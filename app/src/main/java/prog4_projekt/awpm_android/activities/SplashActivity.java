@@ -26,12 +26,12 @@ public class SplashActivity extends AppCompatActivity {
         MySharedPreference.saveBooleanIs500(sharedPref,false);
         MySharedPreference.saveBooleanIsFailed(sharedPref,false);
 
-        if (MySharedPreference.getBooleanIsLoged(sharedPref)==false) {
+        if (MySharedPreference.getStringToken(sharedPref)==null) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
         }
-        if (MySharedPreference.getBooleanIsLoged(sharedPref)==true) {
+        if (MySharedPreference.getStringToken(sharedPref)!=null) {
                     Intent intent = new Intent(this, MainActivity.class);
                     startActivity(intent);
                     finish();
