@@ -5,7 +5,7 @@
     <string name="filter_title">Filtermöglichkeiten</string>
 
     // strings info fragment
-    <string name="global_info">Die folgenden Informationen werden ohne Gewähr für deren Aktualität und Vollständigkeit zur Verfügung gestellt. Bitte beachten Sie auch die jeweiligen Aushänge der Fakultät für angewandte Natur- und Geisteswissenschaften</string>
+    <string name="global_info">Alle Informationen ohne Gewähr. Bitte beachten Sie die jeweiligen Aushänge der Fakultät für angewandte Natur- und Geisteswissenschaften</string>
     <string name="info_links">Links zu den Informationsseiten der Fakultät für angewandte Natur- und Geisteswissenschaften</string>
     <string name="info_link_wue">Abteilung Würzburg</string>
     <string name="info_link_sw">Abteilung Schweinfurt</string>
@@ -38,7 +38,6 @@
     <string name="nonFavorite">"%1$s wurde als \'kein Favorit' markiert!"</string>
     <string name="voted">"%1$s wurde als \'gewählt' markiert!"</string>
     <string name="notvoted">"%1$s wurde als \'nicht gewählt' markiert!"</string>
-
 
 
     <!-- Strings related to Settings -->

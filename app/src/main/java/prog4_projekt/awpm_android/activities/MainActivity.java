@@ -17,6 +17,7 @@ import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
 import prog4_projekt.awpm_android.adapter.ViewPaperAdapterMainActivity;
 import prog4_projekt.awpm_android.fragmente.FragmentLoginDialog;
+import prog4_projekt.awpm_android.fragmente.FragmentTimeframesWue;
 import prog4_projekt.awpm_android.fragmente.FragmentWarningDialog;
 
 public class MainActivity extends AppCompatActivity {
@@ -85,6 +86,14 @@ public class MainActivity extends AppCompatActivity {
                 invalidateOptionsMenu();
             }
         }
+        if(id == R.id.action_timeframe){
+            Intent times = new Intent(this, TimeframesActivity.class);
+            startActivity(times);
+        }
+        if(id == R.id.action_links){
+            Intent links = new Intent(this, LinkActivity.class);
+            startActivity(links);
+        }
         return super.onOptionsItemSelected(item);
     }
     @Override
@@ -92,9 +101,14 @@ public class MainActivity extends AppCompatActivity {
         menu.clear();
         if(String.valueOf(MySharedPreference.getBooleanIsLoged(sharedPref)).equals("true")){
             menu.add(0,R.id.action_login,0,"Logout");
+            menu.add(0,R.id.action_timeframe,0,"Zeitraeume");
+            menu.add(0,R.id.action_links, 0 , "Links");
         }
         if(String.valueOf(MySharedPreference.getBooleanIsLoged(sharedPref)).equals("false")){
             menu.add(0,R.id.action_login,0,"Login");
+            menu.add(0,R.id.action_timeframe,0,"Zeitraeume");
+            menu.add(0,R.id.action_links, 0 , "Links");
+
         }
         return super.onPrepareOptionsMenu(menu);
     }

@@ -14,6 +14,20 @@
                 android:icon="@drawable/ic_security_black_24dp">
 
             </item>
+    <item
+        android:id="@+id/action_links"
+        android:orderInCategory="200"
+        android:title="Links"
+        android:icon="@drawable/ic_security_black_24dp">
+
+    </item>
+    <item
+        android:id="@+id/action_timeframe"
+        android:orderInCategory="200"
+        android:title="Anmeldezeiträume"
+        android:icon="@drawable/ic_security_black_24dp">
+
+    </item>
 
 
 </menu>

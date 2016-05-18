@@ -5,8 +5,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import prog4_projekt.awpm_android.fragmente.FragmentCourses;
-import prog4_projekt.awpm_android.fragmente.FragmentInformations;
-import prog4_projekt.awpm_android.fragmente.FragmentProfile;
+import prog4_projekt.awpm_android.fragmente.FragmentProfil;
+import prog4_projekt.awpm_android.fragmente.FragmentBallot;
 
 public class ViewPaperAdapterMainActivity extends FragmentPagerAdapter{
 
@@ -19,9 +19,9 @@ public class ViewPaperAdapterMainActivity extends FragmentPagerAdapter{
     @Override
     public Fragment getItem(int position) {
         switch (position){
-            case 2: return new FragmentInformations();
+            case 2: return new FragmentProfil();
             case 0: return new FragmentCourses();
-            case 1: return new FragmentProfile();
+            case 1: return new FragmentBallot();
         }
         return null;
     }

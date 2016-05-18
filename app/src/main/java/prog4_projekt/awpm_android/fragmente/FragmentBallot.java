@@ -10,7 +10,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FragmentProfile extends Fragment {
+public class FragmentBallot extends Fragment {
 
     View view;
     RecyclerView recyclerViewC;
@@ -45,7 +44,7 @@ public class FragmentProfile extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_profile, null);
+        view = inflater.inflate(R.layout.fragment_ballot, null);
         nullVoted = (TextView) view.findViewById(R.id.textView_null_voted);
         sad = (TextView) view.findViewById(R.id.textView_sad);
 
@@ -118,7 +117,7 @@ public class FragmentProfile extends Fragment {
                             @Override
                             public void onResponse(Call<Module> call, Response<Module> response) {
 
-                                Intent intent = new Intent(FragmentProfile.this.getContext(), CourseDetailsActivity.class);
+                                Intent intent = new Intent(FragmentBallot.this.getContext(), CourseDetailsActivity.class);
                                 Module moduleToPass = response.body();
                                 Bundle extras = new Bundle();
                                 name = moduleToPass.getName();
@@ -150,7 +149,7 @@ public class FragmentProfile extends Fragment {
                                 extras.putString("examnumber", examNumber);
                                 extras.putInt("id", id);
                                 intent.putExtras(extras);
-                                FragmentProfile.this.getContext().startActivity(intent);
+                                FragmentBallot.this.getContext().startActivity(intent);
 
 
                             }
