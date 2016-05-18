@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import java.io.IOException;
 
+import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
 import prog4_projekt.awpm_android.activities.LoginActivity;
 
@@ -37,25 +38,40 @@ public class FragmentLoginDialog extends DialogFragment {
             @Override
             public void onClick(View v) {
 
-                    EditText inputKNummer = (EditText) view.findViewById(R.id.k_nummer);
-                    Editable valueKNummer = inputKNummer.getText();
-                    setStringKNummer(valueKNummer.toString());
-                    EditText inputPwd = (EditText) view.findViewById(R.id.password);
-                    Editable valuePwd = inputPwd.getText();
-                    setStringPwd(valuePwd.toString());
+                EditText inputKNummer = (EditText) view.findViewById(R.id.k_nummer);
+                Editable valueKNummer = inputKNummer.getText();
+                setStringKNummer(valueKNummer.toString());
+                EditText inputPwd = (EditText) view.findViewById(R.id.password);
+                Editable valuePwd = inputPwd.getText();
+                setStringPwd(valuePwd.toString());
+                if (stringKNummer.isEmpty() || stringPwd.isEmpty()) {
+                    FragmentWarningDialog error = new FragmentWarningDialog();
+                    error.show(getFragmentManager(), null);
+                }
+                if (!stringKNummer.isEmpty() && !stringPwd.isEmpty()) {
 
-                if(!stringKNummer.isEmpty() && !stringPwd.isEmpty()) {
+
                     try {
                         LoginActivity.firstUse(stringKNummer, stringPwd, sharedPref, getFragmentManager());
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                     FragmentLoginDialog.this.dismiss();
                 }
-                if(stringKNummer.isEmpty() || stringPwd.isEmpty()){
-                    FragmentWarningDialog error = new FragmentWarningDialog();
-                    error.show(getFragmentManager(), null);
+                synchronized (this) {
+
+                    try {
+                        this.wait(1950);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (MySharedPreference.getBooleanIs401(sharedPref) || MySharedPreference.getBooleanIs500(sharedPref) || MySharedPreference.getBooleanIsFailed(sharedPref)) {
+                        FragmentWarningDialog dialog = new FragmentWarningDialog();
+                        dialog.show(getFragmentManager(), "log");
+                    }
                 }
             }
         });

@@ -16,6 +16,7 @@ import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
 import prog4_projekt.awpm_android.adapter.ViewPaperAdapterMainActivity;
 import prog4_projekt.awpm_android.fragmente.FragmentLoginDialog;
+import prog4_projekt.awpm_android.fragmente.FragmentWarningDialog;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,11 +38,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.setupWithViewPager(viewPager);
-        Log.i("0012", "401 "+MySharedPreference.getBooleanIs401(sharedPref));
-        Log.i("0012", "500 "+MySharedPreference.getBooleanIs500(sharedPref));
-        Log.i("0012", "failed "+MySharedPreference.getBooleanIsFailed(sharedPref));
-        Log.i("0012", "isLoged "+MySharedPreference.getBooleanIsLoged(sharedPref));
-
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -67,6 +63,13 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_login) {
             if( MySharedPreference.getBooleanIsLoged(sharedPref) == true){
                LoginActivity.userLogout(sharedPref, getSupportFragmentManager());
+                synchronized (this){
+                    try {
+                        this.wait(1950);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
                 invalidateOptionsMenu();
             }
             if( MySharedPreference.getBooleanIsLoged(sharedPref) == false){
@@ -87,6 +90,14 @@ public class MainActivity extends AppCompatActivity {
             menu.add(0,R.id.action_login,0,"Login");
         }
         return super.onPrepareOptionsMenu(menu);
+    }
+    @Override
+    protected void onStart(){
+        super.onStart();
+        if(MySharedPreference.getBooleanIs401(sharedPref) || MySharedPreference.getBooleanIs500(sharedPref) || MySharedPreference.getBooleanIsFailed(sharedPref)){
+            FragmentWarningDialog dialog = new FragmentWarningDialog();
+            dialog.show(getSupportFragmentManager(), "log");
+        }
     }
 
 }

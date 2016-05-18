@@ -74,22 +74,20 @@ public class LoginActivity extends AppCompatActivity {
                             e.printStackTrace();
                         }
 
+                        synchronized (this) {
 
-                        if(MySharedPreference.getBooleanIs401(sharedPref).equals("true") || MySharedPreference.getBooleanIs500(sharedPref) || MySharedPreference.getBooleanIsFailed(sharedPref)){
+
+                            try {
+                                this.wait(1950);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        if(MySharedPreference.getBooleanIs401(sharedPref) || MySharedPreference.getBooleanIs500(sharedPref) || MySharedPreference.getBooleanIsFailed(sharedPref)){
                             FragmentWarningDialog dialog = new FragmentWarningDialog();
                             dialog.show(getSupportFragmentManager(), "log");
                         }
                         else{
-                            Log.i("0010", "token "+MySharedPreference.getStringToken(sharedPref));
-
-                            Log.i("0010", "isloged "+String.valueOf(MySharedPreference.getBooleanIsLoged(sharedPref)));
-
-                            Log.i("0010", "401 "+String.valueOf(MySharedPreference.getBooleanIs401(sharedPref)));
-                            Log.i("0010", "500 "+String.valueOf(MySharedPreference.getBooleanIs500(sharedPref)));
-                            Log.i("0010", "failed "+String.valueOf(MySharedPreference.getBooleanIsFailed(sharedPref)));
-
-
-
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                         }
@@ -112,18 +110,20 @@ public class LoginActivity extends AppCompatActivity {
                         loginObject = response.body();
                         MySharedPreference.saveStringToken(sharedPref, loginObject.getToken());
                         MySharedPreference.saveBooleanIsLoged(sharedPref, true);
-                        MySharedPreference.saveBooleanIs401(sharedPref, "false");
-                        MySharedPreference.saveBooleanIs500(sharedPref, "false");
-                        MySharedPreference.saveBooleanIsFailed(sharedPref, "false");
+                        MySharedPreference.saveBooleanIs401(sharedPref, false);
+                        MySharedPreference.saveBooleanIs500(sharedPref, false);
+                        MySharedPreference.saveBooleanIsFailed(sharedPref, false);
 
                         Log.i("101", response.message() + " " + response.code());
                     }
                     if (response.code() == 401) {
                         Log.i("101", response.message() + " " + response.code());
-                        MySharedPreference.saveBooleanIs401(sharedPref, "true");
+                        MySharedPreference.saveBooleanIs401(sharedPref, true);
+                        Log.i("101", "401 "+MySharedPreference.getBooleanIs401(sharedPref));
+
                     }
                     if (response.code() == 500) {
-                        MySharedPreference.saveBooleanIs500(sharedPref, "true");
+                        MySharedPreference.saveBooleanIs500(sharedPref, true);
                         Log.i("101", response.message() + " " + response.code());
                     }
                 }
@@ -131,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onFailure(Call<Login> call, Throwable t) {
                     Log.i("101", "login fail " + t.getMessage());
 
-                    MySharedPreference.saveBooleanIsFailed(sharedPref,"true");
+                    MySharedPreference.saveBooleanIsFailed(sharedPref,true);
 
                 }
             });
@@ -143,24 +143,26 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Login> call, Response<Login> response) {
                 if(response.code() == 204) {
-                    MySharedPreference.saveBooleanIs401(sharedPref,"false");
-                    MySharedPreference.saveBooleanIs500(sharedPref,"false");
-                    MySharedPreference.saveBooleanIsFailed(sharedPref,"false");
+                    Log.i("0011", response.message()+" "+response.code());
+
+                    MySharedPreference.saveBooleanIs401(sharedPref,false);
+                    MySharedPreference.saveBooleanIs500(sharedPref,false);
+                    MySharedPreference.saveBooleanIsFailed(sharedPref,false);
                     MySharedPreference.saveBooleanIsLoged(sharedPref, false);
                     MySharedPreference.saveStringToken(sharedPref, null);
                 }
                 if(response.code() == 401){
                     Log.i("0011", response.message()+" "+response.code());
-                    MySharedPreference.saveBooleanIs401(sharedPref,"true");
+                    MySharedPreference.saveBooleanIs401(sharedPref,true);
                 }
                 if(response.code() == 500){
                     Log.i("0011", response.message()+" "+response.code());
-                    MySharedPreference.saveBooleanIs500(sharedPref,"true");
+                    MySharedPreference.saveBooleanIs500(sharedPref,true);
                 }
             }
             @Override
             public void onFailure(Call<Login> call, Throwable t) {
-                MySharedPreference.saveBooleanIsFailed(sharedPref,"true");
+                MySharedPreference.saveBooleanIsFailed(sharedPref,true);
                 Log.i("0011", "logout False"+ t.getMessage());
             }
         });

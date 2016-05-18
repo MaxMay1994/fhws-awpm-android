@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 
 import prog4_projekt.awpm_android.MySharedPreference;
 
@@ -19,9 +20,11 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceSate) {
         super.onCreate(savedInstanceSate);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        MySharedPreference.saveBooleanIs401(sharedPref,"false");
-        MySharedPreference.saveBooleanIs500(sharedPref,"false");
-        MySharedPreference.saveBooleanIsFailed(sharedPref,"false");
+
+
+        MySharedPreference.saveBooleanIs401(sharedPref,false);
+        MySharedPreference.saveBooleanIs500(sharedPref,false);
+        MySharedPreference.saveBooleanIsFailed(sharedPref,false);
 
         if (MySharedPreference.getBooleanIsLoged(sharedPref)==false) {
             Intent intent = new Intent(this, LoginActivity.class);

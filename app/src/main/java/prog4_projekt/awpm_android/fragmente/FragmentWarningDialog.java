@@ -48,21 +48,44 @@ public class FragmentWarningDialog extends DialogFragment {
                 missingInputPwdWarning();
                 return view;
             }
-            if(MySharedPreference.getBooleanIs401(sharedPref).equals("true")){
+            if(MySharedPreference.getBooleanIs401(sharedPref)){
                 unauthorizedLogin();
+                MySharedPreference.saveBooleanIs401(sharedPref,false);
+
                 return view;
             }
             if(MySharedPreference.getBooleanIs500(sharedPref)){
                 serverWarning();
+                MySharedPreference.saveBooleanIs500(sharedPref,false);
+
                 return view;
 
             }if(MySharedPreference.getBooleanIsFailed(sharedPref)){
                 connectionFailed();
+                MySharedPreference.saveBooleanIsFailed(sharedPref,false);
                 return view;
             }
 
         }
         if (String.valueOf(getContext()).startsWith("prog4_projekt.awpm_android.activities.MainActivity")) {
+            if(MySharedPreference.getBooleanIs401(sharedPref)){
+                unauthorizedLogin();
+                MySharedPreference.saveBooleanIs401(sharedPref,false);
+
+                return view;
+            }
+            if(MySharedPreference.getBooleanIs500(sharedPref)){
+                serverWarning();
+                MySharedPreference.saveBooleanIs500(sharedPref,false);
+
+                return view;
+
+            }if(MySharedPreference.getBooleanIsFailed(sharedPref)){
+                connectionFailed();
+                MySharedPreference.saveBooleanIsFailed(sharedPref,false);
+
+                return view;
+            }
             if(FragmentLoginDialog.stringKNummer.isEmpty() && FragmentLoginDialog.stringPwd.isEmpty()) {
                 missingInputBothWarning();
                 Log.i("003", "");
@@ -82,9 +105,9 @@ public class FragmentWarningDialog extends DialogFragment {
                 return view;
             }
         }
-
-
+        view.setVisibility(View.INVISIBLE);
             return view;
+
     }
     @Override
     public void onDestroy(){
