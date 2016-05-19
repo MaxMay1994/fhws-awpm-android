@@ -2,6 +2,7 @@ package prog4_projekt.awpm_android.fragmente;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,12 +10,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 import prog4_projekt.awpm_android.R;
+import prog4_projekt.awpm_android.RestApi.Peroids.Periods;
+import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by florianduenow on 17.04.16.
@@ -26,6 +32,7 @@ public class FragmentTimeframesWue extends android.support.v4.app.Fragment {
     GregorianCalendar mainStart, mainEnd, backupStart, backupEnd;
     TextView txtMainStart, txtMainEnd, txtBackupStart, txtBackupEnd;
     Button mainAktivButton, mainInaktivButton, backupAktivButton, backupInaktivButton;
+    List<Periods> periodsList;
 
 
     @Nullable
@@ -33,54 +40,73 @@ public class FragmentTimeframesWue extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_timeframes_wue, null);
 
-        //aktuelles datum holen, strings erstellen und in int umformen
-        Date today = new Date();
-        formDateStrings(today);
-        makeDateInt();
 
-        //aktuelles datum in GregorianCalendar fuellen
-        Calendar g = new GregorianCalendar();
-        g.set(yearInt, monthInt, dayInt, hourInt, minuteInt);
-
-        //zeitfenster haupt- und nachmeldezeitraum
-        //GregorianCalendar befuellen
-        //WICHTIG !!! hier month = monat-1 !!!!
-        setMainStartTimframe(2016,2,15,8,0);
-        setMainEndTimeframe(2016,2,21,12,0);
-        setBackupStartTimeframe(2016,2,21,18,0);
-        setBackupEndTimeframe(2016,2,22,23,0);
-
-        //zeitfenster haupt- nachmeldezeitraum
-        //textviews erstellen und befuellen
         generateTextViews();
-        setTextViews();
 
-        //Buttons erstellen
-        generateButtons();
+        getPeriodsCall().enqueue(new Callback<List<Periods>>() {
 
-        if(g.compareTo(mainStart) >= 0 && g.compareTo(mainEnd) <=0)
-        {
-            mainAktivButton.setVisibility(View.VISIBLE);
-            mainInaktivButton.setVisibility(View.INVISIBLE);
-        }
-        if(g.compareTo(backupStart) >= 0 && g.compareTo(backupEnd) <=0)
-        {
-            backupInaktivButton.setVisibility(View.INVISIBLE);
-            backupAktivButton.setVisibility(View.VISIBLE);
-        }
-        else{
-            mainAktivButton.setVisibility(View.INVISIBLE);
-            backupAktivButton.setVisibility(View.INVISIBLE);
-            mainInaktivButton.setVisibility(View.VISIBLE);
-            backupInaktivButton.setVisibility(View.VISIBLE);
+            @Override
+            public void onResponse(Call<List<Periods>> call, Response<List<Periods>> response) {
+                Log.i("101", response.code() +" "+ response.message());
+                if(response.code() == 200) {
+                    periodsList = response.body();
+
+                    formDateStrings(periodsList.get(0).getStart());
+                    makeDateInt();
+                    setMainStartTimframe(yearInt, monthInt, dayInt, hourInt, minuteInt);
+                    txtMainStart.setText(dateString);
+                    formDateStrings(periodsList.get(0).getEnd());
+                    makeDateInt();
+                    setMainEndTimeframe(yearInt, monthInt, dayInt, hourInt, minuteInt);
+                    txtMainEnd.setText(dateString);
+                    if (periodsList.get(0).isActive()) {
+                        mainAktivButton.setVisibility(View.VISIBLE);
+                        mainInaktivButton.setVisibility(View.INVISIBLE);
+                    }
+                    if (!periodsList.get(0).isActive()) {
+                        mainAktivButton.setVisibility(View.INVISIBLE);
+                        mainInaktivButton.setVisibility(View.VISIBLE);
+                    }
+                    Log.i("101", response.code() + " " + response.message());
+
+                    Log.i("101", "elemente in der peroids list " + periodsList.size());
+                    Log.i("101", String.valueOf(periodsList.get(0).getStart()) + " " + String.valueOf(periodsList.get(0).getEnd()));
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Periods>> call, Throwable t) {
+                Log.i("101", t.getMessage());
+
+            }
+        });
+
+
+            //zeitfenster haupt- und nachmeldezeitraum
+            //GregorianCalendar befuellen
+            //WICHTIG !!! hier month = monat-1 !!!!
+
+            setBackupStartTimeframe(2016, 2, 21, 18, 0);
+            setBackupEndTimeframe(2016, 2, 22, 23, 0);
+
+            //zeitfenster haupt- nachmeldezeitraum
+            //textviews erstellen und befuellen
+            setTextViews();
+
+            //Buttons erstellen
+            generateButtons();
+
+
+            return view;
         }
 
-        return view;
-    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
     }
     //erstellt buttons
     public void generateButtons(){
@@ -125,8 +151,6 @@ public class FragmentTimeframesWue extends android.support.v4.app.Fragment {
     }
     //setzt die Strings in die TextViews
     public void setTextViews(){
-        txtMainStart.setText(mainStartString);
-        txtMainEnd.setText(mainEndString);
         txtBackupStart.setText(backupStartString);
         txtBackupEnd.setText(backupEndString);
     }
@@ -163,4 +187,9 @@ public class FragmentTimeframesWue extends android.support.v4.app.Fragment {
         setBackupFormDate.setCalendar(backupStart);
         backupStartString = setBackupFormDate.format(backupStart.getTime());
     }
+    public static Call<List<Periods>> getPeriodsCall(){
+        Call<List<Periods>> periods = ServiceAdapter.getService().getAllPeriods(false);
+        return periods;
+    }
+
 }

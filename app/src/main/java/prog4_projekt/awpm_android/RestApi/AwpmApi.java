@@ -7,6 +7,7 @@ import prog4_projekt.awpm_android.RestApi.Module.Building;
 import prog4_projekt.awpm_android.RestApi.Module.Date;
 import prog4_projekt.awpm_android.RestApi.Module.Module;
 import prog4_projekt.awpm_android.RestApi.Module.Tag;
+import prog4_projekt.awpm_android.RestApi.Peroids.Periods;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,7 +61,8 @@ public interface AwpmApi {
     Call<Date> getDate(@Path("id") int id);
 
     //Periods
-
+    @GET("api/periods")
+    Call<List<Periods>> getAllPeriods(@Query("active") boolean active);
 
     //Filter GET
 

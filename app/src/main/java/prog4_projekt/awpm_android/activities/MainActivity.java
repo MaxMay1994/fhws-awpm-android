@@ -13,12 +13,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
+import java.util.List;
+
 import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
+import prog4_projekt.awpm_android.RestApi.Peroids.Periods;
+import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
 import prog4_projekt.awpm_android.adapter.ViewPaperAdapterMainActivity;
 import prog4_projekt.awpm_android.fragmente.FragmentLoginDialog;
 import prog4_projekt.awpm_android.fragmente.FragmentTimeframesWue;
 import prog4_projekt.awpm_android.fragmente.FragmentWarningDialog;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,10 +35,14 @@ public class MainActivity extends AppCompatActivity {
     public SharedPreferences sharedPref ;
     Intent getFromDetails;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        MySharedPreference.saveBooleanIs401(sharedPref,false);
+        MySharedPreference.saveBooleanIs500(sharedPref,false);
+        MySharedPreference.saveBooleanIsFailed(sharedPref,false);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.tollbar);
         setSupportActionBar(toolbar);
@@ -58,7 +69,9 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -120,5 +133,6 @@ public class MainActivity extends AppCompatActivity {
             dialog.show(getSupportFragmentManager(), "log");
         }
     }
+
 
 }

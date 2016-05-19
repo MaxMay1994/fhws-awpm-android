@@ -3,6 +3,7 @@ package prog4_projekt.awpm_android.fragmente;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Locale;
 
 import prog4_projekt.awpm_android.R;
+import prog4_projekt.awpm_android.RestApi.Peroids.Periods;
+import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by florianduenow on 17.04.16.
@@ -27,6 +33,7 @@ public class FragmentTimeframesSw extends android.support.v4.app.Fragment {
     GregorianCalendar mainStart, mainEnd, backupStart, backupEnd;
     TextView txtMainStart, txtMainEnd, txtBackupStart, txtBackupEnd;
     Button mainAktivButton, mainInaktivButton, backupAktivButton, backupInaktivButton;
+    List<Periods> periodsList;
 
 
     @Nullable
@@ -34,57 +41,74 @@ public class FragmentTimeframesSw extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_timeframes_sw, null);
 
-        //aktuelles datum holen, strings erstellen und in int umformen
-        Date today = new Date();
-        formDateStrings(today);
-        makeDateInt();
+        generateTextViews();
 
-        //aktuelles datum in GregorianCalendar fuellen
-        Calendar g = new GregorianCalendar();
-        g.set(yearInt, monthInt, dayInt, hourInt, minuteInt);
+        getPeriodsCall().enqueue(new Callback<List<Periods>>() {
+
+            @Override
+            public void onResponse(Call<List<Periods>> call, Response<List<Periods>> response) {
+                Log.i("101", response.code() +" "+ response.message());
+                if(response.code() == 200) {
+                    periodsList = response.body();
+
+                    formDateStrings(periodsList.get(0).getStart());
+                    makeDateInt();
+                    setMainStartTimframe(yearInt, monthInt, dayInt, hourInt, minuteInt);
+                    txtMainStart.setText(dateString);
+                    formDateStrings(periodsList.get(0).getEnd());
+                    makeDateInt();
+                    setMainEndTimeframe(yearInt, monthInt, dayInt, hourInt, minuteInt);
+                    txtMainEnd.setText(dateString);
+                    if (periodsList.get(0).isActive()) {
+                        mainAktivButton.setVisibility(View.VISIBLE);
+                        mainInaktivButton.setVisibility(View.INVISIBLE);
+                    }
+                    if (!periodsList.get(0).isActive()) {
+                        mainAktivButton.setVisibility(View.INVISIBLE);
+                        mainInaktivButton.setVisibility(View.VISIBLE);
+                    }
+                    Log.i("101", response.code() + " " + response.message());
+
+                    Log.i("101", "elemente in der peroids list " + periodsList.size());
+                    Log.i("101", String.valueOf(periodsList.get(0).getStart()) + " " + String.valueOf(periodsList.get(0).getEnd()));
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Periods>> call, Throwable t) {
+                Log.i("101", t.getMessage());
+
+            }
+        });
+
 
         //zeitfenster haupt- und nachmeldezeitraum
         //GregorianCalendar befuellen
         //WICHTIG !!! hier month = monat-1 !!!!
-        setMainStartTimframe(2016,2,15,0,0);
-        setMainEndTimeframe(2016,2,18,14,0);
-        setBackupStartTimeframe(2016,2,22,14,0);
-        setBackupEndTimeframe(2016,3,22,12,0);
 
+        setBackupStartTimeframe(2016, 2, 21, 18, 0);
+        setBackupEndTimeframe(2016, 2, 22, 23, 0);
 
         //zeitfenster haupt- nachmeldezeitraum
         //textviews erstellen und befuellen
-        generateTextViews();
         setTextViews();
 
         //Buttons erstellen
         generateButtons();
 
-        if(g.compareTo(mainStart) >= 0 && g.compareTo(mainEnd) <=0)
-        {
-            mainAktivButton.setVisibility(View.VISIBLE);
-            mainInaktivButton.setVisibility(View.INVISIBLE);
-        }
-        if(g.compareTo(backupStart) >= 0 && g.compareTo(backupEnd) <=0)
-        {
-            backupInaktivButton.setVisibility(View.INVISIBLE);
-            backupAktivButton.setVisibility(View.VISIBLE);
-        }
-        else{
-            mainAktivButton.setVisibility(View.INVISIBLE);
-            backupAktivButton.setVisibility(View.INVISIBLE);
-            mainInaktivButton.setVisibility(View.VISIBLE);
-            backupInaktivButton.setVisibility(View.VISIBLE);
-        }
 
         return view;
     }
 
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
     }
-    //erstellt Buttons
+    //erstellt buttons
     public void generateButtons(){
         mainAktivButton = (Button) view.findViewById(R.id.hauptAktivButton);
         mainInaktivButton = (Button) view.findViewById(R.id.hauptInaktivButton);
@@ -92,7 +116,7 @@ public class FragmentTimeframesSw extends android.support.v4.app.Fragment {
         backupInaktivButton = (Button) view.findViewById(R.id.nebenInaktivButton);
 
     }
-    //erstellt DateStrings aus Date()
+    //erstellt aus Date() verschiedene Strings
     public void formDateStrings(Date date){
         SimpleDateFormat formDate = new SimpleDateFormat("dd.MM.yyyy HH.mm", Locale.getDefault());
         SimpleDateFormat formDay = new SimpleDateFormat("dd", Locale.getDefault());
@@ -107,29 +131,30 @@ public class FragmentTimeframesSw extends android.support.v4.app.Fragment {
         yearString = formYear.format(date);
         hourString = formHour.format(date);
         minuteString = formMinute.format(date);
+
     }
-    //erstellt Int werte aus den DateStrings
+    //erstellt aus den DateStrings Int werte
     public void makeDateInt(){
+
         dayInt = Integer.parseInt(dayString);
         monthInt = Integer.parseInt(monthString);
         yearInt = Integer.parseInt(yearString);
         hourInt = Integer.parseInt(hourString);
         minuteInt = Integer.parseInt(minuteString);
     }
-    //erstellt Textviews
+    //erstellt die TextViews
     public void generateTextViews(){
         txtMainStart = (TextView) view.findViewById(R.id.mainStartDate);
         txtMainEnd = (TextView) view.findViewById(R.id.mainEndDate);
         txtBackupStart = (TextView) view.findViewById(R.id.backupStartDate);
         txtBackupEnd = (TextView) view.findViewById(R.id.backupEndDate);
     }
-    //setzt die DateStrings in die TextViews
+    //setzt die Strings in die TextViews
     public void setTextViews(){
-        txtMainStart.setText(mainStartString);
-        txtMainEnd.setText(mainEndString);
         txtBackupStart.setText(backupStartString);
         txtBackupEnd.setText(backupEndString);
     }
+
     //WICHTIG !!! hier month = monat-1 !!!!
     public void setMainEndTimeframe(int year,int month, int day, int hour,int minute){
         mainEnd = new GregorianCalendar();
@@ -162,4 +187,9 @@ public class FragmentTimeframesSw extends android.support.v4.app.Fragment {
         setBackupFormDate.setCalendar(backupStart);
         backupStartString = setBackupFormDate.format(backupStart.getTime());
     }
+    public static Call<List<Periods>> getPeriodsCall(){
+        Call<List<Periods>> periods = ServiceAdapter.getService().getAllPeriods(false);
+        return periods;
+    }
+
 }
