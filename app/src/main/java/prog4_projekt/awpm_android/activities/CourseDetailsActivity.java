@@ -13,6 +13,8 @@ import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Base64;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -65,6 +67,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_course__details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         toolTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
         information = (TextView) findViewById(R.id.Course_details);
         info_content = (TextView) findViewById(R.id.course_content);
@@ -132,26 +136,6 @@ public class CourseDetailsActivity extends AppCompatActivity {
         notVoteMarked = String.format(res.getString(R.string.notvoted), name);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         authorization = "Basic " + Base64.encodeToString((MySharedPreference.getStringToken(sharedPreferences)+":").getBytes(), Base64.NO_WRAP);
-       /* callVotedList = ServiceAdapter.getService().getVotedModules(true, authorization);
-        callVotedList.enqueue(new Callback<List<Module>>() {
-            @Override
-            public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
-                votedList = response.body();
-                Module[] modulesVoted = votedList.toArray(new Module[0]);
-                for(Module m:modulesVoted){
-                    if(m.getName() == name && moduleVoted == true) wahlSwitch.setChecked(true);
-                    else wahlSwitch.setChecked(false);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Module>> call, Throwable t) {
-
-            }
-        });*/
-
-
 
         mfb.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
             @Override
@@ -190,6 +174,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), notFavMarked, Toast.LENGTH_LONG).show();
                     }
                 } else {
+                    mfb.setFavorite(false);
                     dialog = new FragmentLoginDialog();
                     dialog.show(getSupportFragmentManager(), "log");
                 }
@@ -244,10 +229,26 @@ public class CourseDetailsActivity extends AppCompatActivity {
                         startActivity(voteBack);
                     }
                 }else{
+                    wahlSwitch.setChecked(false);
                     dialog = new FragmentLoginDialog();
                     dialog.show(getSupportFragmentManager(), "log");
                 }
             }
         });
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()) {
+            case android.R.id.home:
+
+                onBackPressed();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
+
+
 }

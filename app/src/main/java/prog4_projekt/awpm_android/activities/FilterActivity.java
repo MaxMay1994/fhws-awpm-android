@@ -28,6 +28,9 @@ public class FilterActivity extends AppCompatActivity {
     CheckBox blockedFor;
     CheckBox votedModules;
     Button returnFromFilter;
+    Spinner spinnerFilter1;
+    Spinner spinnerFilter2;
+
 
     TextView toolText;
 
@@ -37,8 +40,6 @@ public class FilterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_filter2);
 
         toolText = (TextView) findViewById(R.id.filtertoolbar_title);
-
-
         wahlZeitraum = (CheckBox) findViewById(R.id.aktuellerWahlzeitraum);
         location = (CheckBox) findViewById(R.id.location);
         blockedFor = (CheckBox) findViewById(R.id.gesperrt);
@@ -52,7 +53,7 @@ public class FilterActivity extends AppCompatActivity {
         });
 
 
-        Spinner spinnerFilter1 = (Spinner) findViewById(R.id.spinner1);
+        spinnerFilter1 = (Spinner) findViewById(R.id.spinner1);
         final String[] itemsFilter1 = new String[]{"Bitte auswählen", "Schweinfurt", "Würzburg", "Münzstr.", "SHL"};
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, itemsFilter1);
         spinnerFilter1.setAdapter(adapter1);
@@ -74,7 +75,7 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
-        Spinner spinnerFilter2 = (Spinner) findViewById(R.id.spinner2);
+        spinnerFilter2 = (Spinner) findViewById(R.id.spinner2);
         final String[] itemsFilter2 = new String[]{"Wählen", "mich", "BIN", "BWI"};
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, itemsFilter2);
         spinnerFilter2.setAdapter(adapter2);

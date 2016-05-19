@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
         getFromDetails = getIntent();
         int id = getFromDetails.getIntExtra("id", 0);
         if(id == 1) {
-            viewPager.setCurrentItem(1);
+            viewPager.setCurrentItem(0);
         }
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
