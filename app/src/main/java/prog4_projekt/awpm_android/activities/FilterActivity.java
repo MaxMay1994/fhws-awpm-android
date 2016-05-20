@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,14 +20,14 @@ import prog4_projekt.awpm_android.fragmente.FragmentCourses;
 
 public class FilterActivity extends AppCompatActivity {
 
-    int wahlZeitraumID = 0;
-    int locationID = 0;
-    int blockedForID = 0;
-    int votedModulesID = 0;
+    String wahlZeitraumID = "";
+    String locationID = "";
+    String blockedForID = "";
+    String favoredModulesID = "";
     CheckBox wahlZeitraum;
     CheckBox location;
     CheckBox blockedFor;
-    CheckBox votedModules;
+    CheckBox favoredModules;
     Button returnFromFilter;
     Spinner spinnerFilter1;
     Spinner spinnerFilter2;
@@ -43,12 +44,23 @@ public class FilterActivity extends AppCompatActivity {
         wahlZeitraum = (CheckBox) findViewById(R.id.aktuellerWahlzeitraum);
         location = (CheckBox) findViewById(R.id.location);
         blockedFor = (CheckBox) findViewById(R.id.gesperrt);
-        votedModules = (CheckBox) findViewById(R.id.favoriteModulesFilter);
-        returnFromFilter = (Button) findViewById(R.id.return_filter);
-        returnFromFilter.setOnClickListener(new View.OnClickListener() {
+        favoredModules = (CheckBox) findViewById(R.id.favoriteModulesFilter);
+
+        wahlZeitraum.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                finish();
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    wahlZeitraumID = "wahlZeitraum";
+                    wahlZeitraum.setSaveEnabled(true);
+                }
+                else wahlZeitraumID = "";
+            }
+        });
+        favoredModules.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) favoredModulesID = "favoredModules";
+                else favoredModulesID = "";
             }
         });
 
@@ -62,16 +74,22 @@ public class FilterActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
                     for (int i = 1; i < itemsFilter1.length; i++) {
-                        if (i == position) location.setChecked(true);
+                        if (i == position){
+                            location.setChecked(true);
+                            locationID = itemsFilter1[i];
+                            Log.i("ID-Name", locationID);
+                        }
                     }
                 } else {
                     location.setChecked(false);
                 }
+
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 location.setChecked(false);
+                locationID = "";
             }
         });
 
@@ -84,7 +102,11 @@ public class FilterActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position != 0) {
                     for (int i = 1; i < itemsFilter2.length; i++) {
-                        if (i == position) blockedFor.setChecked(true);
+                        if (i == position){
+                            blockedFor.setChecked(true);
+                            blockedForID = itemsFilter2[i];
+                            Log.i("ID-Name", blockedForID);
+                        }
                     }
                 } else {
                     blockedFor.setChecked(false);
@@ -94,6 +116,18 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 blockedFor.setChecked(false);
+                blockedForID = "";
+            }
+        });
+        returnFromFilter = (Button) findViewById(R.id.return_filter);
+        returnFromFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent returnIntent = getIntent();
+                String[] returnFilter = new String[]{wahlZeitraumID, locationID, blockedForID, favoredModulesID};
+                returnIntent.putExtra("returnData", returnFilter);
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
             }
         });
 
