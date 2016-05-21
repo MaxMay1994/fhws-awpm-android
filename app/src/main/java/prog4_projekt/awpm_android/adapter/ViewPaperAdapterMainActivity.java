@@ -10,7 +10,7 @@ import prog4_projekt.awpm_android.fragmente.FragmentBallot;
 
 public class ViewPaperAdapterMainActivity extends FragmentPagerAdapter{
 
-    String[] title = {"Katalog","Wahlzettel","Info`s"};
+    String[] title = {"Katalog","Wahlzettel","Profil"};
 
     public ViewPaperAdapterMainActivity(FragmentManager fm) {
         super(fm);

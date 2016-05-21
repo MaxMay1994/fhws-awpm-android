@@ -2,30 +2,25 @@ package prog4_projekt.awpm_android.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 
-import java.util.List;
 
 import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
-import prog4_projekt.awpm_android.RestApi.Peroids.Periods;
-import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
+
 import prog4_projekt.awpm_android.adapter.ViewPaperAdapterMainActivity;
 import prog4_projekt.awpm_android.fragmente.FragmentLoginDialog;
-import prog4_projekt.awpm_android.fragmente.FragmentTimeframesWue;
-import prog4_projekt.awpm_android.fragmente.FragmentWarningDialog;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -95,7 +90,9 @@ public class MainActivity extends AppCompatActivity {
             }
             if( MySharedPreference.getBooleanIsLoged(sharedPref) == false){
                 final FragmentLoginDialog dialog = new FragmentLoginDialog();
+                dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.transperantDialog);
                 dialog.show(getSupportFragmentManager(), "log");
+
                 invalidateOptionsMenu();
             }
         }
@@ -114,25 +111,15 @@ public class MainActivity extends AppCompatActivity {
         menu.clear();
         if(String.valueOf(MySharedPreference.getBooleanIsLoged(sharedPref)).equals("true")){
             menu.add(0,R.id.action_login,0,"Logout");
-            menu.add(0,R.id.action_timeframe,0,"Zeitraeume");
+            menu.add(0,R.id.action_timeframe,0,"Wahlzeiträume");
             menu.add(0,R.id.action_links, 0 , "Links");
         }
         if(String.valueOf(MySharedPreference.getBooleanIsLoged(sharedPref)).equals("false")){
             menu.add(0,R.id.action_login,0,"Login");
-            menu.add(0,R.id.action_timeframe,0,"Zeitraeume");
+            menu.add(0,R.id.action_timeframe,0,"Wahlzeiträume");
             menu.add(0,R.id.action_links, 0 , "Links");
 
         }
         return super.onPrepareOptionsMenu(menu);
     }
-    @Override
-    protected void onStart(){
-        super.onStart();
-        if(MySharedPreference.getBooleanIs401(sharedPref) || MySharedPreference.getBooleanIs500(sharedPref) || MySharedPreference.getBooleanIsFailed(sharedPref)){
-            FragmentWarningDialog dialog = new FragmentWarningDialog();
-            dialog.show(getSupportFragmentManager(), "log");
-        }
-    }
-
-
 }

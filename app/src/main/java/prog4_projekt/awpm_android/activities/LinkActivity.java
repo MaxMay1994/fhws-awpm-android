@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -19,6 +20,7 @@ public class LinkActivity extends AppCompatActivity {
         setContentView(R.layout.activity_link);
         toolbar = (Toolbar) findViewById(R.id.tollbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         infoWue = (Button) findViewById(R.id.info_button_wue);
         infoSw = (Button) findViewById(R.id.infof_button_sw);
 
@@ -47,5 +49,15 @@ public class LinkActivity extends AppCompatActivity {
 
         });
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

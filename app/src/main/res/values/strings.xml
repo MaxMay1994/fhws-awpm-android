@@ -114,7 +114,7 @@
     <string name="missingKNum">K-Nummer fehlt</string>
     <string name="missinBoth">K-Nummer und Passwort fehlen</string>
     <string name="serverError">Verbindung gestört! Bitte erneut versuchen</string>
-    <string name="unauthorizedLogin">Login/Logout ungültig!</string>
+    <string name="unauthorizedLogin">Login/Logout fehlgeschlagen!</string>
     <string name="failedLogout">Logout fehlgeschlagen!</string>
     <string name="failedConnection">Verbindung fehlgeschlagen!</string>
 

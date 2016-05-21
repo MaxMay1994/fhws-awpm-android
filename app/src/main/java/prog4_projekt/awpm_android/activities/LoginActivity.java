@@ -18,15 +18,14 @@ import android.widget.EditText;
 
 
 import java.io.IOException;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
+
 
 import prog4_projekt.awpm_android.LoginInterface;
 import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
 import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
 import prog4_projekt.awpm_android.RestApi.UserData.Login;
-import prog4_projekt.awpm_android.fragmente.FragmentWarningDialog;
+import prog4_projekt.awpm_android.fragmente.FragmentLoginDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
         setContentView(R.layout.actvity_login);
@@ -83,21 +82,38 @@ public class LoginActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
-                        if(MySharedPreference.getBooleanIs401(sharedPref) || MySharedPreference.getBooleanIs500(sharedPref) || MySharedPreference.getBooleanIsFailed(sharedPref)){
-                            FragmentWarningDialog dialog = new FragmentWarningDialog();
-                            dialog.show(getSupportFragmentManager(), "log");
-                        }
-                        else{
+                        if (MySharedPreference.getBooleanIs401(sharedPref) || MySharedPreference.getBooleanIs500(sharedPref) || MySharedPreference.getBooleanIsFailed(sharedPref)) {
+                            if (MySharedPreference.getBooleanIs401(sharedPref))
+                            {
+                                FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(getLayoutInflater(), getString(R.string.unauthorizedLogin), LoginActivity.this), LoginActivity.this);
+                                MySharedPreference.saveBooleanIs401(sharedPref, false);
+                            }
+                            if (MySharedPreference.getBooleanIs500(sharedPref))
+                            {
+                                FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(getLayoutInflater(), getString(R.string.serverError), LoginActivity.this), LoginActivity.this);
+                                MySharedPreference.saveBooleanIs500(sharedPref,false);
+                            }
+                            if (MySharedPreference.getBooleanIsFailed(sharedPref)) {
+                                FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(getLayoutInflater(), getString(R.string.failedConnection), LoginActivity.this), LoginActivity.this);
+                                MySharedPreference.saveBooleanIsFailed(sharedPref,false);
+                            }
+                        } else {
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                         }
+                        }
+                        if (stringKNummer.isEmpty() && stringPwd.isEmpty()) {
+                            FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(getLayoutInflater(), getString(R.string.missinBoth), LoginActivity.this), LoginActivity.this);
+                        }
+                        if (stringKNummer.isEmpty() && !stringPwd.isEmpty()) {
+                            FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(getLayoutInflater(), getString(R.string.missingKNum), LoginActivity.this), LoginActivity.this);
+                        }
+                        if (!stringKNummer.isEmpty() && stringPwd.isEmpty()) {
+                            FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(getLayoutInflater(), getString(R.string.missingPwd), LoginActivity.this), LoginActivity.this);
+                        }
                     }
-                    if(stringKNummer.isEmpty() || stringPwd.isEmpty()){
-                        FragmentWarningDialog dialog = new FragmentWarningDialog();
-                        dialog.show(getSupportFragmentManager(), "log");
-                    }
-                }
             }
+
         });
     }
     public static void firstUse(String kNummer, String pwd, final SharedPreferences sharedPref, final FragmentManager manager) throws IOException {

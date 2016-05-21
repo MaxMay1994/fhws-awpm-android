@@ -42,7 +42,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.LinkActivity"
-            android:label="Links"
+            android:label="AWPM"
             android:theme="@style/AppTheme">
 
         </activity>
