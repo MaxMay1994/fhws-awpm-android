@@ -48,8 +48,8 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
+                    if(!wahlZeitraumID.isEmpty()) wahlZeitraum.setChecked(true);
                     wahlZeitraumID = "wahlZeitraum";
-                    wahlZeitraum.setSaveEnabled(true);
                 }
                 else wahlZeitraumID = "";
             }
@@ -57,7 +57,10 @@ public class FilterActivity extends AppCompatActivity {
         favoredModules.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) favoredModulesID = "favoredModules";
+                if(isChecked){
+                    if(!favoredModulesID.isEmpty()) favoredModules.setChecked(true);
+                    favoredModulesID = "favoredModules";
+                }
                 else favoredModulesID = "";
             }
         });

@@ -9,7 +9,10 @@ package prog4_projekt.awpm_android.adapter;
     import java.util.List;
 
     import prog4_projekt.awpm_android.R;
+    import prog4_projekt.awpm_android.RestApi.Module.Building;
+    import prog4_projekt.awpm_android.RestApi.Module.Location;
     import prog4_projekt.awpm_android.RestApi.Module.Module;
+    import prog4_projekt.awpm_android.RestApi.Module.Room;
 
 /**
      * Created by Ich on 22.04.2016.
@@ -44,8 +47,20 @@ package prog4_projekt.awpm_android.adapter;
         public void onBindViewHolder(ModuleViewHolder holder, int position) {
             Module module = mList.get(position);
             holder.textview1.setText(module.getName());
-            holder.textview2.setText(module.getTeacher()+ ",  "+ module.getRoom().getBuilding().getLocation().getName()+", "
-                    +module.getRoom().getBuilding().getName());
+            String all = "";
+            String buildingName = "";
+            Room room;
+            if((room = module.getRoom())!= null){
+                Building building;
+                if((building = room.getBuilding())!=null){
+                    buildingName = building.getName();
+                    Location location;
+                    if((location = building.getLocation())!= null){
+                        all = location.getName();
+                    }
+                }
+            }
+            holder.textview2.setText(module.getTeacher()+ ",  "+ all +", "+buildingName);
 
         }
 
