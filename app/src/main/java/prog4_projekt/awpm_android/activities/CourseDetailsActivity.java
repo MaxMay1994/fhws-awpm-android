@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
@@ -167,6 +168,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 } else {
                     mfb.setFavorite(false);
                     dialog = new FragmentLoginDialog();
+                    dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.transperantDialog);
                     dialog.show(getSupportFragmentManager(), "log");
                 }
             }
