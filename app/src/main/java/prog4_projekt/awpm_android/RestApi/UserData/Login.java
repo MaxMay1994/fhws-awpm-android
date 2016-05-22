@@ -1,11 +1,9 @@
 package prog4_projekt.awpm_android.RestApi.UserData;
 
-import android.util.Log;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import prog4_projekt.awpm_android.RestApi.Module.Date;
 
 /**
  * Created by florianduenow on 27.04.16.

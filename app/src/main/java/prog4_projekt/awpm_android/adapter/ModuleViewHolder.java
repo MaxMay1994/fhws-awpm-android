@@ -1,13 +1,10 @@
 package prog4_projekt.awpm_android.adapter;
 
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import prog4_projekt.awpm_android.R;
-import prog4_projekt.awpm_android.activities.CourseDetailsActivity;
 
 /**
  * Created by Ich on 22.04.2016.

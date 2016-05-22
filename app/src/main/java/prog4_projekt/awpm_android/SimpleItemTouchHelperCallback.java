@@ -2,12 +2,9 @@ package prog4_projekt.awpm_android;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 
 import prog4_projekt.awpm_android.adapter.ItemTouchHelperAdapter;
-import prog4_projekt.awpm_android.adapter.ModuleViewHolder;
-import prog4_projekt.awpm_android.adapter.ModuleViewHolderBallot;
-import prog4_projekt.awpm_android.adapter.RecyclerViewAdapterBallot;
+
 
 /**
  * Created by maxma on 11.05.2016.

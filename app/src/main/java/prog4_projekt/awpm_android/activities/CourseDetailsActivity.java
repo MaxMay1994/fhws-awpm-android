@@ -5,16 +5,11 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
-import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -22,18 +17,14 @@ import android.widget.Toast;
 
 import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 
-import org.w3c.dom.Text;
 
 import java.util.List;
 
 import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
 
-import prog4_projekt.awpm_android.RestApi.AwpmApi;
 import prog4_projekt.awpm_android.RestApi.Module.Module;
 import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
-import prog4_projekt.awpm_android.adapter.ModuleViewHolder;
-import prog4_projekt.awpm_android.fragmente.FragmentCourses;
 import prog4_projekt.awpm_android.fragmente.FragmentLoginDialog;
 import retrofit2.Call;
 import retrofit2.Callback;

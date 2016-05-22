@@ -2,19 +2,16 @@ package prog4_projekt.awpm_android.RestApi;
 
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import prog4_projekt.awpm_android.RestApi.Module.Building;
 import prog4_projekt.awpm_android.RestApi.Module.Date;
 import prog4_projekt.awpm_android.RestApi.Module.Module;
 import prog4_projekt.awpm_android.RestApi.Module.Tag;
 import prog4_projekt.awpm_android.RestApi.Peroids.Periods;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.PATCH;
-import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 

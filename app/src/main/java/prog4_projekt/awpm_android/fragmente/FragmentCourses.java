@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,13 +16,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.util.List;
 
 import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.RestApi.Module.Module;
-import prog4_projekt.awpm_android.RestApi.Module.Room;
 import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
 import prog4_projekt.awpm_android.R;
 import prog4_projekt.awpm_android.activities.CourseDetailsActivity;
