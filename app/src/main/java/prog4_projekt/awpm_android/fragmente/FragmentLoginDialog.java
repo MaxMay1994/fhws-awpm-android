@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,9 +21,14 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
+import prog4_projekt.awpm_android.LoginInterface;
 import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
-import prog4_projekt.awpm_android.activities.LoginActivity;
+import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
+import prog4_projekt.awpm_android.RestApi.UserData.Login;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by florianduenow on 19.04.16.
@@ -32,6 +38,7 @@ public class FragmentLoginDialog extends DialogFragment {
     public static String stringPwd = null;
     public static String stringKNummer = null;
     public SharedPreferences sharedPref;
+    public static Login loginObject;
 
     @Nullable
     @Override
@@ -50,46 +57,23 @@ public class FragmentLoginDialog extends DialogFragment {
                 Editable valuePwd = inputPwd.getText();
                 setStringPwd(valuePwd.toString());
                 if (stringKNummer.isEmpty() && stringPwd.isEmpty()) {
-                    makeToast(makeToastView(inflater, getString(R.string.missinBoth), getActivity()),getActivity());
+                    makeToast(makeToastView(getString(R.string.missinBoth), getActivity()),getActivity());
                 }
                 if (stringKNummer.isEmpty() && !stringPwd.isEmpty()) {
-                    makeToast(makeToastView(inflater, getString(R.string.missingKNum), getActivity()),getActivity());
+                    makeToast(makeToastView(getString(R.string.missingKNum), getActivity()),getActivity());
                 }
                 if (!stringKNummer.isEmpty() && stringPwd.isEmpty()) {
-                    makeToast(makeToastView(inflater, getString(R.string.missingPwd), getActivity()),getActivity());
+                    makeToast(makeToastView(getString(R.string.missingPwd), getActivity()),getActivity());
                 }
                 if (!stringKNummer.isEmpty() && !stringPwd.isEmpty()) {
-
-
                     try {
-                        LoginActivity.firstUse(stringKNummer, stringPwd, sharedPref, getFragmentManager());
-
+                        login(stringKNummer, stringPwd, sharedPref, getActivity(), FragmentLoginDialog.this);
+                        inputKNummer.setText(null);
+                        inputPwd.setText(null);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
-                    FragmentLoginDialog.this.dismiss();
-                }
-                synchronized (this) {
-
-                    try {
-                        this.wait(1950);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    if (MySharedPreference.getBooleanIs401(sharedPref)) {
-                        makeToast(makeToastView(inflater, getString(R.string.unauthorizedLogin), getActivity()),getActivity());
-                        MySharedPreference.saveBooleanIs401(sharedPref, false);
-                    }
-                    if (MySharedPreference.getBooleanIs500(sharedPref)) {
-                        makeToast(makeToastView(inflater, getString(R.string.serverError), getActivity()),getActivity());
-                        MySharedPreference.saveBooleanIs500(sharedPref,false);
-                    }
-                    if (MySharedPreference.getBooleanIsFailed(sharedPref)) {
-                        makeToast(makeToastView(inflater, getString(R.string.failedConnection), getActivity()),getActivity());
-                        MySharedPreference.saveBooleanIsFailed(sharedPref,false);
-                    }
                 }
             }
         });
@@ -136,13 +120,102 @@ public class FragmentLoginDialog extends DialogFragment {
         toast.setView(layout);
         toast.show();
     }
-    public static View makeToastView(LayoutInflater inflater, String message,Activity activity){
-        inflater = activity.getLayoutInflater();
+    public static View makeToastView(String message,Activity activity){
+        LayoutInflater inflater = activity.getLayoutInflater();
         View layout = inflater.inflate(R.layout.toast_layout,null);
 
         TextView text = (TextView) layout.findViewById(R.id.text);
         text.setText(message);
         return layout;
     }
+    public static void login(String kNummer, String pwd, final SharedPreferences sharedPref, final Activity activity, final FragmentLoginDialog dialog) throws IOException {
+
+
+        getLoginCall(makeBase64Codierung(makeSendData(kNummer, pwd))).enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(Call<Login> call, Response<Login> response) {
+                if(response.code() == 200){
+                    Log.i("0000","in firstUse "+response.code());
+                    loginObject=response.body();
+                    MySharedPreference.saveBooleanIsLoged(sharedPref, true);
+                    MySharedPreference.saveStringToken(sharedPref, loginObject.getToken());
+                    dialog.dismiss();
+
+                }
+                if(response.code() == 401){
+                    FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(activity.getString(R.string.unauthorizedLogin), activity), activity);
+                    MySharedPreference.saveBooleanIsLoged(sharedPref, false);
+                    Log.i("0000","in firstUse "+response.code());
+                }
+                if(response.code() == 500){
+                    FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(activity.getString(R.string.serverError), activity), activity);
+                    MySharedPreference.saveBooleanIsLoged(sharedPref, false);
+                    Log.i("0000","in firstUse "+response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+                FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(activity.getString(R.string.failedConnection), activity), activity);
+                MySharedPreference.saveBooleanIsLoged(sharedPref, false);
+            }
+        });
+
+
+    }
+    public static void  userLogout(final SharedPreferences sharedPref, final Activity activity){
+        getLogoutCall(makeBase64Codierung(makeTokenSendDataLogout(MySharedPreference.getStringToken(sharedPref)))).enqueue(new Callback<Login>() {
+            @Override
+            public void onResponse(Call<Login> call, Response<Login> response) {
+                if(response.code() == 204) {
+                    Log.i("0011", response.message()+" "+response.code());
+                    MySharedPreference.saveBooleanIsLoged(sharedPref, false);
+                    MySharedPreference.saveStringToken(sharedPref, null);
+                }
+                if(response.code() == 401){
+                    Log.i("0011", response.message()+" "+response.code());
+                    FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(activity.getString(R.string.unauthorizedLogin), activity), activity);
+                }
+                if(response.code() == 500){
+                    Log.i("0011", response.message()+" "+response.code());
+                    FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(activity.getString(R.string.serverError), activity), activity);
+                }
+            }
+            @Override
+            public void onFailure(Call<Login> call, Throwable t) {
+                FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(activity.getString(R.string.failedConnection), activity), activity);
+                Log.i("0011", "logout False"+ t.getMessage());
+            }
+        });
+    }
+    //base64 Codierung des Token
+    public static String makeBase64Codierung(String stringToEncode){
+        String encoded = Base64.encodeToString(stringToEncode.getBytes(), Base64.NO_WRAP);
+        return encoded;
+    }
+    //erstellt den zu verschluesselnden String
+    public static String makeSendData(String nr, String pass){
+        String sendData;
+        sendData = nr+":"+pass;
+        return sendData;
+    }
+
+    public static String makeTokenSendDataLogout(String token){
+        return token+":";
+    }
+
+    //erstellt den Call
+    public static Call<Login> getLoginCall(String stringToSend){
+        LoginInterface log = ServiceAdapter.getLoginService();
+        Call<Login> service = log.authenticate("Basic " + stringToSend);
+        return service;
+    }
+    public static Call<Login> getLogoutCall(String stringToSend){
+        LoginInterface log = ServiceAdapter.getLoginService();
+        Call<Login> service = log.logout("Basic "+stringToSend);
+        return service;
+    }
+
+
 
 }

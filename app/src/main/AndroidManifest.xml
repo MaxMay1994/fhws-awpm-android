@@ -37,10 +37,6 @@
             android:label="AWPM"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".activities.LoginActivity"
-            android:label="Login"
-            android:theme="@style/AppTheme" />
-        <activity
             android:name=".activities.LinkActivity"
             android:label="AWPM"
             android:theme="@style/AppTheme">

@@ -35,9 +35,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
-        MySharedPreference.saveBooleanIs401(sharedPref,false);
-        MySharedPreference.saveBooleanIs500(sharedPref,false);
-        MySharedPreference.saveBooleanIsFailed(sharedPref,false);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.tollbar);
         setSupportActionBar(toolbar);
@@ -78,21 +75,13 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_login) {
             if( MySharedPreference.getBooleanIsLoged(sharedPref) == true){
-               LoginActivity.userLogout(sharedPref, getSupportFragmentManager());
-                synchronized (this){
-                    try {
-                        this.wait(1950);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
+                FragmentLoginDialog.userLogout(sharedPref, this);
                 invalidateOptionsMenu();
             }
             if( MySharedPreference.getBooleanIsLoged(sharedPref) == false){
                 final FragmentLoginDialog dialog = new FragmentLoginDialog();
                 dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.transperantDialog);
                 dialog.show(getSupportFragmentManager(), "log");
-
                 invalidateOptionsMenu();
             }
         }
@@ -118,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
             menu.add(0,R.id.action_login,0,"Login");
             menu.add(0,R.id.action_timeframe,0,"Wahlzeiträume");
             menu.add(0,R.id.action_links, 0 , "Links");
-
         }
         return super.onPrepareOptionsMenu(menu);
     }
