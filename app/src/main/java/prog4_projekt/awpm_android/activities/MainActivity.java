@@ -10,9 +10,12 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 import prog4_projekt.awpm_android.MySharedPreference;
@@ -35,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        if(checkIfTokenIsExpired()){
+            MySharedPreference.saveStringToken(sharedPref,null);
+            MySharedPreference.saveBooleanIsLoged(sharedPref, false);
+        }
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.tollbar);
         setSupportActionBar(toolbar);
@@ -64,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     @Override
@@ -79,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
             if( MySharedPreference.getBooleanIsLoged(sharedPref) == true){
                 FragmentLoginDialog.userLogout(sharedPref, this);
                 invalidateOptionsMenu();
+
             }
             if( MySharedPreference.getBooleanIsLoged(sharedPref) == false){
                 final FragmentLoginDialog dialog = new FragmentLoginDialog();
@@ -113,4 +122,16 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onPrepareOptionsMenu(menu);
     }
+    public boolean checkIfTokenIsExpired(){
+            Date today = new Date();
+            Long todayLong = today.getTime();
+
+        if( todayLong < MySharedPreference.getDateExpiresAtAsLong(sharedPref)){
+                return false;
+            }
+            else{
+                return true;
+            }
+    }
+
 }

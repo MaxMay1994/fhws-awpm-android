@@ -2,6 +2,7 @@ package prog4_projekt.awpm_android;
 
 import prog4_projekt.awpm_android.RestApi.UserData.Login;
 import retrofit2.Call;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 
