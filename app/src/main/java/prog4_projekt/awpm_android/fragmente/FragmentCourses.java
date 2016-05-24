@@ -38,13 +38,14 @@ public class FragmentCourses extends Fragment{
     RecyclerView recyclerView;
     RecyclerView rv;
     public List<Module> modulesList;
-    Call<List<Module>> call;
+    Call<List<Module>> call, call1;
     String content, name, lecturer, start, end, examType, room, examNumber, city, location;
     int participants, id, cityidSW, cityidWUE, locationIDSHL, locationIDMstr, subjectAreaIDBIN, subjectAreaIDBWI;
     boolean voted, favorite;
     Button filter;
     SharedPreferences sharedPref;
     private String authorization;
+    private List<Module> mList;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class FragmentCourses extends Fragment{
                 String[] dataFromFilter = data.getStringArrayExtra("returnData");
                 for (String s : dataFromFilter){
                     Log.i("Filteruebergabe", s);
-                    if(s.equals("wahlZeitraum")){
+                    if(s.toLowerCase().equals("wahlZeitraum".toLowerCase())){
                         call = ServiceAdapter.getService().getActiveModules(true);
                         call.enqueue(new Callback<List<Module>>() {
                             @Override
@@ -78,12 +79,14 @@ public class FragmentCourses extends Fragment{
                             }
                         });
                     }
- /* funktioniert ab hier noch nicht if (s.equals("Schweinfurt")){
+                    //Filterkategorie2: checken lassen, falsche Daten vom Backend erhalten!!!!!
+                    if (s.toLowerCase().equals("Schweinfurt".toLowerCase())){
                         call = ServiceAdapter.getService().getModulesAtLocationID(getIDFor("Schweinfurt"));
                         call.enqueue(new Callback<List<Module>>() {
                             @Override
                             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
                                 modulesList = response.body();
+                                Log.i("IDSW:", String.valueOf(cityidSW));
                                 adapter = new RecyclerViewAdapter(getActivity(), modulesList);
                                 recyclerView.setAdapter(adapter);
                                 adapter.notifyDataSetChanged();
@@ -93,7 +96,7 @@ public class FragmentCourses extends Fragment{
                             }
                         });
                     }
-                    if(s.equals("Würzburg")){
+                    if(s.toLowerCase().equals("Würzburg".toLowerCase())){
                         call = ServiceAdapter.getService().getModulesAtLocationID(getIDFor("Würzburg"));
                         call.enqueue(new Callback<List<Module>>() {
                             @Override
@@ -108,7 +111,7 @@ public class FragmentCourses extends Fragment{
                             }
                         });
                     }
-                    if(s.equals("SHL")){
+                    if(s.toLowerCase().equals("SHL".toLowerCase())){
                         call = ServiceAdapter.getService().getModulesAtBuildingID(getIDFor("SHL"));
                         call.enqueue(new Callback<List<Module>>() {
                             @Override
@@ -123,7 +126,7 @@ public class FragmentCourses extends Fragment{
                             }
                         });
                     }
-                    if (s.equals("Münzstr.")){
+                    if (s.toLowerCase().equals("Münzstr.".toLowerCase())){
                         call = ServiceAdapter.getService().getModulesAtBuildingID(getIDFor("Münzstr."));
                         call.enqueue(new Callback<List<Module>>() {
                             @Override
@@ -137,9 +140,9 @@ public class FragmentCourses extends Fragment{
                             public void onFailure(Call<List<Module>> call, Throwable t) {
                             }
                         });
-                    }*/ // blockedFor "mich" funktioniert
-                    if (s.equals("mich")){
-                        call = ServiceAdapter.getService().getBlockedModules(true, authorization);
+                    } // blockedFor "mich" funktioniert
+                    if (s.toLowerCase().equals("mich".toLowerCase())){
+                        call = ServiceAdapter.getService().getBlockedModules(false, authorization);
                         call.enqueue(new Callback<List<Module>>() {
                             @Override
                             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
@@ -155,7 +158,8 @@ public class FragmentCourses extends Fragment{
                             }
                         });
                     }
-                 /*   if(s.equals("BIN")){
+                    //Filterkategorie3 bis auf "mich" checken lassen, falsche Daten vom Backend erhalten
+                    if(s.toLowerCase().equals("BIN".toLowerCase())){
                         call = ServiceAdapter.getService().getNotBlockedFor(subjectAreaIDBIN);
                         call.enqueue(new Callback<List<Module>>() {
                             @Override
@@ -172,7 +176,7 @@ public class FragmentCourses extends Fragment{
                             }
                         });
                     }
-                    if(s.equals("BWI")){
+                    if(s.toLowerCase().equals("BWI".toLowerCase())){
                         call = ServiceAdapter.getService().getNotBlockedFor(subjectAreaIDBWI);
                         call.enqueue(new Callback<List<Module>>() {
                             @Override
@@ -188,9 +192,9 @@ public class FragmentCourses extends Fragment{
 
                             }
                         });
-                    }*/ //funktioniert erst wieder ab favorisierte Module
+                    }
 
-                    if(s.equals("favoredModules")){
+                    if(s.toLowerCase().equals("favoredModules".toLowerCase())){
                         call = ServiceAdapter.getService().getFavoredModules(true, authorization);
                         call.enqueue(new Callback<List<Module>>() {
                             @Override
@@ -205,7 +209,8 @@ public class FragmentCourses extends Fragment{
 
                             }
                         });
-                    }/*else{
+                    }
+                   /* if(s.isEmpty()){
                         call = ServiceAdapter.getService().getAllModules(1, 50);
                         call.enqueue(new Callback<List<Module>>() {
                             @Override
@@ -237,12 +242,17 @@ public class FragmentCourses extends Fragment{
         filter = (Button) view.findViewById(R.id.filter);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //call = ServiceAdapter.getService().getModulesAtLocationID(0); -> checken im Backend, gibt keine richtigen Werte zurück
+
         call = ServiceAdapter.getService().getAllModules(1,50);
         call.enqueue(new Callback<List<Module>>() {
             @Override
             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
                 modulesList = response.body();
                 adapter = new RecyclerViewAdapter(getActivity(), modulesList);
+               // for(Module m:modulesList){
+                 //   Log.i("Inhalt", m.getName());
+                //}
                 recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
