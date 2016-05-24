@@ -22,6 +22,7 @@ public class FilterActivity extends AppCompatActivity {
     String locationID = "";
     String blockedForID = "";
     String favoredModulesID = "";
+    boolean wahl, loc, blocked, fav;
     CheckBox wahlZeitraum;
     CheckBox location;
     CheckBox blockedFor;
@@ -29,8 +30,6 @@ public class FilterActivity extends AppCompatActivity {
     Button returnFromFilter;
     Spinner spinnerFilter1;
     Spinner spinnerFilter2;
-
-
     TextView toolText;
 
     @Override
@@ -48,20 +47,18 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    if(!wahlZeitraumID.isEmpty()) wahlZeitraum.setChecked(true);
                     wahlZeitraumID = "wahlZeitraum";
                 }
-                else wahlZeitraumID = "";
+                else wahlZeitraumID = null;
             }
         });
         favoredModules.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    if(!favoredModulesID.isEmpty()) favoredModules.setChecked(true);
                     favoredModulesID = "favoredModules";
                 }
-                else favoredModulesID = "";
+                else favoredModulesID = null;
             }
         });
 
@@ -90,7 +87,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 location.setChecked(false);
-                locationID = "";
+                locationID = null;
             }
         });
 
@@ -117,7 +114,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 blockedFor.setChecked(false);
-                blockedForID = "";
+                blockedForID = null;
             }
         });
         returnFromFilter = (Button) findViewById(R.id.return_filter);

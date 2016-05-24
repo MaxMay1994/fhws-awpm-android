@@ -79,7 +79,6 @@ public class FragmentCourses extends Fragment{
                             }
                         });
                     }
-                    //Filterkategorie2: checken lassen, falsche Daten vom Backend erhalten!!!!!
                     if (s.toLowerCase().equals("Schweinfurt".toLowerCase())){
                         call = ServiceAdapter.getService().getModulesAtLocationID(getIDFor("Schweinfurt"));
                         call.enqueue(new Callback<List<Module>>() {
@@ -142,7 +141,7 @@ public class FragmentCourses extends Fragment{
                         });
                     } // blockedFor "mich" funktioniert
                     if (s.toLowerCase().equals("mich".toLowerCase())){
-                        call = ServiceAdapter.getService().getBlockedModules(false, authorization);
+                        call = ServiceAdapter.getService().getBlockedModules(true, authorization);
                         call.enqueue(new Callback<List<Module>>() {
                             @Override
                             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
@@ -160,7 +159,7 @@ public class FragmentCourses extends Fragment{
                     }
                     //Filterkategorie3 bis auf "mich" checken lassen, falsche Daten vom Backend erhalten
                     if(s.toLowerCase().equals("BIN".toLowerCase())){
-                        call = ServiceAdapter.getService().getNotBlockedFor(subjectAreaIDBIN);
+                        call = ServiceAdapter.getService().getNotBlockedFor(1);
                         call.enqueue(new Callback<List<Module>>() {
                             @Override
                             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
@@ -177,7 +176,7 @@ public class FragmentCourses extends Fragment{
                         });
                     }
                     if(s.toLowerCase().equals("BWI".toLowerCase())){
-                        call = ServiceAdapter.getService().getNotBlockedFor(subjectAreaIDBWI);
+                        call = ServiceAdapter.getService().getNotBlockedFor(2);
                         call.enqueue(new Callback<List<Module>>() {
                             @Override
                             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
@@ -210,7 +209,7 @@ public class FragmentCourses extends Fragment{
                             }
                         });
                     }
-                   /* if(s.isEmpty()){
+                    if(dataFromFilter == null){
                         call = ServiceAdapter.getService().getAllModules(1, 50);
                         call.enqueue(new Callback<List<Module>>() {
                             @Override
@@ -226,7 +225,7 @@ public class FragmentCourses extends Fragment{
 
                             }
                         });
-                    }*/
+                    }
                 }
 
             }
@@ -261,18 +260,10 @@ public class FragmentCourses extends Fragment{
                 //Toast.makeText(getContext(), "Bitte erneut laden", Toast.LENGTH_LONG).show();
             }
         });
-/*        for(Module mod:modulesList){
-            if(mod.getBlockedFor().get(0).getName().equals("BIN"))
-                subjectAreaIDBIN = mod.getBlockedFor().get(0).getId();
-            else subjectAreaIDBIN = mod.getBlockedFor().get(1).getId();
-        }
-        for(Module m:modulesList){
-            if(m.getBlockedFor().get(0).getName().equals("BWI")) subjectAreaIDBWI = m.getBlockedFor().get(0).getId();
-            else subjectAreaIDBWI = m.getBlockedFor().get(1).getId();
-        }*/
+
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener(){
-                    @Override public void onItemClick(View view, int position){
+                    @Override public void onItemClick(View view, final int position){
                         Call<Module> call2 = ServiceAdapter.getService().getAuthoristModule(modulesList.get(position).getId(),authorization);
                         call2.enqueue(new Callback<Module>() {
                             @Override
@@ -329,11 +320,11 @@ public class FragmentCourses extends Fragment{
     }
     private int getIDFor(String location){
         for(Module m:modulesList){
-            if(m.getRoom().getBuilding().getLocation().getName().equals("Schweinfurt") && location.equals("Schweinfurt")){
+            if(m.getRoom().getBuilding().getLocation().getName().equalsIgnoreCase("Schweinfurt") && location.equalsIgnoreCase("Schweinfurt")){
                 cityidSW = m.getRoom().getBuilding().getLocation().getId();
                 return cityidSW;
             }
-            else if(m.getRoom().getBuilding().getLocation().getName().equals("Würzburg")&& location.equals("Würzburg")){
+            else if(m.getRoom().getBuilding().getLocation().getName().equalsIgnoreCase("Würzburg")&& location.equalsIgnoreCase("Würzburg")){
                 cityidWUE = m.getRoom().getBuilding().getLocation().getId();
                 return cityidWUE;
             }
@@ -347,5 +338,12 @@ public class FragmentCourses extends Fragment{
             }
         }
         return 0;
+    }
+    private void printList (List<Module> list){
+        for (Module m:
+             list) {
+            Log.i("Liste:", m.getName());
+
+        }
     }
 }

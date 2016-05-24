@@ -79,7 +79,7 @@ public interface AwpmApi {
     getBlockedModules(@Query("blocked") boolean blocked, @Header("Authorization") String authorization);
 
     //alle Module, die nicht für den Studiengang mit der ID not_blocked_for gesperrt sind
-    @GET("api/subject-areas")
+    @GET("api/modules")
     Call<List<Module>>
     getNotBlockedFor(@Query("not_blocked_for") int subjectAreaID);
 
@@ -104,12 +104,12 @@ public interface AwpmApi {
     getAcceptedModules(@Query("accepted") boolean accepted, @Header("Authorization") String authorization);
 
     //nur an Standort mit ID location_id
-    @GET("api/locations")
+    @GET("api/modules")
     Call<List<Module>>
     getModulesAtLocationID(@Query("location_id") int location_id);
 
     //nur in Gebäude mit ID building_id
-    @GET("api/locations")
+    @GET("api/modules")
     Call<List<Module>>
     getModulesAtBuildingID(@Query("building_id") int building_id);
 

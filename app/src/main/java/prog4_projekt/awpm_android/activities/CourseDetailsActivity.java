@@ -41,11 +41,8 @@ public class CourseDetailsActivity extends AppCompatActivity {
     boolean moduleVoted, moduleFavorite;
     String favMarked, notFavMarked, voteMarked, notVoteMarked, name;
     SharedPreferences sharedPreferences;
-    Module passedModule;
     Call<Module> callVoted;
     Call<Module> callFavorite;
-    private Call<List<Module>> callVotedList;
-    private List<Module> votedList;
     int id;
     String authorization;
 
@@ -98,10 +95,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
         if(moduleVoted) wahlSwitch.setChecked(true);
         moduleFavorite = extras.getBoolean("favorite");
         if (moduleFavorite) mfb.setFavorite(true);
-        //passedModule = passedObject.getParcelableExtra("Object");
-
         if(extras!= null){
-
             toolTitle.setText(name);
             information.setText(getString(R.string.description));
             info_content.setText(content); //+numberVoted);
