@@ -1,16 +1,18 @@
 package prog4_projekt.awpm_android.adapter;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import prog4_projekt.awpm_android.R;
 import prog4_projekt.awpm_android.fragmente.FragmentCourses;
 import prog4_projekt.awpm_android.fragmente.FragmentProfil;
 import prog4_projekt.awpm_android.fragmente.FragmentBallot;
 
 public class ViewPaperAdapterMainActivity extends FragmentPagerAdapter{
-
-    String[] title = {"Katalog","Wahlzettel","Profil"};
+    String[] title;
 
     public ViewPaperAdapterMainActivity(FragmentManager fm) {
         super(fm);
@@ -35,5 +37,11 @@ public class ViewPaperAdapterMainActivity extends FragmentPagerAdapter{
     @Override
     public CharSequence getPageTitle(int position) {
         return title[position];
+    }
+    public void setTitleArray(String[] array){
+        this.title = array;
+    }
+    public String[] getTitleArray(){
+        return title;
     }
 }

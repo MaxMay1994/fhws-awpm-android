@@ -11,16 +11,15 @@
     <string name="info_link_sw">Abteilung Schweinfurt</string>
 
     // http strings
-    <string name="fang_SW"></string>
-    <string name="fang_WUE"></string>
-    <string name="datum">hier datum rein</string>
+
 
     // strings timeframes fragmente
     <string name="active">Aktiv !</string>
     <string name="notActive">Inaktiv !</string>
-    <string name="regWindow">Zeitraum :</string>
+    <string name="regWindow">Anmeldezeitraum :</string>
     <string name="catchUpWindow">Nachmeldung :</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="bis">bis</string>
 
     //strings CourseDetailsActivity
     <string name="description">Inhalt</string>
@@ -120,6 +119,48 @@
 
     //file strings
     <string name="awpm_saved_data">awpm_saved_data</string>
+
+    //tab strings
+    <string name="katalogTab">KATALOG</string>
+    <string name="wahlzettelTab">WAHLZETTEL</string>
+    <string name="profiltab">PROFIL</string>
+
+
+    //menue buttonStrings
+    <string name="logout">Logout</string>
+    <string name="wahlzeitraeume">Wahlzeiträume</string>
+    <string name="links">Links</string>
+
+
+    //ort strings
+    <string name="ortWue">Würzburg</string>
+    <string name="ortSw">Schweinfurt</string>
+    <string name="ortShl">SHL</string>
+    <string name="ortMuenz">Münzstr.</string>
+
+
+    //filter strings
+    <string name="topStringFilterActivity">AWPM-Liste filtern</string>
+    <string name="auswaehlen">...</string>
+    <string name="mich">mich</string>
+    <string name="stringStudiengangBIN">BIN</string>
+    <string name="stringStudiengangBWI">BWI</string>
+
+    //filter strings checkboxen
+    <string name="checkboxAktuellerZeitraum">Nur aktueller Wahlzeitraum</string>
+    <string name="checkboxOrt">Nur Module in:</string>
+    <string name="checkboxGesperrteModule">Gesperrte Module \nausblenden für:</string>
+    <string name="checkboxVorgemerkte">Nur vorgemerkte Module anzeigen</string>
+
+    //filter button
+    <string name="filterButtonSpeichern">Auswahl speichern</string>
+
+    //fragmentCourses button
+    <string name="fragmentCoursesButton">Module Filtern</string>
+
+    //content_courses_details strings
+    <string name="favoritMarkieren">Als Favorit markieren</string>
+    <string name="moduleWaehlen">Wählen</string>
 
 
 </resources>

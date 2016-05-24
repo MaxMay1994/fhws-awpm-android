@@ -162,6 +162,7 @@ public class FragmentTimeframesWue extends android.support.v4.app.Fragment {
         SimpleDateFormat setMainFormDate = new SimpleDateFormat("dd.MM.yyyy HH.mm", Locale.getDefault());
         setMainFormDate.setCalendar(mainEnd);
         mainEndString = setMainFormDate.format(mainEnd.getTime());
+        Log.i("0101011", "aus else");
     }
     //WICHTIG !!! hier month = monat-1 !!!!
     public void setMainStartTimframe(int year,int month, int day, int hour,int minute){

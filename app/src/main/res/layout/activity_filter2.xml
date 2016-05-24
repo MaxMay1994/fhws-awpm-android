@@ -12,7 +12,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="AWPF-Liste filtern"
+            android:text="@string/topStringFilterActivity"
             android:layout_gravity="left"
             android:textSize="20dp"
             android:id="@+id/filtertoolbar_title"
@@ -24,7 +24,7 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nur aktueller Wahlzeitraum"
+        android:text="@string/checkboxAktuellerZeitraum"
         android:textSize="18sp"
         android:id="@+id/aktuellerWahlzeitraum"
         android:layout_alignParentTop="true"
@@ -36,7 +36,7 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nur Module in: "
+        android:text="@string/checkboxOrt"
         android:textSize="18sp"
         android:id="@+id/location"
         android:checked="false"
@@ -49,20 +49,19 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gesperrte Module ausblenden für: "
+        android:text="@string/checkboxGesperrteModule"
         android:textSize="18sp"
         android:id="@+id/gesperrt"
         android:clickable="false"
         android:layout_marginTop="80dp"
         android:checked="false"
         android:layout_below="@+id/location"
-        android:layout_toLeftOf="@+id/spinner2"
-        android:layout_toStartOf="@+id/spinner2" />
+        />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nur vorgemerkte Module anzeigen"
+        android:text="@string/checkboxVorgemerkte"
         android:textSize="18sp"
         android:id="@+id/favoriteModulesFilter"
         android:layout_marginTop="80dp"
@@ -90,14 +89,15 @@
         android:spinnerMode="dropdown"
         android:layout_above="@+id/favoriteModulesFilter"
         android:layout_toRightOf="@+id/aktuellerWahlzeitraum"
-        android:layout_alignTop="@+id/gesperrt"
+        android:layout_toEndOf="@+id/gesperrt"
         android:layout_alignRight="@+id/spinner1"
-        android:layout_alignEnd="@+id/spinner1" />
+        android:layout_alignEnd="@+id/spinner1"
+        android:layout_alignBaseline="@+id/gesperrt"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Auswahl speichern"
+        android:text="@string/filterButtonSpeichern"
         android:id="@+id/return_filter"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />

@@ -154,7 +154,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Als Favorit markieren"
+                android:text="@string/favoritMarkieren"
                 android:layout_gravity="bottom"
                 android:id="@+id/favorit"
 
@@ -166,7 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Wählen"
+                android:text="@string/moduleWaehlen"
                 android:layout_gravity="bottom"
                 android:id="@+id/wahl"
                 android:layout_alignTop="@+id/favorit"

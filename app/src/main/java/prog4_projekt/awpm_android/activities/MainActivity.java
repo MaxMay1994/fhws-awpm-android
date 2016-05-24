@@ -13,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-
+import java.util.Locale;
 
 import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
@@ -39,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.tollbar);
         setSupportActionBar(toolbar);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
+        String[] titleArray = {getString(R.string.katalogTab),getString(R.string.wahlzettelTab),getString(R.string.profiltab)};
         final ViewPaperAdapterMainActivity viewPaperAdapter = new ViewPaperAdapterMainActivity(getSupportFragmentManager());
+        viewPaperAdapter.setTitleArray(titleArray);
         viewPager.setAdapter(viewPaperAdapter);
         getFromDetails = getIntent();
         int id = getFromDetails.getIntExtra("id", 0);
@@ -93,20 +95,21 @@ public class MainActivity extends AppCompatActivity {
             Intent links = new Intent(this, LinkActivity.class);
             startActivity(links);
         }
+
         return super.onOptionsItemSelected(item);
     }
     @Override
     public boolean onPrepareOptionsMenu(Menu menu){
         menu.clear();
         if(String.valueOf(MySharedPreference.getBooleanIsLoged(sharedPref)).equals("true")){
-            menu.add(0,R.id.action_login,0,"Logout");
-            menu.add(0,R.id.action_timeframe,0,"Wahlzeiträume");
-            menu.add(0,R.id.action_links, 0 , "Links");
+            menu.add(0,R.id.action_login,0,getString(R.string.logout));
+            menu.add(0,R.id.action_timeframe,0,getString(R.string.wahlzeitraeume));
+            menu.add(0,R.id.action_links, 0 , getString(R.string.links));
         }
         if(String.valueOf(MySharedPreference.getBooleanIsLoged(sharedPref)).equals("false")){
-            menu.add(0,R.id.action_login,0,"Login");
-            menu.add(0,R.id.action_timeframe,0,"Wahlzeiträume");
-            menu.add(0,R.id.action_links, 0 , "Links");
+            menu.add(0,R.id.action_login,0,getString(R.string.login));
+            menu.add(0,R.id.action_timeframe,0,getString(R.string.wahlzeitraeume));
+            menu.add(0,R.id.action_links, 0 , getString(R.string.links));
         }
         return super.onPrepareOptionsMenu(menu);
     }
