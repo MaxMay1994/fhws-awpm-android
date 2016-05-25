@@ -10,14 +10,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 
+
+import prog4_projekt.awpm_android.GCMRegistrationService;
 import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
 
@@ -42,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
             MySharedPreference.saveStringToken(sharedPref,null);
             MySharedPreference.saveBooleanIsLoged(sharedPref, false);
         }
+
+        Intent intent = new Intent(this, GCMRegistrationService.class);
+        startService(intent);
+
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.tollbar);
         setSupportActionBar(toolbar);
