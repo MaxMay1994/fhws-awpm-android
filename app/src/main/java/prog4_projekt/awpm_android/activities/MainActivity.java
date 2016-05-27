@@ -14,10 +14,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
+
+
+import prog4_projekt.awpm_android.GCMRegistrationService;
 import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
 
@@ -41,7 +48,13 @@ public class MainActivity extends AppCompatActivity {
         if(checkIfTokenIsExpired()){
             MySharedPreference.saveStringToken(sharedPref,null);
             MySharedPreference.saveBooleanIsLoged(sharedPref, false);
+            Log.i("1111111", "checkToken dgf");
         }
+        Log.i("1111111", "nach checkToken ");
+
+        //Intent intent = new Intent(this, GCMRegistrationService.class);
+        //startService(intent);
+
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.tollbar);
         setSupportActionBar(toolbar);
@@ -133,5 +146,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
     }
+
 
 }

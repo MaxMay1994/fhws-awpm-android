@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "805625515090",
+    "project_id": "fhws-awpm-20f9c"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:805625515090:android:30743cbb589e61de",
+        "android_client_info": {
+          "package_name": "prog4_projekt.awpm_android"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAO8TQn0rwmn9Ychk4lQBTcYkll1hLjpbs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

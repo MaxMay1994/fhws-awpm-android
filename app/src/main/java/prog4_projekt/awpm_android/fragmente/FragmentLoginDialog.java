@@ -69,6 +69,7 @@ public class FragmentLoginDialog extends DialogFragment {
                 if (!stringKNummer.isEmpty() && !stringPwd.isEmpty()) {
                     try {
                         login(stringKNummer, stringPwd, sharedPref, getActivity(), FragmentLoginDialog.this);
+
                         inputKNummer.setText(null);
                         inputPwd.setText(null);
                     } catch (IOException e) {
@@ -133,6 +134,7 @@ public class FragmentLoginDialog extends DialogFragment {
 
 
         getLoginCall(makeBase64Codierung(makeSendData(kNummer, pwd))).enqueue(new Callback<Login>() {
+
             @Override
             public void onResponse(Call<Login> call, Response<Login> response) {
                 if(response.code() == 200){
@@ -145,22 +147,27 @@ public class FragmentLoginDialog extends DialogFragment {
                     dialog.dismiss();
 
                 }
-                if(response.code() == 401){
+                if(response.code() >= 401){
                     FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(activity.getString(R.string.unauthorizedLogin), activity), activity);
                     MySharedPreference.saveBooleanIsLoged(sharedPref, false);
                     Log.i("0000","in firstUse "+response.code());
                 }
-                if(response.code() == 500){
+                if(response.code() >= 500){
                     FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(activity.getString(R.string.serverError), activity), activity);
                     MySharedPreference.saveBooleanIsLoged(sharedPref, false);
                     Log.i("0000","in firstUse "+response.code());
                 }
+                Log.i("0000","FEHLER "+response.code() +" "+ response.message());
+
+
             }
 
             @Override
             public void onFailure(Call<Login> call, Throwable t) {
                 FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(activity.getString(R.string.failedConnection), activity), activity);
                 MySharedPreference.saveBooleanIsLoged(sharedPref, false);
+                Log.i("0000","onFailure ");
+
             }
         });
 
