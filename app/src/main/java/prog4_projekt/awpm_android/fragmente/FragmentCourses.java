@@ -33,7 +33,7 @@ import retrofit2.Response;
 
 
 public class FragmentCourses extends Fragment{
-   private View view;
+    private View view;
     RecyclerViewAdapter adapter, adapter1;
     RecyclerView recyclerView, rv;
     public List<Module> modulesList;
@@ -41,7 +41,6 @@ public class FragmentCourses extends Fragment{
     String content, name, lecturer, start, end, examType, room, examNumber, city, location;
     int participants, id, cityidSW, cityidWUE, locationIDSHL, locationIDMstr, subjectAreaIDBIN, subjectAreaIDBWI;
     boolean voted, favorite;
-    boolean[] boxIDs;
     Button filter;
     SharedPreferences sharedPref;
     private String authorization;
@@ -341,7 +340,6 @@ public class FragmentCourses extends Fragment{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), FilterActivity.class);
-                intent.putExtra("forwarding", boxIDs);
                 startActivityForResult(intent, 1);
             }
         });
