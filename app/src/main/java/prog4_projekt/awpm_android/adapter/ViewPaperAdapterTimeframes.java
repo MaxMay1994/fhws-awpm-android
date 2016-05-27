@@ -4,6 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import java.lang.reflect.Array;
+
 import prog4_projekt.awpm_android.fragmente.FragmentTimeframesSw;
 import prog4_projekt.awpm_android.fragmente.FragmentTimeframesWue;
 
@@ -11,7 +13,8 @@ import prog4_projekt.awpm_android.fragmente.FragmentTimeframesWue;
  * Created by florianduenow on 17.04.16.
  */
 public class ViewPaperAdapterTimeframes extends FragmentPagerAdapter {
-    String[] title = {"Würzburg","Schweinfurt"};
+    String[] title;
+
 
     public ViewPaperAdapterTimeframes(FragmentManager fm) {
         super(fm);
@@ -35,5 +38,11 @@ public class ViewPaperAdapterTimeframes extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         return title[position];
+    }
+    public void setTitleArray(String[] array){
+        this.title = array;
+    }
+    public String[] getTitleArray(){
+        return title;
     }
 }

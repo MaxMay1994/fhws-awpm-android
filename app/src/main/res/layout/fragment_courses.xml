@@ -23,7 +23,7 @@ tools:showIn="@layout/activity_main">
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Module Filtern"
+        android:text="@string/fragmentCoursesButton"
         android:id="@+id/filter" />
 
 

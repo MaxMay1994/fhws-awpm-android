@@ -29,9 +29,11 @@ public class TimeframesActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-
+        String[] titleArray = {getString(R.string.ortWue),getString(R.string.ortSw)};
         ViewPaperAdapterTimeframes viewPaperAdapter = new ViewPaperAdapterTimeframes(getSupportFragmentManager());
+        viewPaperAdapter.setTitleArray(titleArray);
         viewPager.setAdapter(viewPaperAdapter);
+
 
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);

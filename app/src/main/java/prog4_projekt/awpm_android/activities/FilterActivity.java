@@ -64,7 +64,7 @@ public class FilterActivity extends AppCompatActivity {
 
 
         spinnerFilter1 = (Spinner) findViewById(R.id.spinner1);
-        final String[] itemsFilter1 = new String[]{"Bitte auswählen", "Schweinfurt", "Würzburg", "Münzstr.", "SHL"};
+        final String[] itemsFilter1 = new String[]{getString(R.string.auswaehlen), getString(R.string.ortSw), getString(R.string.ortWue), getString(R.string.ortMuenz), getString(R.string.ortShl)};
         ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, itemsFilter1);
         spinnerFilter1.setAdapter(adapter1);
         spinnerFilter1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -92,7 +92,7 @@ public class FilterActivity extends AppCompatActivity {
         });
 
         spinnerFilter2 = (Spinner) findViewById(R.id.spinner2);
-        final String[] itemsFilter2 = new String[]{"Wählen", "mich", "BIN", "BWI"};
+        final String[] itemsFilter2 = new String[]{getString(R.string.auswaehlen),getString(R.string.mich), getString(R.string.stringStudiengangBIN), getString(R.string.stringStudiengangBWI)};
         ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, itemsFilter2);
         spinnerFilter2.setAdapter(adapter2);
         spinnerFilter2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

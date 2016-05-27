@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.Date;
 
 import prog4_projekt.awpm_android.LoginInterface;
 import prog4_projekt.awpm_android.MySharedPreference;
@@ -139,6 +140,8 @@ public class FragmentLoginDialog extends DialogFragment {
                     loginObject=response.body();
                     MySharedPreference.saveBooleanIsLoged(sharedPref, true);
                     MySharedPreference.saveStringToken(sharedPref, loginObject.getToken());
+                    MySharedPreference.saveDateExpiresAtAsLong(sharedPref, loginObject.getExpires_at());
+
                     dialog.dismiss();
 
                 }
@@ -167,14 +170,21 @@ public class FragmentLoginDialog extends DialogFragment {
         getLogoutCall(makeBase64Codierung(makeTokenSendDataLogout(MySharedPreference.getStringToken(sharedPref)))).enqueue(new Callback<Login>() {
             @Override
             public void onResponse(Call<Login> call, Response<Login> response) {
+                Date today = new Date();
+                today.getTime();
+                String str = today.toString();
                 if(response.code() == 204) {
                     Log.i("0011", response.message()+" "+response.code());
                     MySharedPreference.saveBooleanIsLoged(sharedPref, false);
                     MySharedPreference.saveStringToken(sharedPref, null);
+                    Log.i("123123", str +" "+ MySharedPreference.getDateExpiresAtAsLong(sharedPref));
+
                 }
                 if(response.code() == 401){
                     Log.i("0011", response.message()+" "+response.code());
+
                     FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(activity.getString(R.string.unauthorizedLogin), activity), activity);
+
                 }
                 if(response.code() == 500){
                     Log.i("0011", response.message()+" "+response.code());

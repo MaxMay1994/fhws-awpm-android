@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AWPM</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_course__details">Course_Details</string>
+    <string name="filter_title">Filters</string>
+
+    // strings info fragment
+    <string name="global_info">All information without guarantee. Please note the respective notices of the Faculty of Applied Science and Humanities</string>
+    <string name="info_links">Links to the information page of the Faculty of Applied Science and Humanities</string>
+    <string name="info_link_wue">Department Würzburg</string>
+    <string name="info_link_sw">Department Schweinfurt</string>
+
+    // http strings
+    <string name="fang_SW"></string>
+    <string name="fang_WUE"></string>
+    <string name="datum">placeholder</string>
+
+    // strings timeframes fragmente
+    <string name="active">Aktive !</string>
+    <string name="notActive">Inaktive !</string>
+    <string name="regWindow">Registration Period :</string>
+    <string name="catchUpWindow">Late registration :</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="bis">to</string>
+
+
+    //strings CourseDetailsActivity
+    <string name="description">Content</string>
+    <string name="location">\n\nLocation:\u0020</string>
+    <string name="appointments">\nDate:\u0020</string>
+    <string name="blocked">\nBlocked:\u0020</string>
+    <string name="examnumber">\nCourse-#:\u0020</string>
+    <string name="appearance">\nMendatory attendance:\u0020</string>
+    <string name="teacher">\nLecturer:\u0020</string>
+    <string name="examType">\nExamtype:\u0020</string>
+    <string name="participants">\nSelected from\u0020/\u0020max. Attendance\u0020</string>
+    <string name="start">\nStarting date:\u0020</string>
+    <string name="end">\nEnd date:\u0020</string>
+    <string name="favorite">"%1$s marked as \'favorite' !"</string>
+    <string name="nonFavorite">"%1$s marked as \'not favorite' !"</string>
+    <string name="voted">"%1$s marked as \'elected' !"</string>
+    <string name="notvoted">"%1$s marked as \'not elected' !"</string>
+
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+
+    <string name="title_activity_filter">FilterActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    //login strings
+    <string name="login_text">Login necessary</string>
+    <string name="k_num_hint">K-number</string>
+    <string name="pwd_hint">Password</string>
+    <string name="login">Login</string>
+    <string name="cancel">Cancel</string>
+
+    //warning strings
+    <string name="missingPwd">Missing passoword</string>
+    <string name="missingKNum">Missing K-number</string>
+    <string name="missinBoth">Missing K-number and password</string>
+    <string name="serverError">Disturbed connection! Please try again</string>
+    <string name="unauthorizedLogin">Login/Logout failed!</string>
+    <string name="failedLogout">Logout failed!</string>
+    <string name="failedConnection">Connection failed!</string>
+
+    //file strings
+    <string name="awpm_saved_data">awpm_saved_data</string>
+
+    //menue strings
+    <string name="katalogTab">CATALOG</string>
+    <string name="wahlzettelTab">BALL PAPER</string>
+    <string name="profiltab">PROFILE</string>
+
+
+    //ort strings
+    <string name="ortWue">Würzburg</string>
+    <string name="ortSw">Schweinfurt</string>
+    <string name="ortShl">SHL</string>
+    <string name="ortMuenz">Münzstr.</string>
+
+    //tab buttonStrings
+    <string name="logout">Logout</string>
+    <string name="wahlzeitraeume">Registration periods</string>
+    <string name="links">Links</string>
+
+    //filter strings
+    <string name="topStringFilterActivity">Filter AWPM-List</string>
+    <string name="auswaehlen">...</string>
+    <string name="mich">myself</string>
+    <string name="stringStudiengangBIN">BIN</string>
+    <string name="stringStudiengangBWI">BWI</string>
+
+    //filter strings checkboxen
+    <string name="checkboxAktuellerZeitraum">Only active registration periods</string>
+    <string name="checkboxOrt">Only courses at:</string>
+    <string name="checkboxGesperrteModule">Hide courses blocked for:</string>
+    <string name="checkboxVorgemerkte">Show favorites only</string>
+
+    //filter button
+    <string name="filterButtonSpeichern">Save selection</string>
+
+    //fragmentCourses button
+    <string name="fragmentCoursesButton">Filter courses</string>
+
+    //content_courses_details strings
+    <string name="favoritMarkieren">Favorite</string>
+    <string name="moduleWaehlen">Elect</string>
+</resources>

@@ -4,6 +4,8 @@ package prog4_projekt.awpm_android.RestApi.UserData;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
+
 
 /**
  * Created by florianduenow on 27.04.16.
@@ -18,7 +20,7 @@ public class Login {
     private User user;
     @SerializedName("expires_at")
     @Expose
-    private String expires_at;
+    private Date expires_at;
     /**
      *
      * @return
@@ -59,7 +61,7 @@ public class Login {
      * @return
      * The expires_at
      */
-    public String getExpires_at() {
+    public Date getExpires_at() {
         return expires_at;
     }
     /**
@@ -67,7 +69,7 @@ public class Login {
      * @param expires_at
      * The expires_at
      */
-    public void setExpires_at(String expires_at) {
+    public void setExpires_at(Date expires_at) {
         this.expires_at = expires_at;
     }
 
