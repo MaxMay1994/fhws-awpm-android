@@ -10,9 +10,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Date;
 
 
@@ -40,10 +48,12 @@ public class MainActivity extends AppCompatActivity {
         if(checkIfTokenIsExpired()){
             MySharedPreference.saveStringToken(sharedPref,null);
             MySharedPreference.saveBooleanIsLoged(sharedPref, false);
+            Log.i("1111111", "checkToken dgf");
         }
+        Log.i("1111111", "nach checkToken ");
 
-        Intent intent = new Intent(this, GCMRegistrationService.class);
-        startService(intent);
+        //Intent intent = new Intent(this, GCMRegistrationService.class);
+        //startService(intent);
 
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.tollbar);
@@ -136,5 +146,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
     }
+
 
 }

@@ -4,6 +4,7 @@
     package="prog4_projekt.awpm_android">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <service android:name=".GCMRegistrationService"
         android:exported="false" />
     <service
