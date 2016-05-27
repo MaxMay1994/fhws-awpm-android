@@ -18,9 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-
 import java.util.List;
-
 import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.RestApi.Module.Module;
 import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
@@ -31,8 +29,6 @@ import prog4_projekt.awpm_android.adapter.RecyclerViewAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller;
-
 
 public class FragmentCourses extends Fragment{
     private View view;
