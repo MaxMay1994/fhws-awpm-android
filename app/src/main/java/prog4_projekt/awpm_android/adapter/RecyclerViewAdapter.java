@@ -1,6 +1,7 @@
 package prog4_projekt.awpm_android.adapter;
 
     import android.content.Context;
+    import android.support.v7.widget.CardView;
     import android.support.v7.widget.RecyclerView;
     import android.view.LayoutInflater;
     import android.view.View;
@@ -46,6 +47,7 @@ package prog4_projekt.awpm_android.adapter;
         @Override
         public void onBindViewHolder(ModuleViewHolder holder, int position) {
             Module module = mList.get(position);
+
             holder.textview1.setText(module.getName());
             String all = "";
             String buildingName = "";
@@ -61,8 +63,6 @@ package prog4_projekt.awpm_android.adapter;
                 }
             }
             holder.textview2.setText(module.getTeacher()+ ",  "+ all +", "+buildingName);
-            if(module.isFavorite())holder.textview1.setBackgroundColor(16747520);
-            if(module.isVoted())holder.textview1.setBackgroundColor(9425920);
 
         }
 
