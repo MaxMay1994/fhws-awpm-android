@@ -145,11 +145,42 @@
                 android:textStyle="italic"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:layout_below="@+id/participants_header"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/blocked_header"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_below="@+id/participants_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/blocked_content"
+                android:textStyle="italic"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_below="@+id/blocked_header"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/appearance_header"
+                android:textStyle="bold"
+                android:textColor="#000000"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_below="@+id/blocked_content"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/appearance_content"
+                android:textStyle="italic"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_below="@+id/appearance_header"/>
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/participants_content">
+                    android:layout_below="@id/appearance_content">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

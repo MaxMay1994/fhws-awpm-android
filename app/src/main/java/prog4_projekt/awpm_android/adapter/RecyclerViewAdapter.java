@@ -61,6 +61,8 @@ package prog4_projekt.awpm_android.adapter;
                 }
             }
             holder.textview2.setText(module.getTeacher()+ ",  "+ all +", "+buildingName);
+            if(module.isFavorite())holder.textview1.setBackgroundColor(16747520);
+            if(module.isVoted())holder.textview1.setBackgroundColor(9425920);
 
         }
 

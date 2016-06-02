@@ -2,7 +2,6 @@ package prog4_projekt.awpm_android.fragmente;
 
 
 import android.app.Activity;
-import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -37,13 +36,15 @@ public class FragmentCourses extends Fragment{
     public List<Module> modulesList;
     Call<List<Module>> call, call1;
     String content, name, lecturer, start, end, examType, room, examNumber, city, location;
-    int participants, id, cityidSW, cityidWUE, locationIDSHL, locationIDMstr, subjectAreaIDBIN, subjectAreaIDBWI;
-    boolean voted, favorite;
+    int participants, id, cityidSW, cityidWUE, locationIDSHL, locationIDMstr, votes;
+    boolean voted, favorite, appearance, blocked;
     Button filter;
     SharedPreferences sharedPref;
     private String authorization;
     private List<Module> mList;
     FragmentLoginDialog dialog;
+    LinearLayoutManager mLayoutManager;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -419,28 +420,28 @@ public class FragmentCourses extends Fragment{
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        sharedPref= PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         authorization = "Basic " + Base64.encodeToString((MySharedPreference.getStringToken(sharedPref) + ":").getBytes(), Base64.NO_WRAP);
         filter = (Button) view.findViewById(R.id.filter);
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        call = ServiceAdapter.getService().getAllModules(1,50);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(mLayoutManager);
+        call = ServiceAdapter.getService().getAllModules(1, 50);
         call.enqueue(new Callback<List<Module>>() {
             @Override
             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
                 modulesList = response.body();
                 adapter = new RecyclerViewAdapter(getActivity(), modulesList);
-               // for(Module m:modulesList){
-                 //   Log.i("Inhalt", m.getName());
-                //}
                 recyclerView.setAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
+
             @Override
             public void onFailure(Call<List<Module>> call, Throwable t) {
                 //Toast.makeText(getContext(), "Bitte erneut laden", Toast.LENGTH_LONG).show();
             }
         });
+
 
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener(){
@@ -466,6 +467,8 @@ public class FragmentCourses extends Fragment{
                                 room = moduleToPass.getRoom().getName();
                                 examNumber = moduleToPass.getExamNumber();
                                 id = moduleToPass.getId();
+                                blocked = moduleToPass.isBlocked();
+                                appearance = moduleToPass.isIntensive();
                                 extras.putString("name", name);
                                 extras.putString("content", content);
                                 extras.putString("examtype", examType);
@@ -480,6 +483,8 @@ public class FragmentCourses extends Fragment{
                                 extras.putString("room", room);
                                 extras.putString("examnumber", examNumber);
                                 extras.putInt("id", id);
+                                extras.putBoolean("blocked", blocked);
+                                extras.putBoolean("appearance", appearance);
                                 intent.putExtras(extras);
                                 FragmentCourses.this.getContext().startActivity(intent);
                             }
@@ -519,12 +524,5 @@ public class FragmentCourses extends Fragment{
             }
         }
         return 0;
-    }
-    private void printList (List<Module> list){
-        for (Module m:
-             list) {
-            Log.i("Liste:", m.getName());
-
-        }
     }
 }

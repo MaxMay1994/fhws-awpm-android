@@ -134,8 +134,6 @@ public class FilterActivity extends AppCompatActivity {
                 Intent returnIntent = getIntent();
                 String[] returnFilter = new String[]{wahlZeitraumID, locationID, blockedForID, favoredModulesID};
                 returnIntent.putExtra("returnData", returnFilter);
-                boolean[] checkBoxes = new boolean[]{wahl, loc, blocked, fav};
-                returnIntent.putExtra("booleans", checkBoxes);
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }

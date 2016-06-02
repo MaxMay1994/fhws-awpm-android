@@ -35,7 +35,8 @@ import retrofit2.Response;
 public class CourseDetailsActivity extends AppCompatActivity {
     TextView information, info_content, toolTitle, dozent_header, dozent_content, location_header,
             location_content, startDate_header, startDate_content, endDate_header, endDate_content,
-            examType_header, examType_content, examNumber_header, examNumber_content, participants_header, participants_content;
+            examType_header, examType_content, examNumber_header, examNumber_content, participants_header, participants_content,
+            blocked_header, blocked_content, appearance_header, appearance_content;
     MaterialFavoriteButton mfb;
     Switch wahlSwitch;
     boolean moduleVoted, moduleFavorite;
@@ -44,12 +45,9 @@ public class CourseDetailsActivity extends AppCompatActivity {
     Call<Module> callVoted;
     Call<Module> callFavorite;
     int id;
+    int count = 0;
     String authorization;
-
-
     FragmentLoginDialog dialog;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +73,10 @@ public class CourseDetailsActivity extends AppCompatActivity {
         examNumber_content = (TextView) findViewById(R.id.examNumber_content);
         participants_header = (TextView) findViewById(R.id.participants_header);
         participants_content = (TextView) findViewById(R.id.participants_content);
+        blocked_header = (TextView) findViewById(R.id.blocked_header);
+        blocked_content = (TextView) findViewById(R.id.blocked_content);
+        appearance_header = (TextView) findViewById(R.id.appearance_header);
+        appearance_content = (TextView) findViewById(R.id.appearance_content);
         mfb = (MaterialFavoriteButton) findViewById(R.id.view);
         wahlSwitch = (Switch) findViewById(R.id.wahlswitch);
         Intent passedObject = getIntent();
@@ -91,14 +93,19 @@ public class CourseDetailsActivity extends AppCompatActivity {
         int participants = extras.getInt("participants");
         String examNumber = extras.getString("examnumber");
         id = extras.getInt("id");
+        boolean blocked = extras.getBoolean("blocked");
+        boolean appearance = extras.getBoolean("appearance");
         moduleVoted = extras.getBoolean("voted");
-        if(moduleVoted) wahlSwitch.setChecked(true);
+        if(moduleVoted){
+            wahlSwitch.setChecked(true);
+            count++;
+        }
         moduleFavorite = extras.getBoolean("favorite");
         if (moduleFavorite) mfb.setFavorite(true);
         if(extras!= null){
             toolTitle.setText(name);
             information.setText(getString(R.string.description));
-            info_content.setText(content); //+numberVoted);
+            info_content.setText(content);
             dozent_header.setText(getString(R.string.teacher));
             dozent_content.setText(teacher);
             location_header.setText(getString(R.string.location));
@@ -112,7 +119,15 @@ public class CourseDetailsActivity extends AppCompatActivity {
             examNumber_header.setText(getString(R.string.examnumber));
             examNumber_content.setText(examNumber);
             participants_header.setText(getString(R.string.participants));
-            participants_content.setText("0 / " + String.valueOf(participants));
+            participants_content.setText(count + " / " + String.valueOf(participants));
+            blocked_header.setText(getString(R.string.blocked));
+            if(blocked)blocked_content.setText("✔");
+            else if(!blocked)blocked_content.setText("✘");
+            else blocked_content.setText("unbekannt");
+            appearance_header.setText(getString(R.string.appearance));
+            if(appearance)appearance_content.setText("✔");
+            else if(!appearance)appearance_content.setText("✘");
+            else appearance_content.setText("unbekannt");
         }
 
         Resources res = getResources();
@@ -122,7 +137,6 @@ public class CourseDetailsActivity extends AppCompatActivity {
         notVoteMarked = String.format(res.getString(R.string.notvoted), name);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         authorization = "Basic " + Base64.encodeToString((MySharedPreference.getStringToken(sharedPreferences)+":").getBytes(), Base64.NO_WRAP);
-
         mfb.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
             @Override
             public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
@@ -167,17 +181,13 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 }
             }
         } );
-
-
-
-
         wahlSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(MySharedPreference.getBooleanIsLoged(sharedPreferences)) {
 
                     if (wahlSwitch.isChecked()) {
-
                         callVoted = ServiceAdapter.getService().patchVoted(id, true, authorization);
                         callVoted.enqueue(new Callback<Module>() {
                             @Override
@@ -197,6 +207,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                         startActivity(voteBack);
                     } else {
                         moduleVoted = false;
+                        count--;
                         callVoted = ServiceAdapter.getService().patchVoted( id, false, authorization);
                         callVoted.enqueue(new Callback<Module>() {
                             @Override
@@ -222,6 +233,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
