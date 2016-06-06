@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
@@ -37,7 +38,7 @@ public class FragmentCourses extends Fragment{
     Call<List<Module>> call, call1;
     String content, name, lecturer, start, end, examType, room, examNumber, city, location;
     int participants, id, cityidSW, cityidWUE, locationIDSHL, locationIDMstr, votes;
-    boolean voted, favorite, appearance, blocked;
+    boolean voted, favorite, appearance, blocked, selectState;
     Button filter;
     SharedPreferences sharedPref;
     private String authorization;
@@ -61,6 +62,7 @@ public class FragmentCourses extends Fragment{
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
                 String[] dataFromFilter = data.getStringArrayExtra("returnData");
+                selectState = data.getBooleanExtra("returnNothing", false);
                // for (String s : dataFromFilter){
                 for(int i=0; i<dataFromFilter.length; i++) {
                     // Log.i("Filteruebergabe", s);
@@ -393,7 +395,7 @@ public class FragmentCourses extends Fragment{
                         }
                     }
                 }
-                 if (dataFromFilter == null){
+                 if (!selectState){
                         call = ServiceAdapter.getService().getAllModules(1, 50);
                         call.enqueue(new Callback<List<Module>>() {
                             @Override

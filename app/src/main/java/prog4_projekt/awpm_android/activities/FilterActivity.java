@@ -22,7 +22,8 @@ public class FilterActivity extends AppCompatActivity {
     String locationID = "";
     String blockedForID = "";
     String favoredModulesID = "";
-    boolean wahl, loc, blocked, fav;
+    boolean selectState;
+    int nothingSelected1, nothingSelected2, nothingSelected3, nothingSelected4;
     CheckBox wahlZeitraum, location, blockedFor, favoredModules;
     Button returnFromFilter;
     Spinner spinnerFilter1, spinnerFilter2;
@@ -44,11 +45,10 @@ public class FilterActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     wahlZeitraumID = "wahlZeitraum";
-                    wahl = true;
                 }
                 else{
                     wahlZeitraumID = null;
-                    wahl = false;
+                    nothingSelected1 = 0;
                 }
             }
         });
@@ -57,11 +57,10 @@ public class FilterActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
                     favoredModulesID = "favoredModules";
-                    fav = true;
                 }
                 else{
                     favoredModulesID = null;
-                    fav = false;
+                    nothingSelected2 = 0;
                 }
             }
         });
@@ -79,13 +78,12 @@ public class FilterActivity extends AppCompatActivity {
                         if (i == position){
                             location.setChecked(true);
                             locationID = itemsFilter1[i];
-                            loc = true;
                             Log.i("ID-Name", locationID);
                         }
                     }
                 } else {
                     location.setChecked(false);
-                    loc = false;
+                    nothingSelected3 = 0;
                 }
 
             }
@@ -94,7 +92,7 @@ public class FilterActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
                 location.setChecked(false);
                 locationID = null;
-                loc = false;
+                nothingSelected3 = 0;
             }
         });
 
@@ -109,24 +107,24 @@ public class FilterActivity extends AppCompatActivity {
                     for (int i = 1; i < itemsFilter2.length; i++) {
                         if (i == position){
                             blockedFor.setChecked(true);
-                            blocked = true;
                             blockedForID = itemsFilter2[i];
                             Log.i("ID-Name", blockedForID);
                         }
                     }
                 } else {
                     blockedFor.setChecked(false);
-                    blocked = false;
+                    nothingSelected4 = 0;
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 blockedFor.setChecked(false);
-                blocked = false;
                 blockedForID = null;
+                nothingSelected4 = 0;
             }
         });
+        if(nothingSelected1 == 0 && nothingSelected2 == 0 && nothingSelected3 == 0 && nothingSelected4 == 0)selectState = false;
         returnFromFilter = (Button) findViewById(R.id.return_filter);
         returnFromFilter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,6 +132,7 @@ public class FilterActivity extends AppCompatActivity {
                 Intent returnIntent = getIntent();
                 String[] returnFilter = new String[]{wahlZeitraumID, locationID, blockedForID, favoredModulesID};
                 returnIntent.putExtra("returnData", returnFilter);
+                returnIntent.putExtra("returnNothing", selectState);
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
