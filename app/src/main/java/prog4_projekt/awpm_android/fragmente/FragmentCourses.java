@@ -67,8 +67,6 @@ public class FragmentCourses extends Fragment{
                 // for (String s : dataFromFilter){
 
                 for (int i = 0; i < dataFromFilter.length; i++) {
-                    // Log.i("Filteruebergabe", s);
-                    // if(s.toLowerCase().equals("wahlZeitraum".toLowerCase())){
                     //Favoriten und Standort SHL
                     if (dataFromFilter[i].toLowerCase().equals("SHL".toLowerCase()) && dataFromFilter[3].toLowerCase().equals("favoredModules".toLowerCase())) {
                         call = ServiceAdapter.getService().getModulesAtBuildingID(getIDFor("SHL"));
