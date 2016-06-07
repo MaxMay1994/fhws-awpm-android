@@ -25,7 +25,7 @@ public class FilterActivity extends AppCompatActivity {
     boolean selectState;
     int nothingSelected1, nothingSelected2, nothingSelected3, nothingSelected4;
     CheckBox wahlZeitraum, location, blockedFor, favoredModules;
-    Button returnFromFilter;
+    Button returnFromFilter, resetFilter;
     Spinner spinnerFilter1, spinnerFilter2;
     TextView toolText;
 
@@ -47,7 +47,7 @@ public class FilterActivity extends AppCompatActivity {
                     wahlZeitraumID = "wahlZeitraum";
                 }
                 else{
-                    wahlZeitraumID = null;
+                    wahlZeitraumID = "null";
                     nothingSelected1 = 0;
                 }
             }
@@ -59,7 +59,7 @@ public class FilterActivity extends AppCompatActivity {
                     favoredModulesID = "favoredModules";
                 }
                 else{
-                    favoredModulesID = null;
+                    favoredModulesID = "null";
                     nothingSelected2 = 0;
                 }
             }
@@ -83,7 +83,6 @@ public class FilterActivity extends AppCompatActivity {
                     }
                 } else {
                     location.setChecked(false);
-                    nothingSelected3 = 0;
                 }
 
             }
@@ -91,7 +90,7 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 location.setChecked(false);
-                locationID = null;
+                locationID = "";
                 nothingSelected3 = 0;
             }
         });
@@ -113,28 +112,38 @@ public class FilterActivity extends AppCompatActivity {
                     }
                 } else {
                     blockedFor.setChecked(false);
-                    nothingSelected4 = 0;
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 blockedFor.setChecked(false);
-                blockedForID = null;
+                blockedForID = "null";
                 nothingSelected4 = 0;
             }
         });
         if(nothingSelected1 == 0 && nothingSelected2 == 0 && nothingSelected3 == 0 && nothingSelected4 == 0)selectState = false;
         returnFromFilter = (Button) findViewById(R.id.return_filter);
+        resetFilter = (Button) findViewById(R.id.reset_filter);
+        resetFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(Activity.RESULT_CANCELED);
+                finish();
+            }
+        });
+
         returnFromFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent returnIntent = getIntent();
-                String[] returnFilter = new String[]{wahlZeitraumID, locationID, blockedForID, favoredModulesID};
-                returnIntent.putExtra("returnData", returnFilter);
-                returnIntent.putExtra("returnNothing", selectState);
-                setResult(Activity.RESULT_OK, returnIntent);
-                finish();
+
+                    Intent returnIntent = getIntent();
+                    String[] returnFilter = new String[]{wahlZeitraumID, locationID, blockedForID, favoredModulesID};
+                    returnIntent.putExtra("returnData", returnFilter);
+                    setResult(Activity.RESULT_OK, returnIntent);
+                    finish();
+
+
             }
         });
 

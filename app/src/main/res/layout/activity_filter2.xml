@@ -100,6 +100,16 @@
         android:text="@string/filterButtonSpeichern"
         android:id="@+id/return_filter"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_toLeftOf="@+id/reset_filter"
+        android:layout_toStartOf="@+id/reset_filter" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/filterButtonReset"
+        android:id="@+id/reset_filter"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 
 </RelativeLayout>

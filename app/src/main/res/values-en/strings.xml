@@ -156,6 +156,7 @@
 
     //filter button
     <string name="filterButtonSpeichern">Save selection</string>
+    <string name="filterButtonReset">Reset filter</string>
 
     //fragmentCourses button
     <string name="fragmentCoursesButton">Filter courses</string>
