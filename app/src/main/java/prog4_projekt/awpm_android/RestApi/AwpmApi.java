@@ -7,6 +7,8 @@ import prog4_projekt.awpm_android.RestApi.Module.Date;
 import prog4_projekt.awpm_android.RestApi.Module.Module;
 import prog4_projekt.awpm_android.RestApi.Module.Tag;
 import prog4_projekt.awpm_android.RestApi.Peroids.Periods;
+import prog4_projekt.awpm_android.RestApi.UserData.Login;
+import prog4_projekt.awpm_android.RestApi.UserData.User;
 import retrofit2.Call;
 
 import retrofit2.http.GET;
@@ -93,6 +95,10 @@ public interface AwpmApi {
     Call<List<Module>>
     getFavoredModules(@Query("favored") boolean favored, @Header("Authorization") String authorization);
 
+    @GET("api/modules")
+    Call<List<Module>>
+    getFavoredModulesWithoutVotedModules(@Query("favored") boolean favored, @Query("voted") boolean voted, @Header("Authorization") String authorization);
+
     //true: nur gewählte Module | false: alle, die nicht gewählt sind | default: alle
     @GET("api/modules")
     Call<List<Module>>
@@ -118,6 +124,9 @@ public interface AwpmApi {
     Call<List<Module>>
     getModulesWithTags(@Query("tag_ids") String tag_ids);
 
+    @GET("api/whoami")
+    Call<Login>
+    getWhoAmI(@Header("Authorization") String authorization);
 
     //PATCH
 
@@ -128,5 +137,7 @@ public interface AwpmApi {
     //true: Modul favorisieren | false: Modul entfavorisieren
     @PATCH("api/modules/{id}")
     Call<Module> patchFavored(@Path("id") int id, @Query("favored") boolean favored, @Header("Authorization") String authorization);
+
+
 
 }

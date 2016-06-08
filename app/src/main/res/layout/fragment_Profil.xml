@@ -4,4 +4,109 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/imageViewAvatar"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+    />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/textViewProfilName"
+        android:layout_below="@+id/imageViewAvatar"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:textColor="#000"
+        android:textStyle="bold" />
+
+    <android.support.v7.widget.AppCompatButton
+        xmlns:button="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/testbutton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gewählte Module"
+        android:layout_below="@+id/textViewProfilName"
+        android:textAllCaps="false"
+        android:background="#eee"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/testbutton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Favoriten"
+        android:layout_below="@+id/testbutton1"
+        android:textAllCaps="false"
+        android:background="#eee"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/testbutton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="QR-Codes"
+        android:layout_below="@+id/testbutton2"
+        android:textAllCaps="false"
+        android:background="#eee"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/testbutton4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kalender Feed"
+        android:layout_below="@+id/testbutton3"
+        android:textAllCaps="false"
+        android:background="#eee"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/testbutton5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Abmelden"
+        android:layout_below="@+id/testbutton4"
+        android:textAllCaps="false"
+        android:background="#eee"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"/>
+
+
 </RelativeLayout>

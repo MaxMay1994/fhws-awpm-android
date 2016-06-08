@@ -13,7 +13,14 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.rjung.util.Gravatar;
+import org.rjung.util.gravatar.Default;
+import org.rjung.util.gravatar.Protocol;
+import org.rjung.util.gravatar.Rating;
+
 import java.util.List;
 
 import prog4_projekt.awpm_android.MySharedPreference;
@@ -22,6 +29,7 @@ import prog4_projekt.awpm_android.RestApi.Module.Module;
 import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
 import prog4_projekt.awpm_android.SimpleItemTouchHelperCallback;
 import prog4_projekt.awpm_android.activities.CourseDetailsActivity;
+import prog4_projekt.awpm_android.adapter.RecyclerViewAdapter;
 import prog4_projekt.awpm_android.adapter.RecyclerViewAdapterBallot;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,16 +38,22 @@ import retrofit2.Response;
 public class FragmentBallot extends Fragment {
 
     View view;
-    RecyclerView recyclerViewC;
+    RecyclerView recyclerViewC, recyclerViewF;
     RecyclerViewAdapterBallot adapter;
-    List<Module> votedList;
-    Call<List<Module>> call;
+    RecyclerViewAdapter adapter2;
+    List<Module> votedList, favoriteList;
+    Call<List<Module>> call, call2;
     TextView nullVoted;
     TextView sad;
+    TextView textViewBallot;
+    TextView textViewFavorite;
     SharedPreferences sharedPref;
     String content, name, lecturer, start, end, examType, room, examNumber, city, location;
-    int participants, id;
+    int participants, id, votes;
     boolean voted, favorite;
+    ImageView imageView;
+
+
 
     @Nullable
     @Override
@@ -47,7 +61,9 @@ public class FragmentBallot extends Fragment {
         view = inflater.inflate(R.layout.fragment_ballot, null);
         nullVoted = (TextView) view.findViewById(R.id.textView_null_voted);
         sad = (TextView) view.findViewById(R.id.textView_sad);
-
+        imageView = (ImageView) view.findViewById(R.id.imageReorder);
+        textViewBallot = (TextView) view.findViewById(R.id.textViewBallot);
+        textViewFavorite = (TextView) view.findViewById(R.id.textViewFavorite);
         return view;
     }
 
@@ -61,32 +77,41 @@ public class FragmentBallot extends Fragment {
         recyclerViewC = (RecyclerView) view.findViewById(R.id.recyclerViewC);
         recyclerViewC.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        recyclerViewF = (RecyclerView) view.findViewById(R.id.recyclerViewF);
+        recyclerViewF.setLayoutManager(new LinearLayoutManager(getContext()));
+
         call = ServiceAdapter.getService().getVotedModules(true, authorization);
         call.enqueue(new Callback<List<Module>>() {
 
             @Override
             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
 
-                if(response.code() == 200) {
+                if (response.code() == 200) {
 
                     votedList = response.body();
                     adapter = new RecyclerViewAdapterBallot(getActivity(), votedList);
                     recyclerViewC.setAdapter(adapter);
-
-                    if (response.body().size() == 0) {
-
-                        nullVoted.setVisibility(View.VISIBLE);
-                        sad.setVisibility(View.VISIBLE);
-
-                    }
-
                     ItemTouchHelper.Callback callback =
                             new SimpleItemTouchHelperCallback(adapter);
                     ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
                     touchHelper.attachToRecyclerView(recyclerViewC);
 
+                    if(response.body().size() > 0) {
+                        textViewBallot.setVisibility(View.VISIBLE);
+                    }
+
+                    if (response.body().size() == 0) {
+
+                        //nullVoted.setVisibility(View.VISIBLE);
+                        //sad.setVisibility(View.VISIBLE);
+                        textViewBallot = nullVoted;
+                        textViewBallot.setVisibility(View.VISIBLE);
+                        sad.setVisibility(View.VISIBLE);
+
+                    }
+
                 }
-                if(response.code() == 401){
+                if (response.code() == 401) {
 
                     nullVoted.setText("Bitte Logen Sie sich ein");
                     nullVoted.setVisibility(View.VISIBLE);
@@ -98,7 +123,30 @@ public class FragmentBallot extends Fragment {
             @Override
             public void onFailure(Call<List<Module>> call, Throwable t) {
 
+            }
+        });
+        call2 = ServiceAdapter.getService().getFavoredModulesWithoutVotedModules(true,false, authorization);
+        call2.enqueue(new Callback<List<Module>>() {
+            @Override
+            public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
 
+                favoriteList = response.body();
+                adapter2 = new RecyclerViewAdapter(getActivity(), favoriteList);
+                recyclerViewF.setAdapter(adapter2);
+
+                if (response.code() == 200) {
+                    if (response.body().size() > 0) {
+                        textViewFavorite.setVisibility(View.VISIBLE);
+                    }
+                }
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Module>> call, Throwable t) {
 
             }
         });
@@ -148,9 +196,9 @@ public class FragmentBallot extends Fragment {
                                 extras.putString("room", room);
                                 extras.putString("examnumber", examNumber);
                                 extras.putInt("id", id);
+                                extras.putInt("votes", votes);
                                 intent.putExtras(extras);
                                 FragmentBallot.this.getContext().startActivity(intent);
-
 
                             }
 
