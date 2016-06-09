@@ -1,6 +1,5 @@
 package prog4_projekt.awpm_android.fragmente;
 
-
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -13,24 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.koushikdutta.ion.Ion;
-
-import org.rjung.util.Gravatar;
-import org.rjung.util.GravatarException;
-import org.rjung.util.gravatar.Default;
-import org.rjung.util.gravatar.Protocol;
-import org.rjung.util.gravatar.Rating;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import prog4_projekt.awpm_android.MD5Util;
 import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
 import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
 import prog4_projekt.awpm_android.RestApi.UserData.Login;
-import prog4_projekt.awpm_android.RestApi.UserData.User;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -61,10 +50,6 @@ public class FragmentProfil extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-
-
-
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         String authorization = "Basic " + Base64.encodeToString((MySharedPreference.getStringToken(sharedPref) + ":").getBytes(), Base64.NO_WRAP);
 
@@ -87,7 +72,6 @@ public class FragmentProfil extends Fragment {
                             .resize(400, 400)
                             .load(url);
 
-
                 }
 
             }
@@ -97,30 +81,6 @@ public class FragmentProfil extends Fragment {
 
             }
         });
-
-
-
-
-        /*try {
-            String url = Gravatar.forEmail()
-                    .with(Protocol.HTTPS)     // prepend https://
-                    .size(400)                // set the size to 123 pixel
-                    .defaultImage(Default.MM) // if not available show mystery man image
-                    .with(Rating.G)           // set rating to X
-                    .toUrl();
-
-            Ion.with(avatar)
-                    .placeholder(R.mipmap.ic_launcher)
-                    .resize(400, 400)
-                    .load(url);
-        }catch (GravatarException ex){
-
-        }*/
-
-
-
-
-
 
     }
 

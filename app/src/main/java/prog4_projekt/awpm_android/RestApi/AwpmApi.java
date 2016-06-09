@@ -138,6 +138,7 @@ public interface AwpmApi {
     @PATCH("api/modules/{id}")
     Call<Module> patchFavored(@Path("id") int id, @Query("favored") boolean favored, @Header("Authorization") String authorization);
 
-
+    @PATCH("api/modules/{id}")
+    Call<Module> patchVotePosition(@Path("id") int id, @Query("vote_position") int votePosition,  @Header("Authorization") String authorization);
 
 }

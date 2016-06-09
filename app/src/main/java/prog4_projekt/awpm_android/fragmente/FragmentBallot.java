@@ -72,7 +72,7 @@ public class FragmentBallot extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String authorization = "Basic " + Base64.encodeToString((MySharedPreference.getStringToken(sharedPref) + ":").getBytes(), Base64.NO_WRAP);
+        final String authorization = "Basic " + Base64.encodeToString((MySharedPreference.getStringToken(sharedPref) + ":").getBytes(), Base64.NO_WRAP);
 
         recyclerViewC = (RecyclerView) view.findViewById(R.id.recyclerViewC);
         recyclerViewC.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -92,9 +92,11 @@ public class FragmentBallot extends Fragment {
                     adapter = new RecyclerViewAdapterBallot(getActivity(), votedList);
                     recyclerViewC.setAdapter(adapter);
                     ItemTouchHelper.Callback callback =
-                            new SimpleItemTouchHelperCallback(adapter);
+                            new SimpleItemTouchHelperCallback(adapter,votedList,authorization);
                     ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
                     touchHelper.attachToRecyclerView(recyclerViewC);
+
+
 
                     if(response.body().size() > 0) {
                         textViewBallot.setVisibility(View.VISIBLE);

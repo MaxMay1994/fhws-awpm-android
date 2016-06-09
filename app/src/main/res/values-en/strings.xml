@@ -126,7 +126,7 @@
 
     //menue strings
     <string name="katalogTab">CATALOG</string>
-    <string name="wahlzettelTab">BALL PAPER</string>
+    <string name="wahlzettelTab">BALLOT</string>
     <string name="profiltab">PROFILE</string>
 
 
