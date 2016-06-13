@@ -26,6 +26,9 @@ public class User {
     @SerializedName("subject_area")
     @Expose
     private SubjectArea subjectArea;
+    @SerializedName("avatar")
+    @Expose
+    private String avatar;
 
     /**
      *
@@ -42,6 +45,22 @@ public class User {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+    /**
+     *
+     * @return
+     * The avatar
+     */
+    public String getAvatar() {
+        return avatar;
+    }
+    /**
+     *
+     * @param avatar
+     * The avatar
+     */
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
     /**
      *

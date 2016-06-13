@@ -127,7 +127,7 @@ public class FragmentBallot extends Fragment {
 
             }
         });
-        call2 = ServiceAdapter.getService().getFavoredModulesWithoutVotedModules(true,false, authorization);
+        call2 = ServiceAdapter.getService().getAll(null,null,null,null,null,null,true,false,null,null,null,null,null,null,authorization);
         call2.enqueue(new Callback<List<Module>>() {
             @Override
             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
