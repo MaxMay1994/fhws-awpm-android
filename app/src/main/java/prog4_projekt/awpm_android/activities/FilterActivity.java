@@ -21,6 +21,8 @@ import prog4_projekt.awpm_android.RestApi.Module.Building;
 import prog4_projekt.awpm_android.RestApi.Module.Location;
 import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class FilterActivity extends AppCompatActivity {
 
@@ -32,9 +34,12 @@ public class FilterActivity extends AppCompatActivity {
     Button returnFromFilter, resetFilter;
     Spinner spinnerFilter1, spinnerFilter2;
     TextView toolText;
+    String wue, sw;
+    String[] itemsFilter1;
+    ArrayAdapter<String> adapter1;
 
-    List<Building> locationList;
-    Call<List<Building>> callLocations;
+    List<Building> locationList, buildingList;
+    Call<List<Building>> callLocations, callBuilding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +50,51 @@ public class FilterActivity extends AppCompatActivity {
         location = (CheckBox) findViewById(R.id.location);
         blockedFor = (CheckBox) findViewById(R.id.gesperrt);
         favoredModules = (CheckBox) findViewById(R.id.favoriteModulesFilter);
+
+        callLocations = ServiceAdapter.getService().getAllLocations();
+        callLocations.enqueue(new Callback<List<Building>>() {
+            @Override
+            public void onResponse(Call<List<Building>> call, Response<List<Building>> response) {
+                locationList = response.body();
+                wue = locationList.get(1).getName();
+                sw = locationList.get(0).getName();
+                spinnerFilter1 = (Spinner) findViewById(R.id.spinner1);
+                itemsFilter1 = new String[]{getString(R.string.auswaehlen), sw, wue, getString(R.string.ortMuenz), getString(R.string.ortShl)};
+                adapter1 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, itemsFilter1);
+                spinnerFilter1.setAdapter(adapter1);
+                spinnerFilter1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            for (int i = 1; i < itemsFilter1.length; i++) {
+                                if (i == position){
+                                    location.setChecked(true);
+                                    locationID = itemsFilter1[i];
+                                    Log.i("ID-Name", locationID);
+                                }
+                            }
+                        } else {
+                            location.setChecked(false);
+                        }
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        location.setChecked(false);
+                        locationID = "null";
+                        Log.i("ID-Name", locationID);
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Building>> call, Throwable t) {
+
+            }
+        });
+
 
 
         wahlZeitraum.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -75,34 +125,7 @@ public class FilterActivity extends AppCompatActivity {
         });
 
 
-        spinnerFilter1 = (Spinner) findViewById(R.id.spinner1);
-        final String[] itemsFilter1 = new String[]{getString(R.string.auswaehlen), getString(R.string.ortSw), getString(R.string.ortWue), getString(R.string.ortMuenz), getString(R.string.ortShl)};
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, itemsFilter1);
-        spinnerFilter1.setAdapter(adapter1);
-        spinnerFilter1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                    for (int i = 1; i < itemsFilter1.length; i++) {
-                        if (i == position){
-                            location.setChecked(true);
-                            locationID = itemsFilter1[i];
-                            Log.i("ID-Name", locationID);
-                        }
-                    }
-                } else {
-                    location.setChecked(false);
-                }
 
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                location.setChecked(false);
-                locationID = "null";
-                Log.i("ID-Name", locationID);
-            }
-        });
 
         spinnerFilter2 = (Spinner) findViewById(R.id.spinner2);
         final String[] itemsFilter2 = new String[]{getString(R.string.auswaehlen),getString(R.string.mich), getString(R.string.stringStudiengangBIN), getString(R.string.stringStudiengangBWI)};
