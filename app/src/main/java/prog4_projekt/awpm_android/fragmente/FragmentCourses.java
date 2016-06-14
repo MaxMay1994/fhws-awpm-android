@@ -44,8 +44,8 @@ public class FragmentCourses extends Fragment{
     public List<Module> modulesList;
     Call<List<Module>> call, call1;
     String content, name, lecturer, start, end, examType, room, examNumber, city, location;
-    int participants, id, cityidSW, cityidWUE, locationIDSHL, locationIDMstr, votes;
-    boolean voted, favorite, appearance, blocked, selectState;
+    int participants, id, cityidSW, cityidWUE, locationIDSHL, locationIDMstr;
+    boolean voted, favorite, appearance, blocked;
     Button filter;
     SharedPreferences sharedPref;
     private String authorization;
@@ -53,7 +53,6 @@ public class FragmentCourses extends Fragment{
     FragmentLoginDialog dialog;
     LinearLayoutManager mLayoutManager;
     List<Module> hiddenList;
-    private Map<String, String> filtermap = new HashMap<String, String>();
 
     @Nullable
     @Override
@@ -169,40 +168,12 @@ public class FragmentCourses extends Fragment{
                 }
                 //Favoriten und Standort SHL
 
-                if ((dataFromFilter[1].toLowerCase().equals("SHL".toLowerCase())) && (dataFromFilter[3].toLowerCase().equals("favoredModules".toLowerCase()))) {
-
-                    hiddenList = createList(modulesList, "SHL");
-                    adapter = new RecyclerViewAdapter(getActivity(), modulesList);
-                    recyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                }
-                //Favoriten und Standort Münzstr.
-                if (dataFromFilter[1].toLowerCase().equals("Münzstr.".toLowerCase()) && dataFromFilter[3].toLowerCase().equals("favoredModules".toLowerCase())) {
-                    hiddenList = createList(modulesList, "Münzstr.");
-                    adapter = new RecyclerViewAdapter(getActivity(), modulesList);
-                    recyclerView.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
-                }
-                //Favoriten und Standort Würzburg
-                if (dataFromFilter[1].toLowerCase().equals("Würzburg".toLowerCase()) && dataFromFilter[3].toLowerCase().equals("favoredModules".toLowerCase())) {
-                    call = ServiceAdapter.getService().getModulesAtLocationID(getIDFor("Würzburg"));
+                if ((dataFromFilter[0].toLowerCase().equals("null".toLowerCase()))&& (dataFromFilter[1].toLowerCase().equals("SHL".toLowerCase())) &&(dataFromFilter[2].toLowerCase().equals("null".toLowerCase()))&& (dataFromFilter[3].toLowerCase().equals("favoredModules".toLowerCase()))) {
+                    call = ServiceAdapter.getService().getAll(null, null, null, null, null, null, true, null, null, null, null, getIDFor("SHL"), null, null, authorization);
                     call.enqueue(new Callback<List<Module>>() {
                         @Override
                         public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
-                            mList = response.body();
-                        }
-
-                        @Override
-                        public void onFailure(Call<List<Module>> call, Throwable t) {
-
-                        }
-                    });
-                    call1 = ServiceAdapter.getService().getFavoredModules(true, authorization);
-                    call1.enqueue(new Callback<List<Module>>() {
-                        @Override
-                        public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
                             modulesList = response.body();
-                            joinLists(modulesList, mList);
                             adapter = new RecyclerViewAdapter(getActivity(), modulesList);
                             recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
@@ -213,14 +184,21 @@ public class FragmentCourses extends Fragment{
 
                         }
                     });
+                    //hiddenList = createList(modulesList, "SHL");
+                    //adapter = new RecyclerViewAdapter(getActivity(), modulesList);
+                    //recyclerView.setAdapter(adapter);
+                    //adapter.notifyDataSetChanged();
                 }
-                //Favoriten und Standort Schweinfurt
-                if (dataFromFilter[1].toLowerCase().equals("Schweinfurt".toLowerCase()) && dataFromFilter[3].toLowerCase().equals("favoredModules".toLowerCase())) {
-                    call = ServiceAdapter.getService().getModulesAtLocationID(getIDFor("Schweinfurt"));
+                //Favoriten und Standort Münzstr.
+                if (dataFromFilter[1].toLowerCase().equals("Münzstr.".toLowerCase()) && dataFromFilter[3].toLowerCase().equals("favoredModules".toLowerCase())) {
+                    call = ServiceAdapter.getService().getAll(null, null, null, null, null, null, true, null, null, null, null, getIDFor("Münzstr."), null, null, authorization);
                     call.enqueue(new Callback<List<Module>>() {
                         @Override
                         public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
-                            mList = response.body();
+                            modulesList = response.body();
+                            adapter = new RecyclerViewAdapter(getActivity(), modulesList);
+                            recyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
                         }
 
                         @Override
@@ -228,12 +206,37 @@ public class FragmentCourses extends Fragment{
 
                         }
                     });
-                    call1 = ServiceAdapter.getService().getFavoredModules(true, authorization);
-                    call1.enqueue(new Callback<List<Module>>() {
+                    //hiddenList = createList(modulesList, "Münzstr.");
+                    //adapter = new RecyclerViewAdapter(getActivity(), modulesList);
+                    //recyclerView.setAdapter(adapter);
+                    //adapter.notifyDataSetChanged();
+                }
+                //Favoriten und Standort Würzburg
+                if (dataFromFilter[1].toLowerCase().equals("Würzburg".toLowerCase()) && dataFromFilter[3].toLowerCase().equals("favoredModules".toLowerCase())) {
+                    call = ServiceAdapter.getService().getAll(null, null, null, null, null, null, true, null, null, null, null, getIDFor("Würzburg"), null, null, authorization);
+                    call.enqueue(new Callback<List<Module>>() {
                         @Override
                         public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
                             modulesList = response.body();
-                            joinLists(modulesList, mList);
+                            adapter = new RecyclerViewAdapter(getActivity(), modulesList);
+                            recyclerView.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<Module>> call, Throwable t) {
+
+                        }
+                    });
+
+                }
+                //Favoriten und Standort Schweinfurt
+                if (dataFromFilter[1].toLowerCase().equals("Schweinfurt".toLowerCase()) && dataFromFilter[3].toLowerCase().equals("favoredModules".toLowerCase())) {
+                    call = ServiceAdapter.getService().getAll(null, null, null, null, null, null, true, null, null, null, null, getIDFor("Schweinfurt"), null, null, authorization);
+                    call.enqueue(new Callback<List<Module>>() {
+                        @Override
+                        public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
+                            modulesList = response.body();
                             adapter = new RecyclerViewAdapter(getActivity(), modulesList);
                             recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
@@ -247,24 +250,11 @@ public class FragmentCourses extends Fragment{
                 }
                 //Wahlzeitraum und Favoriten
                 if (dataFromFilter[0].toLowerCase().equals("wahlZeitraum".toLowerCase()) && dataFromFilter[3].toLowerCase().equals("favoredModules".toLowerCase())) {
-                    call1 = ServiceAdapter.getService().getFavoredModules(true, authorization);
-                    call1.enqueue(new Callback<List<Module>>() {
-                        @Override
-                        public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
-                            mList = response.body();
-                        }
-
-                        @Override
-                        public void onFailure(Call<List<Module>> call, Throwable t) {
-
-                        }
-                    });
-                    call = ServiceAdapter.getService().getActiveModules(true);
+                    call = ServiceAdapter.getService().getAll(null, true, null, null, null, null, true, null, null, null, null, null, null,null, authorization);
                     call.enqueue(new Callback<List<Module>>() {
                         @Override
                         public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
                             modulesList = response.body();
-                            joinLists(modulesList, mList);
                             adapter = new RecyclerViewAdapter(getActivity(), modulesList);
                             recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
@@ -275,11 +265,10 @@ public class FragmentCourses extends Fragment{
 
                         }
                     });
-
-
                 }
+                //aktiver Wahlzeitraum
                 if (dataFromFilter[0].toLowerCase().equals("wahlZeitraum".toLowerCase())) {
-                    call = ServiceAdapter.getService().getActiveModules(true);
+                    call = ServiceAdapter.getService().getAll(null, true, null,null,null,null,null,null,null,null,null,null,null,null,null);
                     call.enqueue(new Callback<List<Module>>() {
                         @Override
                         public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {

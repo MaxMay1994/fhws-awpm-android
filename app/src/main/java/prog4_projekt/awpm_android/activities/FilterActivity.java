@@ -14,7 +14,13 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.List;
+
 import prog4_projekt.awpm_android.R;
+import prog4_projekt.awpm_android.RestApi.Module.Building;
+import prog4_projekt.awpm_android.RestApi.Module.Location;
+import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
+import retrofit2.Call;
 
 public class FilterActivity extends AppCompatActivity {
 
@@ -27,6 +33,8 @@ public class FilterActivity extends AppCompatActivity {
     Spinner spinnerFilter1, spinnerFilter2;
     TextView toolText;
 
+    List<Building> locationList;
+    Call<List<Building>> callLocations;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +45,7 @@ public class FilterActivity extends AppCompatActivity {
         location = (CheckBox) findViewById(R.id.location);
         blockedFor = (CheckBox) findViewById(R.id.gesperrt);
         favoredModules = (CheckBox) findViewById(R.id.favoriteModulesFilter);
+
 
         wahlZeitraum.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

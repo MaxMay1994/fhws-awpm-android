@@ -6,6 +6,7 @@ import java.util.List;
 
 import prog4_projekt.awpm_android.RestApi.Module.Building;
 import prog4_projekt.awpm_android.RestApi.Module.Date;
+import prog4_projekt.awpm_android.RestApi.Module.Location;
 import prog4_projekt.awpm_android.RestApi.Module.Module;
 import prog4_projekt.awpm_android.RestApi.Module.Tag;
 import prog4_projekt.awpm_android.RestApi.Peroids.Periods;
@@ -132,6 +133,10 @@ public interface AwpmApi {
     @GET("api/modules")
     Call<List<Module>>
     getModulesAtBuildingID(@Query("building_id") int building_id);
+
+    @GET("api/locations")
+    Call<List<Building>>
+    getBuildingID(@Query("building_id") int building_id);
 
     //Komma-separierte Liste mit Tag-IDs Beispiel: "1,3,5"
     @GET("api/tags")
