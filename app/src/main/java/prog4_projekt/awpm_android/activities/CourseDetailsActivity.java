@@ -39,15 +39,16 @@ public class CourseDetailsActivity extends AppCompatActivity {
             blocked_header, blocked_content, appearance_header, appearance_content;
     MaterialFavoriteButton mfb;
     Switch wahlSwitch;
-    boolean moduleVoted, moduleFavorite;
-    String favMarked, notFavMarked, voteMarked, notVoteMarked, name;
+    boolean moduleVoted, moduleFavorite, blocked, appearance;
+    String favMarked, notFavMarked, voteMarked, notVoteMarked, name, content, examType, teacher, start, end, city, location, room, examNumber,
+    authorization;
     SharedPreferences sharedPreferences;
     Call<Module> callVoted;
     Call<Module> callFavorite;
-    int id;
+    int id, participants;
     int count = 0;
-    String authorization;
     FragmentLoginDialog dialog;
+    Module passedModule;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,19 +83,19 @@ public class CourseDetailsActivity extends AppCompatActivity {
         Intent passedObject = getIntent();
         Bundle extras = passedObject.getExtras();
         name = extras.getString("name");
-        String content = extras.getString("content");
-        String examType = extras.getString("examtype");
-        String teacher = extras.getString("Teacher");
-        String start = extras.getString("start");
-        String end = extras.getString("end");
-        String city = extras.getString("city");
-        String location = extras.getString("location");
-        String room = extras.getString("room");
-        int participants = extras.getInt("participants");
-        String examNumber = extras.getString("examnumber");
+        content = extras.getString("content");
+        examType = extras.getString("examtype");
+        teacher = extras.getString("Teacher");
+        start = extras.getString("start");
+        end = extras.getString("end");
+        city = extras.getString("city");
+        location = extras.getString("location");
+        room = extras.getString("room");
+        participants = extras.getInt("participants");
+        examNumber = extras.getString("examnumber");
         id = extras.getInt("id");
-        boolean blocked = extras.getBoolean("blocked");
-        boolean appearance = extras.getBoolean("appearance");
+        blocked = extras.getBoolean("blocked");
+        appearance = extras.getBoolean("appearance");
         moduleVoted = extras.getBoolean("voted");
         if(moduleVoted){
             wahlSwitch.setChecked(true);
