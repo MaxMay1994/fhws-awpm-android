@@ -1,5 +1,7 @@
 package prog4_projekt.awpm_android.RestApi;
 
+import android.support.annotation.Nullable;
+
 import java.util.List;
 
 import prog4_projekt.awpm_android.RestApi.Module.Building;
@@ -20,16 +22,32 @@ import retrofit2.http.Query;
 public interface AwpmApi {
 
     //GET
+    @GET("api/modules")
+    Call<List<Module>> getAll(@Query("name") String name,
+                              @Query("active") Boolean active,
+                              @Query("history") Boolean history,
+                              @Query("blocked") Boolean blocked,
+                              @Query("not_blocked_for") Integer notBlockedFor,
+                              @Query("intensive") Boolean intensive,
+                              @Query("favored") Boolean favored,
+                              @Query("voted") Boolean voted,
+                              @Query("voteable") Boolean voteable,
+                              @Query("accepted") Boolean accepted,
+                              @Query("location_id") Integer locationId,
+                              @Query("building_id") Integer building_id,
+                              @Query("tag_ids") String tag_ids,
+                              @Query("upcoming") Boolean upcoming,
+                              @Header("Authorization") String authorization);
 
     //Alle Module und ein ein Modul
     @GET("api/modules")
-    Call<List<Module>> getAllModules(@Query("page")int page, @Query("per_page") int perPage); // für pagination @Path("page") int page
+    Call<List<Module>> getAllModules(@Query("page") int page, @Query("per_page") int perPage); // für pagination @Path("page") int page
 
     @GET("api/modules/{id}")
     Call<Module> getModule(@Path("id") int id);
 
     @GET("api/modules/{id}")
-    Call<Module> getAuthoristModule(@Path("id") int id,@Header("Authorization") String authorization);
+    Call<Module> getAuthoristModule(@Path("id") int id, @Header("Authorization") String authorization);
 
     //Alle Locations und eine Location
     @GET("api/locations")
@@ -95,10 +113,6 @@ public interface AwpmApi {
     Call<List<Module>>
     getFavoredModules(@Query("favored") boolean favored, @Header("Authorization") String authorization);
 
-    @GET("api/modules")
-    Call<List<Module>>
-    getFavoredModulesWithoutVotedModules(@Query("favored") boolean favored, @Query("voted") boolean voted, @Header("Authorization") String authorization);
-
     //true: nur gewählte Module | false: alle, die nicht gewählt sind | default: alle
     @GET("api/modules")
     Call<List<Module>>
@@ -128,17 +142,21 @@ public interface AwpmApi {
     Call<Login>
     getWhoAmI(@Header("Authorization") String authorization);
 
+    @GET("api/modules")
+    Call<List<Module>>
+    getAccepted(@Query("accepted") Boolean accepted, @Header("Authorization") String authorization);
+
     //PATCH
 
     //true: Modul wählen | false: Modul entwählen
     @PATCH("api/modules/{id}")
-    Call<Module> patchVoted(@Path("id") int id, @Query("voted") boolean voted,  @Header("Authorization") String authorization);
+    Call<Module> patchVoted(@Path("id") int id, @Query("voted") boolean voted, @Header("Authorization") String authorization);
 
     //true: Modul favorisieren | false: Modul entfavorisieren
     @PATCH("api/modules/{id}")
     Call<Module> patchFavored(@Path("id") int id, @Query("favored") boolean favored, @Header("Authorization") String authorization);
 
     @PATCH("api/modules/{id}")
-    Call<Module> patchVotePosition(@Path("id") int id, @Query("vote_position") int votePosition,  @Header("Authorization") String authorization);
+    Call<Module> patchVotePosition(@Path("id") int id, @Query("vote_position") int votePosition, @Header("Authorization") String authorization);
 
 }

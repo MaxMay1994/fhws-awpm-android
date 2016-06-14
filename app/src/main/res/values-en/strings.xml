@@ -164,4 +164,14 @@
     //content_courses_details strings
     <string name="favoritMarkieren">Favorite</string>
     <string name="moduleWaehlen">Elect</string>
+
+    //ballot
+    <string name="ballot_my_choice_title">My Choice</string>
+    <string name="ballot_favorite_title">Favorite</string>
+    <string name="ballot_no_choice">Sie haben noch kein \nModul gewählt</string>
+
+    //profil
+    <string name="profil_subject_area">Subject: </string>
+    <string name="profil_knumber">K-Nummer: </string>
+    <string name="profil_email">E-Mail: </string>
 </resources>
