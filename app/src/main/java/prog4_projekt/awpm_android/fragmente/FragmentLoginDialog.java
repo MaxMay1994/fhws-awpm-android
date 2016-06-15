@@ -2,6 +2,7 @@ package prog4_projekt.awpm_android.fragmente;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -27,6 +28,7 @@ import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
 import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
 import prog4_projekt.awpm_android.RestApi.UserData.Login;
+import prog4_projekt.awpm_android.activities.MainActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -77,6 +79,7 @@ public class FragmentLoginDialog extends DialogFragment {
                     }
 
                 }
+
             }
         });
         Button loginCancel = (Button) view.findViewById(R.id.login_cancel);
@@ -146,6 +149,9 @@ public class FragmentLoginDialog extends DialogFragment {
 
                     dialog.dismiss();
 
+                    Intent main = new Intent(activity.getApplication(),MainActivity.class);
+                    activity.startActivity(main);
+
                 }
                 if(response.code() >= 401){
                     FragmentLoginDialog.makeToast(FragmentLoginDialog.makeToastView(activity.getString(R.string.unauthorizedLogin), activity), activity);
@@ -204,6 +210,8 @@ public class FragmentLoginDialog extends DialogFragment {
                 Log.i("0011", "logout False"+ t.getMessage());
             }
         });
+        Intent main = new Intent(activity.getApplication(),MainActivity.class);
+        activity.startActivity(main);
     }
     //base64 Codierung des Token
     public static String makeBase64Codierung(String stringToEncode){
