@@ -45,6 +45,7 @@ public class FragmentProfil extends Fragment {
     TextView subjectArea;
     TextView kNumber;
     TextView email;
+    TextView acceptedTitle;
     RecyclerView recyclerViewA;
     List<Module> aList;
     RecyclerViewAdapter adapter;
@@ -66,6 +67,7 @@ public class FragmentProfil extends Fragment {
         email = (TextView) view.findViewById(R.id.card_view_profil_email);
         recyclerViewA = (RecyclerView) view.findViewById(R.id.recyclerViewA);
         recyclerViewA.setLayoutManager(new LinearLayoutManager(getContext()));
+        acceptedTitle = (TextView) view.findViewById(R.id.profil_a_title);
 
         return view;
     }
@@ -120,14 +122,23 @@ public class FragmentProfil extends Fragment {
         });
 
 
-        callAList = ServiceAdapter.getService().getAccepted(true, authorization);
+        callAList = ServiceAdapter.getService().getAll(null,null,null,null,null,null,true,null,null,null,null,3,null,null,authorization);
         callAList.enqueue(new Callback<List<Module>>() {
             @Override
             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
 
-                aList = response.body();
-                adapter = new RecyclerViewAdapter(getActivity(), aList);
-                recyclerViewA.setAdapter(adapter);
+                if(response.code() == 200) {
+                    aList = response.body();
+                    adapter = new RecyclerViewAdapter(getActivity(), aList);
+                    recyclerViewA.setAdapter(adapter);
+
+                    if(response.body().size() == 0){
+                        acceptedTitle.setVisibility(View.GONE);
+
+                    }
+
+                }
+
 
 
 

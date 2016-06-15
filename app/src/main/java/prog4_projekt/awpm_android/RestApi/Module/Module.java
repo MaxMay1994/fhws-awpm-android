@@ -71,6 +71,9 @@ public class Module implements Serializable, Parcelable{
     @SerializedName("voted")
     @Expose
     private boolean voted;
+    @SerializedName("votes")
+    @Expose
+    private int votes;
     @SerializedName("favored")
     @Expose
     private boolean favorite;
@@ -420,7 +423,23 @@ public class Module implements Serializable, Parcelable{
         this.voted = voted;
     }
 
+    /**
+     *
+     * @return
+     *     The votes
+     */
+    public int getVoted() {
+        return votes;
+    }
 
+    /**
+     *
+     * @param votes
+     *     The votes
+     */
+    public void setVotes(int votes) {
+        this.votes = votes;
+    }
 
 
     /**
