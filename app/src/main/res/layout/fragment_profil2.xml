@@ -145,6 +145,16 @@
         android:layout_gravity="center_horizontal"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+            <TextView
+                android:id="@+id/profil_emty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/card_view_profil"
+                android:text="Kein Modul gefunden"
+                android:layout_marginTop="32dp"
+                android:layout_gravity="center_horizontal"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewA"
         android:layout_below="@+id/profil_a_title"
