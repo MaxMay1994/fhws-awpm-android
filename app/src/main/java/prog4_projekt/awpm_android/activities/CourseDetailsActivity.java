@@ -45,8 +45,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     Call<Module> callVoted;
     Call<Module> callFavorite;
-    int id, participants;
-    int count = 0;
+    int id, participants, votes;
     FragmentLoginDialog dialog;
     Module passedModule;
     @Override
@@ -95,15 +94,15 @@ public class CourseDetailsActivity extends AppCompatActivity {
         examNumber = extras.getString("examnumber");
         id = extras.getInt("id");
         blocked = extras.getBoolean("blocked");
-        appearance = extras.getBoolean("appearance");
+        appearance = extras.getBoolean("mandatory");
         moduleVoted = extras.getBoolean("voted");
+        votes = extras.getInt("votes");
         if(moduleVoted){
             wahlSwitch.setChecked(true);
-            count++;
         }
         moduleFavorite = extras.getBoolean("favorite");
         if (moduleFavorite) mfb.setFavorite(true);
-        if(extras!= null){
+        if(extras != null){
             toolTitle.setText(name);
             information.setText(getString(R.string.description));
             info_content.setText(content);
@@ -120,7 +119,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
             examNumber_header.setText(getString(R.string.examnumber));
             examNumber_content.setText(examNumber);
             participants_header.setText(getString(R.string.participants));
-            participants_content.setText(count + " / " + String.valueOf(participants));
+            participants_content.setText(votes + " / " + String.valueOf(participants));
             blocked_header.setText(getString(R.string.blocked));
             if(blocked)blocked_content.setText("✔");
             else if(!blocked)blocked_content.setText("✘");
@@ -208,7 +207,6 @@ public class CourseDetailsActivity extends AppCompatActivity {
                         startActivity(voteBack);
                     } else {
                         moduleVoted = false;
-                        count--;
                         callVoted = ServiceAdapter.getService().patchVoted( id, false, authorization);
                         callVoted.enqueue(new Callback<Module>() {
                             @Override

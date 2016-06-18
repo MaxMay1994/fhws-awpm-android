@@ -91,10 +91,10 @@ public class FragmentBallot extends Fragment {
                     votedList = response.body();
                     adapter = new RecyclerViewAdapterBallot(getActivity(), votedList);
                     recyclerViewC.setAdapter(adapter);
-                   /* ItemTouchHelper.Callback callback =
+                    ItemTouchHelper.Callback callback =
                             new SimpleItemTouchHelperCallback(adapter,votedList,authorization);
                     ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
-                    touchHelper.attachToRecyclerView(recyclerViewC);*/
+                    touchHelper.attachToRecyclerView(recyclerViewC);
 
 
 
@@ -115,7 +115,7 @@ public class FragmentBallot extends Fragment {
                 }
                 if (response.code() == 401) {
 
-                    nullVoted.setText("Bitte Logen Sie sich ein");
+                    nullVoted.setText("Bitte Loggen Sie sich ein");
                     nullVoted.setVisibility(View.VISIBLE);
                     sad.setVisibility(View.VISIBLE);
 

@@ -26,20 +26,19 @@ import retrofit2.Response;
 
 public class FilterActivity extends AppCompatActivity {
 
-    String wahlZeitraumID = "";
-    String locationID = "";
-    String blockedForID = "";
-    String favoredModulesID = "";
+    String wahlZeitraumID = null;
+    String buildingID = null;
+    String locationID = null;
+    String blockedforMe = null;
+    String blockedForID = null;
+    String favoredModulesID = null;
+
     CheckBox wahlZeitraum, location, blockedFor, favoredModules;
     Button returnFromFilter, resetFilter;
     Spinner spinnerFilter1, spinnerFilter2;
     TextView toolText;
-    String wue, sw;
-    String[] itemsFilter1;
     ArrayAdapter<String> adapter1;
 
-    List<Building> locationList, buildingList;
-    Call<List<Building>> callLocations, callBuilding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,16 +50,10 @@ public class FilterActivity extends AppCompatActivity {
         blockedFor = (CheckBox) findViewById(R.id.gesperrt);
         favoredModules = (CheckBox) findViewById(R.id.favoriteModulesFilter);
 
-        callLocations = ServiceAdapter.getService().getAllLocations();
-        callLocations.enqueue(new Callback<List<Building>>() {
-            @Override
-            public void onResponse(Call<List<Building>> call, Response<List<Building>> response) {
-                locationList = response.body();
-                wue = locationList.get(1).getName();
-                sw = locationList.get(0).getName();
+
                 spinnerFilter1 = (Spinner) findViewById(R.id.spinner1);
-                itemsFilter1 = new String[]{getString(R.string.auswaehlen), sw, wue, getString(R.string.ortMuenz), getString(R.string.ortShl)};
-                adapter1 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, itemsFilter1);
+                final  String[] itemsFilter1 = new String[]{getString(R.string.auswaehlen), getString(R.string.ortSw), getString(R.string.ortWue), getString(R.string.ortMuenz), getString(R.string.ortShl)};
+                adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, itemsFilter1);
                 spinnerFilter1.setAdapter(adapter1);
                 spinnerFilter1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -69,8 +62,22 @@ public class FilterActivity extends AppCompatActivity {
                             for (int i = 1; i < itemsFilter1.length; i++) {
                                 if (i == position){
                                     location.setChecked(true);
-                                    locationID = itemsFilter1[i];
-                                    Log.i("ID-Name", locationID);
+                                    if(itemsFilter1[i].equalsIgnoreCase("Schweinfurt")) {
+                                        locationID = "schweinfurt";
+                                        Log.i("LocationName", locationID);
+                                    }
+                                    else if(itemsFilter1[i].equalsIgnoreCase("Würzburg")){
+                                        locationID = "würzburg";
+                                        Log.i("LocationName", locationID);
+                                    }
+                                    else if(itemsFilter1[i].equalsIgnoreCase("Münzstr.")){
+                                        buildingID = "münzstr.";
+                                        Log.i("BuildingName", buildingID);
+                                    }
+                                    else if(itemsFilter1[i].equalsIgnoreCase("SHL")){
+                                        buildingID = "shl";
+                                        Log.i("BuildingName", buildingID);
+                                    }
                                 }
                             }
                         } else {
@@ -82,18 +89,10 @@ public class FilterActivity extends AppCompatActivity {
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
                         location.setChecked(false);
-                        locationID = "null";
-                        Log.i("ID-Name", locationID);
                     }
                 });
 
-            }
 
-            @Override
-            public void onFailure(Call<List<Building>> call, Throwable t) {
-
-            }
-        });
 
 
 
@@ -101,12 +100,8 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    wahlZeitraumID = "wahlZeitraum";
-                    Log.i("ID-name", wahlZeitraumID);
-                }
-                else{
-                    wahlZeitraumID = "null";
-                    Log.i("Id-name", wahlZeitraumID);
+                    wahlZeitraumID = "wahlzeitraum";
+                    Log.i("WahlzeitraumID", wahlZeitraumID);
                 }
             }
         });
@@ -114,18 +109,11 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    favoredModulesID = "favoredModules";
-                    Log.i("ID-name", favoredModulesID);
-                }
-                else{
-                    favoredModulesID = "null";
-                    Log.i("ID-name", favoredModulesID);
+                    favoredModulesID = "favorites";
+                    Log.i("FavoritenID", favoredModulesID);
                 }
             }
         });
-
-
-
 
         spinnerFilter2 = (Spinner) findViewById(R.id.spinner2);
         final String[] itemsFilter2 = new String[]{getString(R.string.auswaehlen),getString(R.string.mich), getString(R.string.stringStudiengangBIN), getString(R.string.stringStudiengangBWI)};
@@ -138,8 +126,18 @@ public class FilterActivity extends AppCompatActivity {
                     for (int i = 1; i < itemsFilter2.length; i++) {
                         if (i == position){
                             blockedFor.setChecked(true);
-                            blockedForID = itemsFilter2[i];
-                            Log.i("ID-Name", blockedForID);
+                            if (itemsFilter2[i].equalsIgnoreCase("mich")) {
+                                blockedforMe = "mich";
+                                Log.i("BlockedForMe", blockedforMe);
+                            }
+                            else if(itemsFilter2[i].equalsIgnoreCase("BIN")){
+                                blockedForID = "bin";
+                                Log.i("BlockedAllgemein", blockedForID);
+                            }
+                            else if(itemsFilter2[i].equalsIgnoreCase("BWI")){
+                                blockedForID = "bwi";
+                                Log.i("BlockedAllgemein", blockedForID);
+                            }
                         }
                     }
                 } else {
@@ -150,8 +148,6 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
                 blockedFor.setChecked(false);
-                blockedForID = "null";
-                Log.i("ID-Name", blockedForID);
             }
         });
         returnFromFilter = (Button) findViewById(R.id.return_filter);
@@ -171,10 +167,10 @@ public class FilterActivity extends AppCompatActivity {
                 Intent returnIntent = getIntent();
                 returnIntent.putExtra("wahlZeitraumID", wahlZeitraumID);
                 returnIntent.putExtra("locationID", locationID);
+                returnIntent.putExtra("buildingID", buildingID);
+                returnIntent.putExtra("blockedForMe", blockedforMe);
                 returnIntent.putExtra("blockedForID", blockedForID);
                 returnIntent.putExtra("favoredModulesID", favoredModulesID);
-                    //String[] returnFilter = new String[]{wahlZeitraumID, locationID, blockedForID, favoredModulesID};
-                    //returnIntent.putExtra("returnData", returnFilter);
                     setResult(Activity.RESULT_OK, returnIntent);
                     finish();
             }

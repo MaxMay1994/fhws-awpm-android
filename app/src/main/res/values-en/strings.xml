@@ -113,7 +113,7 @@
     <string name="cancel">Cancel</string>
 
     //warning strings
-    <string name="missingPwd">Missing passoword</string>
+    <string name="missingPwd">Missing password</string>
     <string name="missingKNum">Missing K-number</string>
     <string name="missinBoth">Missing K-number and password</string>
     <string name="serverError">Disturbed connection! Please try again</string>
@@ -162,7 +162,7 @@
     <string name="fragmentCoursesButton">Filter courses</string>
 
     //content_courses_details strings
-    <string name="favoritMarkieren">Favorite</string>
+    <string name="favoritMarkieren">Set As Favorite</string>
     <string name="moduleWaehlen">Elect</string>
 
     //ballot

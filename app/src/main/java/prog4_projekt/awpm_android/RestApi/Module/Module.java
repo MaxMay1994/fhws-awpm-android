@@ -77,6 +77,21 @@ public class Module implements Serializable, Parcelable{
     @SerializedName("vote_position")
     @Expose
     private int votePosition;
+    @SerializedName("mandatory")
+    @Expose
+    private boolean mandatory;
+    /**
+     * @return
+     * mandatory
+     */
+    public boolean isMandatory() { return mandatory; }
+
+    /**
+     * @param mandatory
+     * return mandatory
+     */
+
+    public void setMandatory(boolean mandatory) { this.mandatory = mandatory; }
 
     /**
      * 

@@ -116,7 +116,9 @@ public class FragmentCourses extends Fragment{
                                 examNumber = moduleToPass.getExamNumber();
                                 id = moduleToPass.getId();
                                 blocked = moduleToPass.isBlocked();
-                                appearance = moduleToPass.isIntensive();
+                                int votes = moduleToPass.getVotePosition();
+                                boolean mandatory = moduleToPass.isMandatory();
+                                extras.putInt("votes", votes);
                                 extras.putString("name", name);
                                 extras.putString("content", content);
                                 extras.putString("examtype", examType);
@@ -132,7 +134,7 @@ public class FragmentCourses extends Fragment{
                                 extras.putString("examnumber", examNumber);
                                 extras.putInt("id", id);
                                 extras.putBoolean("blocked", blocked);
-                                extras.putBoolean("appearance", appearance);
+                                extras.putBoolean("appearance", mandatory);
                                 intent.putExtras(extras);
                                 FragmentCourses.this.getContext().startActivity(intent);
                             }
@@ -159,23 +161,49 @@ public class FragmentCourses extends Fragment{
                 String wahl = data.getStringExtra("wahlZeitraumID");
                 String favorit = data.getStringExtra("favoredModulesID");
                 String location = data.getStringExtra("locationID");
+                String building = data.getStringExtra("buildingID");
+                String blockedForMe = data.getStringExtra("blockedForMe");
                 String blocked = data.getStringExtra("blockedForID");
 
-                String[] dataFromFilter = new String[]{wahl, location, blocked, favorit};
-                for (String s : dataFromFilter) {
-                    Log.i("Filteruebergabe", s);
+                call = ServiceAdapter.getService().getAll(
+                        null,
+                        ((wahl != null) && (wahl.equalsIgnoreCase("wahlzeitraum")))? true : null,
+                        null,
+                        ((blockedForMe != null) && (blockedForMe.equalsIgnoreCase("mich"))) ? true : null,
+                        ((blocked != null) && (blocked.equalsIgnoreCase("bin"))) ? 30 : ((blocked != null) && (blocked.equalsIgnoreCase("bwi")) ? 29 : null),
+                        null,
+                        ((favorit != null) && (favorit.equalsIgnoreCase("favorites"))) ? true : null,
+                        null,
+                        null,
+                        null,
+                        ((location != null) && (location.equalsIgnoreCase("schweinfurt")))? 2 : ((location != null && location.equalsIgnoreCase("würzburg")) ? 1 : null),
+                        ((building != null) && (building.equalsIgnoreCase("münzstr."))) ? 1 : ((building != null && building.equalsIgnoreCase("shl")) ? 2 : null),
+                        null,
+                        null,
+                        authorization);
 
-                }
-                //Favoriten und Standort SHL
+                call.enqueue(new Callback<List<Module>>() {
+                    @Override
+                    public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
+                        modulesList = response.body();
+                        adapter = new RecyclerViewAdapter(getActivity(), modulesList);
+                        recyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    }
 
-                if ((dataFromFilter[0].toLowerCase().equals("null".toLowerCase()))&& (dataFromFilter[1].toLowerCase().equals("SHL".toLowerCase())) &&(dataFromFilter[2].toLowerCase().equals("null".toLowerCase()))&& (dataFromFilter[3].toLowerCase().equals("favoredModules".toLowerCase()))) {
+                    @Override
+                    public void onFailure(Call<List<Module>> call, Throwable t) {
+
+                    }
+                });
+              /*  if ((dataFromFilter[0].toLowerCase().equals("null".toLowerCase()))&& (dataFromFilter[1].toLowerCase().equals("SHL".toLowerCase())) &&(dataFromFilter[2].toLowerCase().equals("null".toLowerCase()))&& (dataFromFilter[3].toLowerCase().equals("favoredModules".toLowerCase()))) {
                     call = ServiceAdapter.getService().getAll(null, null, null, null, null, null, true, null, null, null, null, getIDFor("SHL"), null, null, authorization);
                     call.enqueue(new Callback<List<Module>>() {
                         @Override
                         public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
                             modulesList = response.body();
-                            adapter = new RecyclerViewAdapter(getActivity(), modulesList);
-                            recyclerView.setAdapter(adapter);
+                            adapter1 = new RecyclerViewAdapter(getActivity(), modulesList);
+                            recyclerView.setAdapter(adapter1);
                             adapter.notifyDataSetChanged();
                         }
 
@@ -236,7 +264,7 @@ public class FragmentCourses extends Fragment{
                     call.enqueue(new Callback<List<Module>>() {
                         @Override
                         public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
-                            modulesList = response.body();
+                            modulesList  = response.body();
                             adapter = new RecyclerViewAdapter(getActivity(), modulesList);
                             recyclerView.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
@@ -436,30 +464,30 @@ public class FragmentCourses extends Fragment{
                         dialog.setStyle(DialogFragment.STYLE_NO_TITLE, R.style.transperantDialog);
                         dialog.show(getFragmentManager(), "log");
                     }
-                }
+                }*/
             }
 
 
-                if (resultCode == Activity.RESULT_CANCELED) {
-                    call = ServiceAdapter.getService().getAllModules(1, 50);
-                    call.enqueue(new Callback<List<Module>>() {
-                        @Override
-                        public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
-                            modulesList = response.body();
-                            adapter = new RecyclerViewAdapter(getActivity(), modulesList);
-                            recyclerView.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
-                        }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                call = ServiceAdapter.getService().getAllModules(1, 50);
+                call.enqueue(new Callback<List<Module>>() {
+                    @Override
+                    public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
+                        modulesList = response.body();
+                        adapter = new RecyclerViewAdapter(getActivity(), modulesList);
+                        recyclerView.setAdapter(adapter);
+                        adapter.notifyDataSetChanged();
+                    }
 
-                        @Override
-                        public void onFailure(Call<List<Module>> call, Throwable t) {
+                    @Override
+                    public void onFailure(Call<List<Module>> call, Throwable t) {
 
-                        }
-                    });
+                    }
+                });
 
-                }
             }
         }
+    }
 
     private int getIDFor(String location){
         for(Module m:modulesList){
