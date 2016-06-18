@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 import prog4_projekt.awpm_android.MySharedPreference;
+import prog4_projekt.awpm_android.RestApi.Module.Building;
 import prog4_projekt.awpm_android.RestApi.Module.Module;
 import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
 import prog4_projekt.awpm_android.R;
@@ -42,14 +43,16 @@ public class FragmentCourses extends Fragment{
     RecyclerViewAdapter adapter, adapter1;
     RecyclerView recyclerView, rv;
     public List<Module> modulesList;
-    Call<List<Module>> call, call1;
+    Call<List<Module>> call;
+    String[] areasFinal;
+    Call<List<Building>> callBuildings, callSubjects;
     String content, name, lecturer, start, end, examType, room, examNumber, city, location;
     int participants, id, cityidSW, cityidWUE, locationIDSHL, locationIDMstr;
     boolean voted, favorite, appearance, blocked;
     Button filter;
     SharedPreferences sharedPref;
     private String authorization;
-    private List<Module> mList;
+    private List<Building> buildingList, areaList;
     FragmentLoginDialog dialog;
     LinearLayoutManager mLayoutManager;
     List<Module> hiddenList;
@@ -90,7 +93,6 @@ public class FragmentCourses extends Fragment{
             }
         });
 
-
         recyclerView.addOnItemTouchListener(
                 new RecyclerItemClickListener(getContext(), new RecyclerItemClickListener.OnItemClickListener(){
                     @Override public void onItemClick(View view, final int position){
@@ -116,7 +118,7 @@ public class FragmentCourses extends Fragment{
                                 examNumber = moduleToPass.getExamNumber();
                                 id = moduleToPass.getId();
                                 blocked = moduleToPass.isBlocked();
-                                int votes = moduleToPass.getVotePosition();
+                                int votes = moduleToPass.getVoted();
                                 boolean mandatory = moduleToPass.isMandatory();
                                 extras.putInt("votes", votes);
                                 extras.putString("name", name);
@@ -150,6 +152,7 @@ public class FragmentCourses extends Fragment{
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), FilterActivity.class);
+                intent.putExtra("areas", areasFinal);
                 startActivityForResult(intent, 1);
             }
         });
@@ -169,15 +172,15 @@ public class FragmentCourses extends Fragment{
                         null,
                         ((wahl != null) && (wahl.equalsIgnoreCase("wahlzeitraum")))? true : null,
                         null,
-                        ((blockedForMe != null) && (blockedForMe.equalsIgnoreCase("mich"))) ? true : null,
-                        ((blocked != null) && (blocked.equalsIgnoreCase("bin"))) ? 30 : ((blocked != null) && (blocked.equalsIgnoreCase("bwi")) ? 29 : null),
+                        ((blockedForMe != null) && (blockedForMe.equalsIgnoreCase("mich"))) ? false : null,
+                        null, //((blocked != null) && (blocked.equalsIgnoreCase("bin"))) ? 30 : ((blocked != null) && (blocked.equalsIgnoreCase("bwi")) ? 29 : null),
                         null,
                         ((favorit != null) && (favorit.equalsIgnoreCase("favorites"))) ? true : null,
                         null,
                         null,
                         null,
-                        ((location != null) && (location.equalsIgnoreCase("schweinfurt")))? 2 : ((location != null && location.equalsIgnoreCase("würzburg")) ? 1 : null),
-                        ((building != null) && (building.equalsIgnoreCase("münzstr."))) ? 1 : ((building != null && building.equalsIgnoreCase("shl")) ? 2 : null),
+                        null, //? 2 : ((location != null && location.equalsIgnoreCase("würzburg")) ? 1 : null),
+                        null, //((building != null) && (building.equalsIgnoreCase("münzstr."))) ? 1 : ((building != null && building.equalsIgnoreCase("shl")) ? 2 : null),
                         null,
                         null,
                         authorization);
@@ -530,12 +533,4 @@ public class FragmentCourses extends Fragment{
         return newList;
     }
 
-    private List<Module> joinLists(List<Module> list1, List<Module> list2){
-        for(Module m:list2) {
-            if (!list1.contains(m)) {
-                list1.add(m);
-            }
-        }
-        return list1;
-    }
 }

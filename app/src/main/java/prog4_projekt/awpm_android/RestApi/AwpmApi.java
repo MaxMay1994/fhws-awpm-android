@@ -134,9 +134,6 @@ public interface AwpmApi {
     Call<List<Module>>
     getModulesAtBuildingID(@Query("building_id") int building_id);
 
-    @GET("api/locations")
-    Call<List<Building>>
-    getBuildings();
 
     //Komma-separierte Liste mit Tag-IDs Beispiel: "1,3,5"
     @GET("api/tags")

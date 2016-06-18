@@ -32,6 +32,9 @@ public class FilterActivity extends AppCompatActivity {
     String blockedforMe = null;
     String blockedForID = null;
     String favoredModulesID = null;
+    Call<List<Building>> callSubjects;
+    List<Building> areaList;
+    String[] areasFinal;
 
     CheckBox wahlZeitraum, location, blockedFor, favoredModules;
     Button returnFromFilter, resetFilter;
@@ -49,7 +52,6 @@ public class FilterActivity extends AppCompatActivity {
         location = (CheckBox) findViewById(R.id.location);
         blockedFor = (CheckBox) findViewById(R.id.gesperrt);
         favoredModules = (CheckBox) findViewById(R.id.favoriteModulesFilter);
-
 
                 spinnerFilter1 = (Spinner) findViewById(R.id.spinner1);
                 final  String[] itemsFilter1 = new String[]{getString(R.string.auswaehlen), getString(R.string.ortSw), getString(R.string.ortWue), getString(R.string.ortMuenz), getString(R.string.ortShl)};
@@ -115,41 +117,65 @@ public class FilterActivity extends AppCompatActivity {
             }
         });
 
-        spinnerFilter2 = (Spinner) findViewById(R.id.spinner2);
-        final String[] itemsFilter2 = new String[]{getString(R.string.auswaehlen),getString(R.string.mich), getString(R.string.stringStudiengangBIN), getString(R.string.stringStudiengangBWI)};
-        ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, itemsFilter2);
-        spinnerFilter2.setAdapter(adapter2);
-        spinnerFilter2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        callSubjects = ServiceAdapter.getService().getAllSubjectAreas();
+        callSubjects.enqueue(new Callback<List<Building>>() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position != 0) {
-                    for (int i = 1; i < itemsFilter2.length; i++) {
-                        if (i == position){
-                            blockedFor.setChecked(true);
-                            if (itemsFilter2[i].equalsIgnoreCase("mich")) {
-                                blockedforMe = "mich";
-                                Log.i("BlockedForMe", blockedforMe);
+            public void onResponse(Call<List<Building>> call, Response<List<Building>> response) {
+                areaList=response.body();
+                Building[] areas = areaList.toArray(new Building [areaList.size()]);
+                areasFinal = new String[(areas.length)];
+                //areasFinal[0] = getString(R.string.auswaehlen);
+                //areasFinal[1] = getString(R.string.mich);
+                for(int i = 0; i < areas.length; i++){
+                    areasFinal[i] = areas[i].getName();
+                    Log.i("array", areasFinal[i]);
+                }
+
+                spinnerFilter2 = (Spinner) findViewById(R.id.spinner2);
+                ArrayAdapter<String> adapter2 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, areasFinal);
+                spinnerFilter2.setAdapter(adapter2);
+                spinnerFilter2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            for (int i = 1; i < areasFinal.length; i++) {
+                                if (i == position){
+                                    blockedFor.setChecked(true);
+                                    if (areasFinal[i].equalsIgnoreCase("mich")) {
+                                        blockedforMe = "mich";
+                                        Log.i("BlockedForMe", blockedforMe);
+                                    }
+                                    else if(areasFinal[i].equalsIgnoreCase("BIN")){
+                                        blockedForID = "bin";
+                                        Log.i("BlockedAllgemein", blockedForID);
+                                    }
+                                    else if(areasFinal[i].equalsIgnoreCase("BWI")){
+                                        blockedForID = "bwi";
+                                        Log.i("BlockedAllgemein", blockedForID);
+                                    }
+                                }
                             }
-                            else if(itemsFilter2[i].equalsIgnoreCase("BIN")){
-                                blockedForID = "bin";
-                                Log.i("BlockedAllgemein", blockedForID);
-                            }
-                            else if(itemsFilter2[i].equalsIgnoreCase("BWI")){
-                                blockedForID = "bwi";
-                                Log.i("BlockedAllgemein", blockedForID);
-                            }
+                        } else {
+                            blockedFor.setChecked(false);
                         }
                     }
-                } else {
-                    blockedFor.setChecked(false);
-                }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        blockedFor.setChecked(false);
+                    }
+                });
+
+
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                blockedFor.setChecked(false);
+            public void onFailure(Call<List<Building>> call, Throwable t) {
+
             }
         });
+
         returnFromFilter = (Button) findViewById(R.id.return_filter);
         resetFilter = (Button) findViewById(R.id.reset_filter);
         resetFilter.setOnClickListener(new View.OnClickListener() {
