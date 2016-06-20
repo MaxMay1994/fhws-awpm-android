@@ -163,24 +163,26 @@ public class FragmentCourses extends Fragment{
             if (resultCode == Activity.RESULT_OK) {
                 String wahl = data.getStringExtra("wahlZeitraumID");
                 String favorit = data.getStringExtra("favoredModulesID");
-                String location = data.getStringExtra("locationID");
-                String building = data.getStringExtra("buildingID");
                 String blockedForMe = data.getStringExtra("blockedForMe");
-                String blocked = data.getStringExtra("blockedForID");
+                int locationid = data.getIntExtra("locationID", 1);
+                Log.i("location im Fragment", String.valueOf(locationid));
+                int blockedForAll = data.getIntExtra("blockedForAll", 1);
+                Log.i("block im Fragment", String.valueOf(blockedForAll));
+
 
                 call = ServiceAdapter.getService().getAll(
                         null,
                         ((wahl != null) && (wahl.equalsIgnoreCase("wahlzeitraum")))? true : null,
                         null,
                         ((blockedForMe != null) && (blockedForMe.equalsIgnoreCase("mich"))) ? false : null,
-                        null, //((blocked != null) && (blocked.equalsIgnoreCase("bin"))) ? 30 : ((blocked != null) && (blocked.equalsIgnoreCase("bwi")) ? 29 : null),
+                        (blockedForAll != 0) ? blockedForAll : null,
                         null,
                         ((favorit != null) && (favorit.equalsIgnoreCase("favorites"))) ? true : null,
                         null,
                         null,
                         null,
-                        null, //? 2 : ((location != null && location.equalsIgnoreCase("würzburg")) ? 1 : null),
-                        null, //((building != null) && (building.equalsIgnoreCase("münzstr."))) ? 1 : ((building != null && building.equalsIgnoreCase("shl")) ? 2 : null),
+                        null,
+                        (locationid != 0) ? locationid : null,
                         null,
                         null,
                         authorization);
