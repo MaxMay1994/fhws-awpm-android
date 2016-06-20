@@ -8,12 +8,14 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 import java.util.List;
 
 import prog4_projekt.awpm_android.RestApi.Module.Module;
 import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
 import prog4_projekt.awpm_android.activities.CourseDetailsActivity;
+import prog4_projekt.awpm_android.activities.MainActivity;
 import prog4_projekt.awpm_android.adapter.ItemTouchHelperAdapter;
 import prog4_projekt.awpm_android.fragmente.FragmentBallot;
 import retrofit2.Call;

@@ -5,9 +5,11 @@ import android.support.annotation.Nullable;
 import java.util.List;
 
 import prog4_projekt.awpm_android.RestApi.Module.Building;
+import prog4_projekt.awpm_android.RestApi.Module.City;
 import prog4_projekt.awpm_android.RestApi.Module.Date;
 import prog4_projekt.awpm_android.RestApi.Module.Location;
 import prog4_projekt.awpm_android.RestApi.Module.Module;
+import prog4_projekt.awpm_android.RestApi.Module.SubjectArea;
 import prog4_projekt.awpm_android.RestApi.Module.Tag;
 import prog4_projekt.awpm_android.RestApi.Peroids.Periods;
 import prog4_projekt.awpm_android.RestApi.UserData.Login;
@@ -51,18 +53,24 @@ public interface AwpmApi {
     Call<Module> getAuthoristModule(@Path("id") int id, @Header("Authorization") String authorization);
 
     //Alle Locations und eine Location
+    //@GET("api/locations")
+    //Call<List<Building>> getAllLocations();
+
     @GET("api/locations")
-    Call<List<Building>> getAllLocations();
+    Call<List<City>> getAllCity();
+
+    //@GET("api/locations/{id}")
+    //Call<Building> getLocation(@Path("id") int id);
 
     @GET("api/locations/{id}")
-    Call<Building> getLocation(@Path("id") int id);
+    Call<City> getCity(@Path("id") int id);
 
     //Alle Subject Areas und ein Subject Area
     @GET("api/subject-areas")
-    Call<List<Building>> getAllSubjectAreas();
+    Call<List<SubjectArea>> getAllSubjectAreas();
 
     @GET("api/subject-areas/{id}")
-    Call<Building> getSubjectAreas(@Path("id") int id);
+    Call<SubjectArea> getSubjectAreas(@Path("id") int id);
 
     //Alle Tags und ein Tag z.B. Sprache oder Technik
     @GET("api/tags")

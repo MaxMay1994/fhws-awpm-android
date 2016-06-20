@@ -54,6 +54,7 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewC"
+                android:visibility="visible"
                 android:layout_width="match_parent"
                 android:paddingRight="16dp"
                 android:paddingLeft="16dp"
@@ -73,6 +74,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recyclerViewF"
                 android:layout_width="match_parent"
+                android:visibility="visible"
                 android:paddingRight="16dp"
                 android:paddingLeft="16dp"
                 android:layout_height="wrap_content">
@@ -80,8 +82,6 @@
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
-
-
 
 
 

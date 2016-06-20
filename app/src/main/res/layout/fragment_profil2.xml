@@ -97,8 +97,8 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginRight="16dp"
-                android:id="@+id/imageButton1"
-
+                android:id="@+id/card_view_profil_logout_button"
+                android:src="@drawable/ic_exit_to_app_black_24dp"
                 android:layout_alignParentRight="true"
                 android:layout_below="@+id/card_view_profil_email"
 
@@ -111,23 +111,12 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
                 android:layout_marginRight="32dp"
-                android:layout_toLeftOf="@+id/imageButton1"
-                android:id="@+id/imageButton2"
-                android:src="@drawable/ic_setting_light"
+                android:layout_toLeftOf="@+id/card_view_profil_logout_button"
+                android:id="@+id/card_view_profil_calendar_button"
+                android:src="@drawable/ic_perm_contact_calendar_black_24dp"
                 android:layout_below="@+id/card_view_profil_email"
                 />
 
-            <ImageButton
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:layout_marginRight="32dp"
-                android:layout_toLeftOf="@+id/imageButton2"
-                android:id="@+id/imageButton3"
-                android:src="@drawable/ic_star_black_24dp"
-                android:layout_below="@+id/card_view_profil_email"
-                />
 
 
         </RelativeLayout>
@@ -146,16 +135,29 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
             <TextView
-                android:id="@+id/profil_emty"
+                android:id="@+id/profil_empty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_below="@id/card_view_profil"
                 android:text="Kein Modul gefunden"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="64dp"
                 android:layout_gravity="center_horizontal"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <android.support.v7.widget.RecyclerView
+
+            <TextView
+                android:id="@+id/profil_empty_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_below="@id/card_view_profil"
+                android:text="Sie wurden noch für kein Modul zugelassen"
+
+                android:layout_gravity="center_horizontal"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerViewA"
         android:layout_below="@+id/profil_a_title"
         android:layout_width="match_parent"

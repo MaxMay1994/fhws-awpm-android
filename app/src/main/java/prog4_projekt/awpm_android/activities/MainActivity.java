@@ -29,7 +29,11 @@ import prog4_projekt.awpm_android.MySharedPreference;
 import prog4_projekt.awpm_android.R;
 
 import prog4_projekt.awpm_android.adapter.ViewPaperAdapterMainActivity;
+import prog4_projekt.awpm_android.fragmente.FragmentBallot;
+import prog4_projekt.awpm_android.fragmente.FragmentCourses;
+import prog4_projekt.awpm_android.fragmente.FragmentLogin;
 import prog4_projekt.awpm_android.fragmente.FragmentLoginDialog;
+import prog4_projekt.awpm_android.fragmente.FragmentProfil;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -60,7 +64,13 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         String[] titleArray = {getString(R.string.katalogTab),getString(R.string.wahlzettelTab),getString(R.string.profiltab)};
-        final ViewPaperAdapterMainActivity viewPaperAdapter = new ViewPaperAdapterMainActivity(getSupportFragmentManager());
+        ViewPaperAdapterMainActivity viewPaperAdapter = null;
+        if(MySharedPreference.getBooleanIsLoged(sharedPref)){
+            viewPaperAdapter = new ViewPaperAdapterMainActivity(getSupportFragmentManager(),new FragmentCourses(),new FragmentBallot(),new FragmentProfil());
+        }else{
+            viewPaperAdapter = new ViewPaperAdapterMainActivity(getSupportFragmentManager(),new FragmentCourses(),new FragmentLogin(),new FragmentLogin());
+
+        }
         viewPaperAdapter.setTitleArray(titleArray);
         viewPager.setAdapter(viewPaperAdapter);
         getFromDetails = getIntent();

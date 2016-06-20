@@ -171,7 +171,7 @@
     <string name="ballot_no_choice">Sie haben noch kein \nModul gewählt</string>
 
     //profil
-    <string name="profil_subject_area">Subject: </string>
-    <string name="profil_knumber">K-Nummer: </string>
+    <string name="profil_subject_area">Subject Area: </string>
+    <string name="profil_knumber">K-Number: </string>
     <string name="profil_email">E-Mail: </string>
 </resources>

@@ -1,8 +1,6 @@
 package prog4_projekt.awpm_android;
-
 import android.content.SharedPreferences;
 import android.util.Log;
-
 import java.util.Date;
 
 /**

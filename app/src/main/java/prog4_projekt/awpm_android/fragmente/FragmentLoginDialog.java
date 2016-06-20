@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.util.Base64;
 import android.util.Log;
@@ -133,7 +134,11 @@ public class FragmentLoginDialog extends DialogFragment {
         text.setText(message);
         return layout;
     }
-    public static void login(String kNummer, String pwd, final SharedPreferences sharedPref, final Activity activity, final FragmentLoginDialog dialog) throws IOException {
+    //public static void makeLogin(String kNummer, String pwd, final SharedPreferences sharedPref, final Activity activity){
+    //    login(kNummer,pwd,sharedPref,activity,);
+    //
+    //}
+    public static void login(String kNummer, String pwd, final SharedPreferences sharedPref, final Activity activity, final Fragment dialog) throws IOException {
 
 
         getLoginCall(makeBase64Codierung(makeSendData(kNummer, pwd))).enqueue(new Callback<Login>() {
@@ -147,7 +152,7 @@ public class FragmentLoginDialog extends DialogFragment {
                     MySharedPreference.saveStringToken(sharedPref, loginObject.getToken());
                     MySharedPreference.saveDateExpiresAtAsLong(sharedPref, loginObject.getExpires_at());
 
-                    dialog.dismiss();
+                    //dialog.dismiss();
 
                     Intent main = new Intent(activity.getApplication(),MainActivity.class);
                     activity.startActivity(main);
@@ -191,7 +196,8 @@ public class FragmentLoginDialog extends DialogFragment {
                     MySharedPreference.saveBooleanIsLoged(sharedPref, false);
                     MySharedPreference.saveStringToken(sharedPref, null);
                     Log.i("123123", str +" "+ MySharedPreference.getDateExpiresAtAsLong(sharedPref));
-
+                    Intent main = new Intent(activity.getApplication(),MainActivity.class);
+                    activity.startActivity(main);
                 }
                 if(response.code() == 401){
                     Log.i("0011", response.message()+" "+response.code());
@@ -210,8 +216,7 @@ public class FragmentLoginDialog extends DialogFragment {
                 Log.i("0011", "logout False"+ t.getMessage());
             }
         });
-        Intent main = new Intent(activity.getApplication(),MainActivity.class);
-        activity.startActivity(main);
+
     }
     //base64 Codierung des Token
     public static String makeBase64Codierung(String stringToEncode){

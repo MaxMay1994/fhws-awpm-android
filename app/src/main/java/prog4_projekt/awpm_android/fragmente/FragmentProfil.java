@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
 import com.koushikdutta.ion.Ion;
 
 import java.util.List;
@@ -29,7 +30,9 @@ import prog4_projekt.awpm_android.RestApi.Module.Module;
 import prog4_projekt.awpm_android.RestApi.ServiceAdapter;
 import prog4_projekt.awpm_android.RestApi.UserData.Login;
 import prog4_projekt.awpm_android.RestApi.UserData.User;
+import prog4_projekt.awpm_android.activities.MainActivity;
 import prog4_projekt.awpm_android.adapter.RecyclerViewAdapter;
+import prog4_projekt.awpm_android.adapter.ViewPaperAdapterMainActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,6 +49,9 @@ public class FragmentProfil extends Fragment {
     TextView kNumber;
     TextView email;
     TextView acceptedTitle;
+    TextView emptyTitle;
+    TextView emptySubtitle;
+    ImageButton logoutButton;
     RecyclerView recyclerViewA;
     List<Module> aList;
     RecyclerViewAdapter adapter;
@@ -58,6 +64,7 @@ public class FragmentProfil extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.fragment_profil2, null);
         card = (CardView) view.findViewById(R.id.card_view_profil);
         image = (CircleImageView) view.findViewById(R.id.card_view_profil_imageViewAvatar);
@@ -65,27 +72,28 @@ public class FragmentProfil extends Fragment {
         subjectArea = (TextView) view.findViewById(R.id.card_view_profil_subject);
         kNumber = (TextView) view.findViewById(R.id.card_view_profil_knumber);
         email = (TextView) view.findViewById(R.id.card_view_profil_email);
+        emptyTitle = (TextView) view.findViewById(R.id.profil_empty);
+        emptySubtitle = (TextView) view.findViewById(R.id.profil_empty_subtitle);
+        logoutButton = (ImageButton) view.findViewById(R.id.card_view_profil_logout_button);
         recyclerViewA = (RecyclerView) view.findViewById(R.id.recyclerViewA);
         recyclerViewA.setLayoutManager(new LinearLayoutManager(getContext()));
         acceptedTitle = (TextView) view.findViewById(R.id.profil_a_title);
-
         return view;
+
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        String url = "https://secure.gravatar.com/avatar/" + MD5Util.md5Hex("max.may@live.de") + "?r=g&s=64";
-
         Ion.with(image)
                 .placeholder(R.mipmap.ic_launcher)
-                .resize(400, 400)
-                .load(url);
-
+                .resize(64, 64);
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String authorization = "Basic " + Base64.encodeToString((MySharedPreference.getStringToken(sharedPref) + ":").getBytes(), Base64.NO_WRAP);
+
+
+        final String authorization = "Basic " + Base64.encodeToString((MySharedPreference.getStringToken(sharedPref) + ":").getBytes(), Base64.NO_WRAP);
 
         callUser = ServiceAdapter.getService().getWhoAmI(authorization);
         callUser.enqueue(new Callback<Login>() {
@@ -93,13 +101,11 @@ public class FragmentProfil extends Fragment {
             public void onResponse(Call<Login> call, Response<Login> response) {
 
                 if (response.code() == 200) {
-                    user = (User) response.body().getUser();
+                    user = response.body().getUser();
                     String userName = user.getFirst_name() + " " + user.getLast_name();
                     String userSubject = subjectArea.getText() + " " + user.getSubjectArea().getName();
                     String userKNumber = kNumber.getText() + " " + user.getName();
                     String userEmail = email.getText() + " " + user.getEmail();
-                    //Log.e("Avatar",user.getAvatar());
-                    //String url = "https://secure.gravatar.com/avatar/" + MD5Util.md5Hex(user.getEmail()) + "?r=g&s=64";
 
                     Ion.with(image)
                             .placeholder(R.mipmap.ic_launcher)
@@ -122,24 +128,25 @@ public class FragmentProfil extends Fragment {
         });
 
 
-        callAList = ServiceAdapter.getService().getAll(null,null,null,null,null,null,true,null,null,null,null,3,null,null,authorization);
+        callAList = ServiceAdapter.getService().getAccepted(true, authorization);
         callAList.enqueue(new Callback<List<Module>>() {
             @Override
             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
 
-                if(response.code() == 200) {
+                if (response.code() == 200) {
                     aList = response.body();
                     adapter = new RecyclerViewAdapter(getActivity(), aList);
                     recyclerViewA.setAdapter(adapter);
 
-                    if(response.body().size() == 0){
+                    if (response.body().size() == 0) {
                         acceptedTitle.setVisibility(View.GONE);
+                        emptyTitle.setVisibility(View.VISIBLE);
+                        emptySubtitle.setVisibility(View.VISIBLE);
+
 
                     }
 
                 }
-
-
 
 
             }
@@ -150,10 +157,12 @@ public class FragmentProfil extends Fragment {
             }
         });
 
-
-
-
-
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentLoginDialog.userLogout(sharedPref, FragmentProfil.this.getActivity());
+            }
+        });
 
 
     }
