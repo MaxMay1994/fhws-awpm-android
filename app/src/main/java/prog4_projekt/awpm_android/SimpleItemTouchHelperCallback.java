@@ -30,7 +30,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
     private final ItemTouchHelperAdapter mAdapter;
     private List<Module> list;
-    private static int changedItemId = -1;
+    private static int changedItemId = 0;
     String authorization = "";
     Call<Module> call;
 

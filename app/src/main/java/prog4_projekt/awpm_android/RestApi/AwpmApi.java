@@ -40,6 +40,8 @@ public interface AwpmApi {
                               @Query("building_id") Integer building_id,
                               @Query("tag_ids") String tag_ids,
                               @Query("upcoming") Boolean upcoming,
+                              @Query("page") int page,
+                              @Query("per_page") int perPage,
                               @Header("Authorization") String authorization);
 
     //Alle Module und ein ein Modul

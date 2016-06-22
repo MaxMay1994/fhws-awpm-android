@@ -193,6 +193,11 @@ public class CourseDetailsActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<Module> call, Response<Module> response) {
                                 Log.i("Test", response.message());
+                                Toast.makeText(getApplicationContext(), voteMarked, Toast.LENGTH_LONG).show();
+                                Intent voteBack = new Intent(getApplicationContext(), MainActivity.class);
+                                int id = 1;
+                                voteBack.putExtra("id", id);
+                                startActivity(voteBack);
                             }
 
                             @Override
@@ -200,11 +205,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                                 Log.i("FailTest", t.toString());
                             }
                         });
-                        Toast.makeText(getApplicationContext(), voteMarked, Toast.LENGTH_LONG).show();
-                        Intent voteBack = new Intent(getApplicationContext(), MainActivity.class);
-                        int id = 1;
-                        voteBack.putExtra("id", id);
-                        startActivity(voteBack);
+
                     } else {
                         moduleVoted = false;
                         callVoted = ServiceAdapter.getService().patchVoted( id, false, authorization);
@@ -212,6 +213,11 @@ public class CourseDetailsActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(Call<Module> call, Response<Module> response) {
                                 Log.i("Test", response.message());
+                                Toast.makeText(getApplicationContext(), notVoteMarked, Toast.LENGTH_LONG).show();
+                                Intent voteBack = new Intent(getApplicationContext(), MainActivity.class);
+                                int id = 1;
+                                voteBack.putExtra("id", id);
+                                startActivity(voteBack);
                             }
 
                             @Override
@@ -219,11 +225,7 @@ public class CourseDetailsActivity extends AppCompatActivity {
                                 Log.i("FailTest", t.toString());
                             }
                         });
-                        Toast.makeText(getApplicationContext(), notVoteMarked, Toast.LENGTH_LONG).show();
-                        Intent voteBack = new Intent(getApplicationContext(), MainActivity.class);
-                        int id = 1;
-                        voteBack.putExtra("id", id);
-                        startActivity(voteBack);
+
                     }
                 }else{
                     wahlSwitch.setChecked(false);

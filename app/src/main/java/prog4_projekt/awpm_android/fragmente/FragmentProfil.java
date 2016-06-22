@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -36,11 +37,13 @@ import prog4_projekt.awpm_android.adapter.ViewPaperAdapterMainActivity;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Headers;
 
 
 public class FragmentProfil extends Fragment {
 
     View view;
+    View mainview;
     CardView card;
     CircleImageView image;
 
@@ -55,17 +58,23 @@ public class FragmentProfil extends Fragment {
     RecyclerView recyclerViewA;
     List<Module> aList;
     RecyclerViewAdapter adapter;
-
+    okhttp3.Headers headers;
+    static int page = 1;
+    static int perPage = 10;
+    static String header = null;
     Call callUser;
     Call callAList;
+    Call callPage;
     SharedPreferences sharedPref;
     User user;
+    NestedScrollView scrollView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_profil2, null);
+        mainview = inflater.inflate(R.layout.activity_main, null);
         card = (CardView) view.findViewById(R.id.card_view_profil);
         image = (CircleImageView) view.findViewById(R.id.card_view_profil_imageViewAvatar);
         name = (TextView) view.findViewById(R.id.card_view_profil_name);
@@ -78,13 +87,57 @@ public class FragmentProfil extends Fragment {
         recyclerViewA = (RecyclerView) view.findViewById(R.id.recyclerViewA);
         recyclerViewA.setLayoutManager(new LinearLayoutManager(getContext()));
         acceptedTitle = (TextView) view.findViewById(R.id.profil_a_title);
+        scrollView = (NestedScrollView) view.findViewById(R.id.profil_scrollView);
         return view;
 
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    public void onViewCreated(final View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        recyclerViewA.setNestedScrollingEnabled(false);
+
+        /*scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+
+                //Log.e("Height",String.valueOf(recyclerViewA.getHeight()));
+                //Log.e("srollY",String.valueOf(scrollY));
+                //Log.e("recy",String.valueOf(recyclerViewA.getY()));//716 fehlen noch 26
+                //Log.e("tab",String.valueOf(getActivity().findViewById(R.id.tablayout).getHeight()));
+                //Log.e("End",String.valueOf(v.computeVerticalScrollExtent()));
+                //if(v.computeVerticalScrollOffset() == 0){
+                //    Log.e("End",String.valueOf(v.computeVerticalScrollOffset()));
+                //}
+                //Log.e("enable",String.valueOf( v.canScrollVertically(1)));
+
+
+                if (!v.canScrollVertically(1) && getNext(header)) {
+
+                    callPage = ServiceAdapter.getService().getAllModules(page,perPage);
+                    callPage.enqueue(new Callback<List<Module>>() {
+                        @Override
+                        public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
+
+                            headers = response.headers();
+                            getNext(headers.get("Link"));
+                            header = headers.get("Link");
+                            Log.e("Link",headers.get("Link"));
+                            aList.addAll(response.body());
+                            adapter.notifyDataSetChanged();
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<List<Module>> call, Throwable t) {
+
+                        }
+                    });
+
+                }
+            }
+
+        });*/
 
         Ion.with(image)
                 .placeholder(R.mipmap.ic_launcher)
@@ -133,6 +186,12 @@ public class FragmentProfil extends Fragment {
             @Override
             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
 
+
+                //headers = response.headers();
+                //getNext(headers.get("Link"));
+                //header = headers.get("Link");
+                //Log.e("headers", headers.get("Link"));
+
                 if (response.code() == 200) {
                     aList = response.body();
                     adapter = new RecyclerViewAdapter(getActivity(), aList);
@@ -166,6 +225,33 @@ public class FragmentProfil extends Fragment {
 
 
     }
+
+    /*private static boolean getNext(String line) {
+
+        String[] lines = line.split(",");
+        boolean next = false;
+
+
+        if (lines[1].contains("next")) {
+            perPage = Integer.parseInt(lines[1].substring(lines[1].indexOf('=')+1,lines[1].indexOf('&')));
+
+            String newline = lines[1].substring(lines[1].indexOf('<') + 1, lines[1].indexOf('>'));
+            page = Integer.parseInt(newline.split("&")[1].split("=")[1]);
+            Log.e(String.valueOf(perPage),String.valueOf(page));
+            next = true;
+
+
+        } else if(lines[2].contains("next")){
+            perPage = Integer.parseInt(lines[2].substring(lines[2].indexOf('=')+1,lines[2].indexOf('&')));
+
+            String newline = lines[2].substring(lines[2].indexOf('<') + 1, lines[2].indexOf('>'));
+            page = Integer.parseInt(newline.split("&")[1].split("=")[1]);
+            Log.e(String.valueOf(perPage),String.valueOf(page));
+            next = true;
+        }
+
+        return next;
+    }*/
 
 }
 

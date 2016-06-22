@@ -77,9 +77,11 @@ public class FragmentBallot extends Fragment {
 
         recyclerViewC = (RecyclerView) view.findViewById(R.id.recyclerViewC);
         recyclerViewC.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewC.setNestedScrollingEnabled(false);
 
         recyclerViewF = (RecyclerView) view.findViewById(R.id.recyclerViewF);
         recyclerViewF.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerViewF.setNestedScrollingEnabled(false);
 
         call = ServiceAdapter.getService().getVotedModules(true, authorization);
         call.enqueue(new Callback<List<Module>>() {
@@ -124,7 +126,7 @@ public class FragmentBallot extends Fragment {
 
             }
         });
-        call2 = ServiceAdapter.getService().getAll(null, null, null, null, null, null, true, false, null, null, null, null, null, null, authorization);
+        call2 = ServiceAdapter.getService().getAll(null, null, null, null, null, null, true, false, null, null, null, null, null, null,1,50, authorization);
         call2.enqueue(new Callback<List<Module>>() {
             @Override
             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {

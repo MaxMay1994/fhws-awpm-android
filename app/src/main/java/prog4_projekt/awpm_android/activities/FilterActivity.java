@@ -184,7 +184,13 @@ public class FilterActivity extends AppCompatActivity {
         resetFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(Activity.RESULT_CANCELED);
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("wahlZeitraumID",(String)null );
+                returnIntent.putExtra("locationID", (Integer)null);
+                returnIntent.putExtra("blockedForMe", (String)null);
+                returnIntent.putExtra("blockedForAll", (Integer)null);
+                returnIntent.putExtra("favoredModulesID", (String)null);
+                setResult(Activity.RESULT_OK,returnIntent);
                 finish();
             }
         });

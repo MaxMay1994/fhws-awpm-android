@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.util.Base64;
 import android.util.Log;
@@ -156,6 +157,7 @@ public class FragmentLoginDialog extends DialogFragment {
 
                     Intent main = new Intent(activity.getApplication(),MainActivity.class);
                     activity.startActivity(main);
+                    activity.finish();
 
                 }
                 if(response.code() >= 401){
@@ -198,6 +200,7 @@ public class FragmentLoginDialog extends DialogFragment {
                     Log.i("123123", str +" "+ MySharedPreference.getDateExpiresAtAsLong(sharedPref));
                     Intent main = new Intent(activity.getApplication(),MainActivity.class);
                     activity.startActivity(main);
+                    activity.finish();
                 }
                 if(response.code() == 401){
                     Log.i("0011", response.message()+" "+response.code());
