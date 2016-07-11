@@ -135,12 +135,12 @@ public class MainActivity extends AppCompatActivity {
         menu.clear();
         if(String.valueOf(MySharedPreference.getBooleanIsLoged(sharedPref)).equals("true")){
             menu.add(0,R.id.action_login,0,getString(R.string.logout));
-            menu.add(0,R.id.action_timeframe,0,getString(R.string.wahlzeitraeume));
+            //menu.add(0,R.id.action_timeframe,0,getString(R.string.wahlzeitraeume));
             menu.add(0,R.id.action_links, 0 , getString(R.string.links));
         }
         if(String.valueOf(MySharedPreference.getBooleanIsLoged(sharedPref)).equals("false")){
             menu.add(0,R.id.action_login,0,getString(R.string.login));
-            menu.add(0,R.id.action_timeframe,0,getString(R.string.wahlzeitraeume));
+            //menu.add(0,R.id.action_timeframe,0,getString(R.string.wahlzeitraeume));
             menu.add(0,R.id.action_links, 0 , getString(R.string.links));
         }
         return super.onPrepareOptionsMenu(menu);

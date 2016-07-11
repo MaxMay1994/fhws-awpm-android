@@ -2,8 +2,10 @@ package prog4_projekt.awpm_android.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatSpinner;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -60,56 +62,56 @@ public class FilterActivity extends AppCompatActivity {
         favoredModules = (CheckBox) findViewById(R.id.favoriteModulesFilter);
 
 
-                callLocations = ServiceAdapter.getService().getAllCity();
-                callLocations.enqueue(new Callback<List<City>>() {
+        callLocations = ServiceAdapter.getService().getAllCity();
+        callLocations.enqueue(new Callback<List<City>>() {
+            @Override
+            public void onResponse(Call<List<City>> call, Response<List<City>> response) {
+                locList = response.body();
+                buildings = locList.get(0).getBuildings();
+                final Building[] building = buildings.toArray(new Building[buildings.size()]);
+                buildingsFinal = new String[(building.length + 1)];
+                buildingsFinal[0] = getString(R.string.auswaehlen);
+                for (int i = 0; i < building.length; i++) {
+                    buildingsFinal[i + 1] = building[i].getName();
+                }
+                spinnerFilter1 = (Spinner) findViewById(R.id.spinner1);
+                adapter1 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, buildingsFinal);
+                spinnerFilter1.setAdapter(adapter1);
+                spinnerFilter1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
-                    public void onResponse(Call<List<City>> call, Response<List<City>> response) {
-                        locList = response.body();
-                        buildings = locList.get(0).getBuildings();
-                        final Building[] building = buildings.toArray(new Building[buildings.size()]);
-                        buildingsFinal = new String[(building.length+1)];
-                        buildingsFinal[0] = getString(R.string.auswaehlen);
-                        for(int i = 0; i < building.length; i++){
-                            buildingsFinal[i+1] = building[i].getName();
-                        }
-                        spinnerFilter1 = (Spinner) findViewById(R.id.spinner1);
-                        adapter1 = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, buildingsFinal);
-                        spinnerFilter1.setAdapter(adapter1);
-                        spinnerFilter1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                            @Override
-                            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                if (position != 0) {
-                                    for (int i = 1; i < buildingsFinal.length; i++) {
-                                        if (i == position){
-                                            location.setChecked(true);
-                                            locationid = i;
-                                            Log.i("Location im Filter", String.valueOf(locationid));
-                                        }
-                                    }
-                                } else {
-                                    location.setChecked(false);
-                                    locationid = 0;
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        if (position != 0) {
+                            for (int i = 1; i < buildingsFinal.length; i++) {
+                                if (i == position) {
+                                    location.setChecked(true);
+                                    locationid = i;
+                                    Log.i("Location im Filter", String.valueOf(locationid));
                                 }
-
                             }
+                        } else {
+                            location.setChecked(false);
+                            locationid = 0;
+                        }
 
-                            @Override
-                            public void onNothingSelected(AdapterView<?> parent) {
-                                location.setChecked(false);
-                            }
-                        });
                     }
 
                     @Override
-                    public void onFailure(Call<List<City>> call, Throwable t) {
-
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        location.setChecked(false);
                     }
                 });
+            }
+
+            @Override
+            public void onFailure(Call<List<City>> call, Throwable t) {
+
+            }
+        });
 
         wahlZeitraum.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     wahlZeitraumID = "wahlzeitraum";
                     Log.i("WahlzeitraumID", wahlZeitraumID);
                 }
@@ -118,7 +120,7 @@ public class FilterActivity extends AppCompatActivity {
         favoredModules.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     favoredModulesID = "favorites";
                     Log.i("FavoritenID", favoredModulesID);
                 }
@@ -126,17 +128,17 @@ public class FilterActivity extends AppCompatActivity {
         });
 
 
-        callSubjects = ServiceAdapter.getService().getAllSubjectAreas();
+        callSubjects = ServiceAdapter.getService().getAllSubjectAreas(50);
         callSubjects.enqueue(new Callback<List<SubjectArea>>() {
             @Override
             public void onResponse(Call<List<SubjectArea>> call, Response<List<SubjectArea>> response) {
-                areaList=response.body();
+                areaList = response.body();
                 SubjectArea[] areas = areaList.toArray(new SubjectArea[areaList.size()]);
-                areasFinal = new String[(areas.length)+2];
+                areasFinal = new String[(areas.length) + 2];
                 areasFinal[0] = getString(R.string.auswaehlen);
                 areasFinal[1] = getString(R.string.mich);
-                for(int i = 0; i < areas.length; i++){
-                    areasFinal[i+2] = areas[i].getName();
+                for (int i = 0; i < areas.length; i++) {
+                    areasFinal[i + 2] = areas[i].getName();
                 }
 
                 spinnerFilter2 = (Spinner) findViewById(R.id.spinner2);
@@ -147,13 +149,14 @@ public class FilterActivity extends AppCompatActivity {
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         if (position != 0) {
                             for (int i = 1; i < areasFinal.length; i++) {
-                                if (i == position){
+                                if (i == position) {
                                     blockedFor.setChecked(true);
                                     if (areasFinal[i].equalsIgnoreCase("mich")) {
                                         blockedforMe = "mich";
                                         Log.i("BlockedForMe", blockedforMe);
-                                    }else{
-                                        blockedforid = i-1;
+                                    } else {
+                                        blockedforid = areaList.get(position - 2).getId();
+                                        //blockedforid = i-1;
                                         Log.i("Block im Filter", String.valueOf(blockedforid));
                                     }
                                 }
@@ -185,12 +188,12 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra("wahlZeitraumID",(String)null );
-                returnIntent.putExtra("locationID", (Integer)null);
-                returnIntent.putExtra("blockedForMe", (String)null);
-                returnIntent.putExtra("blockedForAll", (Integer)null);
-                returnIntent.putExtra("favoredModulesID", (String)null);
-                setResult(Activity.RESULT_OK,returnIntent);
+                returnIntent.putExtra("wahlZeitraumID", (String) null);
+                returnIntent.putExtra("locationID", (Integer) null);
+                returnIntent.putExtra("blockedForMe", (String) null);
+                returnIntent.putExtra("blockedForAll", (Integer) null);
+                returnIntent.putExtra("favoredModulesID", (String) null);
+                setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
         });

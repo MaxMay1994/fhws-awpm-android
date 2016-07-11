@@ -176,8 +176,9 @@ public class FragmentCourses extends Fragment{
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 if(!v.canScrollVertically(1)&& isNextPage(header)){
-                    setPage(header);
                     Log.e("header",header);
+                    setPage(header);
+
                     String wahl = intent.getStringExtra("wahlZeitraumID");
                     String favorit = intent.getStringExtra("favoredModulesID");
                     String blockedForMe = intent.getStringExtra("blockedForMe");
@@ -206,6 +207,7 @@ public class FragmentCourses extends Fragment{
                             page,
                             perPage,
                             authorization);
+
                     call.enqueue(new Callback<List<Module>>() {
                         @Override
                         public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
@@ -272,11 +274,12 @@ public class FragmentCourses extends Fragment{
                         10,
                         authorization);
 
-
+                Log.e("response",call.request().toString());
                 call.enqueue(new Callback<List<Module>>() {
                     @Override
                     public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
                         header = response.headers().get("Link");
+
 
                         //if(modulesList == null) {
                             //Log.e("Hallo","Test");
@@ -392,6 +395,7 @@ public class FragmentCourses extends Fragment{
     }
 
     private void setPage(String line){
+        Log.e("line",line);
         String[] headers = line.split(",");
         String nextHeader = null;
         for(int i = 0; i < headers.length; i++){
@@ -401,9 +405,19 @@ public class FragmentCourses extends Fragment{
             }
         }
         if(nextHeader != null){
-            perPage = Integer.parseInt(nextHeader.split("per_page=")[1].split("&")[0]);
-            page = Integer.parseInt(nextHeader.split("&page=")[1].split("&")[0]);
+            String line0 = nextHeader.split("&")[0];
+            String line1 = nextHeader.split("&")[1];
+            if(line0.contains("per_page=")){
+                perPage = Integer.parseInt(line0.split("per_page=")[1].split("&")[0]);
+                page = Integer.parseInt(line1.split("pape=")[1].split("&")[0]);
+            }else {
+                perPage = Integer.parseInt(line1.split("per_page=")[1].split("&")[0]);
+                Log.e("fehler",line0.split("pape=")[0].split("page=")[1]);
+                page = Integer.parseInt(line0.split("pape=")[0].split("page=")[1]);
+            }
+
         }
+        Log.e(String.valueOf(perPage),String.valueOf(page));
     }
 
 }

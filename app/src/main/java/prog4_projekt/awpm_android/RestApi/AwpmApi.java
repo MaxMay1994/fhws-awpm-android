@@ -69,7 +69,7 @@ public interface AwpmApi {
 
     //Alle Subject Areas und ein Subject Area
     @GET("api/subject-areas")
-    Call<List<SubjectArea>> getAllSubjectAreas();
+    Call<List<SubjectArea>> getAllSubjectAreas(@Query("per_page") int perPage);
 
     @GET("api/subject-areas/{id}")
     Call<SubjectArea> getSubjectAreas(@Path("id") int id);
