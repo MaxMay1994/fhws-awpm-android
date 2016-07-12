@@ -130,7 +130,6 @@ public class FragmentProfil extends Fragment {
             }
         });
 
-
         callAList = ServiceAdapter.getService().getAccepted(true, authorization);
         callAList.enqueue(new Callback<List<Module>>() {
             @Override

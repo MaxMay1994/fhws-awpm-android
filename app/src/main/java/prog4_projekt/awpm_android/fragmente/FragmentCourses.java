@@ -165,13 +165,6 @@ public class FragmentCourses extends Fragment{
             }
         });
 
-
-
-
-
-
-
-
         scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -226,19 +219,6 @@ public class FragmentCourses extends Fragment{
             }
         });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -280,18 +260,11 @@ public class FragmentCourses extends Fragment{
                     public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
                         header = response.headers().get("Link");
 
-                        //if(modulesList == null) {
-                            //Log.e("Hallo","Test");
                             modulesList = response.body();
                             adapter = new RecyclerViewAdapter(getActivity(), modulesList);
                             recyclerView.setAdapter(adapter);
-                        //} else {
-                        //    modulesList.addAll(response.body());
-                        //}
 
                         adapter.notifyDataSetChanged();
-                        //Log.e("header",header);
-                        //Log.e("response", modulesList.toString());
                     }
 
                     @Override
@@ -303,54 +276,6 @@ public class FragmentCourses extends Fragment{
             }
         }
 
-        /*scrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if(!v.canScrollVertically(1)&& isNextPage(header)){
-                    setPage(header);
-                    Log.e("header",header);
-                    String wahl = intent.getStringExtra("wahlZeitraumID");
-                    String favorit = intent.getStringExtra("favoredModulesID");
-                    String blockedForMe = intent.getStringExtra("blockedForMe");
-                    Integer locationid = intent.getIntExtra("locationID", 0);
-                    Log.i("location im Fragment", String.valueOf(locationid));
-                    Integer blockedForAll = intent.getIntExtra("blockedForAll", 0);
-                    Log.i("block im Fragment", String.valueOf(blockedForAll));
-
-
-                    call = ServiceAdapter.getService().getAll(
-                            null,
-                            ((wahl != null) && (wahl.equalsIgnoreCase("wahlzeitraum"))) ? true : null,
-                            null,
-                            ((blockedForMe != null) && (blockedForMe.equalsIgnoreCase("mich"))) ? false : null,
-                            (blockedForAll != 0) ? blockedForAll : null,
-                            null,
-                            ((favorit != null) && (favorit.equalsIgnoreCase("favorites"))) ? true : null,
-                            null,
-                            null,
-                            null,
-                            null,
-                            (locationid != 0) ? locationid : null,
-                            null,
-                            null,
-                            page,
-                            perPage,
-                            authorization);
-                    call.enqueue(new Callback<List<Module>>() {
-                        @Override
-                        public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
-                            modulesList.addAll(response.body());
-                        }
-
-                        @Override
-                        public void onFailure(Call<List<Module>> call, Throwable t) {
-
-                        }
-                    });
-
-                }
-            }
-        });*/
     }
 
     private int getIDFor(String location){
@@ -387,6 +312,7 @@ public class FragmentCourses extends Fragment{
         }
         return newList;
     }
+
     private boolean isNextPage(String line){
         if(line.contains("next"))
             return true;

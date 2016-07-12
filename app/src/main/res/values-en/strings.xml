@@ -167,14 +167,15 @@
 
     //ballot
     <string name="ballot_my_choice_title">My Choice</string>
-    <string name="ballot_favorite_title">Favorite</string>
-    <string name="ballot_no_choice">Sie haben noch kein \nModul gewählt</string>
+    <string name="ballot_favorite_title">Favorites</string>
+    <string name="ballot_no_choice">you have not selected\nany module</string>
 
     //profil
     <string name="profil_name">Name: </string>
     <string name="profil_subject_area">Subject Area: </string>
     <string name="profil_knumber">K-Number: </string>
     <string name="profil_email">E-Mail: </string>
-    <string name="profil_a_title"> Akzeptiert </string>
-    <string name="profil_a_subtitle"> Sie wurden noch für kein Modul zugelassen </string>
+    <string name="profil_a_title"> Accepted </string>
+    <string name="profil_a_subtitle">It looks like you were not accepted for any module</string>
+    <string name="profil_a_empty"> No module found </string>
 </resources>
