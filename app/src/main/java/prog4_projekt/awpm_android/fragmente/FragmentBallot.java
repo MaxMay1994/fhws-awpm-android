@@ -71,8 +71,6 @@ public class FragmentBallot extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-
         final String authorization = "Basic " + Base64.encodeToString((MySharedPreference.getStringToken(sharedPref) + ":").getBytes(), Base64.NO_WRAP);
 
         recyclerViewC = (RecyclerView) view.findViewById(R.id.recyclerViewC);
@@ -106,8 +104,6 @@ public class FragmentBallot extends Fragment {
 
                     if (response.body().size() == 0) {
 
-                        //nullVoted.setVisibility(View.VISIBLE);
-                        //sad.setVisibility(View.VISIBLE);
                         textViewBallot = nullVoted;
                         textViewBallot.setVisibility(View.VISIBLE);
                         sad.setVisibility(View.VISIBLE);
@@ -126,7 +122,7 @@ public class FragmentBallot extends Fragment {
 
             }
         });
-        call2 = ServiceAdapter.getService().getAll(null, null, null, null, null, null, true, false, null, null, null, null, null, null,1,50, authorization);
+        call2 = ServiceAdapter.getService().getAll(null, null, null, null, null, null, true, false, null, null, null, null, null, null, 1, 50, authorization);
         call2.enqueue(new Callback<List<Module>>() {
             @Override
             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {

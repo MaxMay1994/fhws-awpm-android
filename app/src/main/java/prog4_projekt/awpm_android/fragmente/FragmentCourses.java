@@ -280,7 +280,6 @@ public class FragmentCourses extends Fragment{
                     public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
                         header = response.headers().get("Link");
 
-
                         //if(modulesList == null) {
                             //Log.e("Hallo","Test");
                             modulesList = response.body();
@@ -405,16 +404,22 @@ public class FragmentCourses extends Fragment{
             }
         }
         if(nextHeader != null){
-            String line0 = nextHeader.split("&")[0];
-            String line1 = nextHeader.split("&")[1];
-            if(line0.contains("per_page=")){
-                perPage = Integer.parseInt(line0.split("per_page=")[1].split("&")[0]);
-                page = Integer.parseInt(line1.split("pape=")[1].split("&")[0]);
-            }else {
-                perPage = Integer.parseInt(line1.split("per_page=")[1].split("&")[0]);
-                Log.e("fehler",line0.split("pape=")[0].split("page=")[1]);
-                page = Integer.parseInt(line0.split("pape=")[0].split("page=")[1]);
+            String[] nextHeaderParts = nextHeader.split("&");
+            nextHeaderParts[0] = nextHeaderParts[0].split("\\?")[1];
+            String perPageLine = "";
+            String pageLine = "";
+
+            for(int i = 0; i < nextHeaderParts.length; i++){
+                if(nextHeaderParts[i].contains("per_page")){
+                    perPageLine = nextHeaderParts[i];
+                }
+                if(nextHeaderParts[i].contains("page") && !nextHeaderParts[i].contains("per_page")){
+                    pageLine = nextHeaderParts[i];
+                }
             }
+
+                perPage = Integer.parseInt(perPageLine.split("per_page=")[1]);
+                page = Integer.parseInt(pageLine.split("page=")[1]);
 
         }
         Log.e(String.valueOf(perPage),String.valueOf(page));

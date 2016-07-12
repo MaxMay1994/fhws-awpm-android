@@ -46,7 +46,6 @@ public class FragmentProfil extends Fragment {
     View mainview;
     CardView card;
     CircleImageView image;
-
     TextView name;
     TextView subjectArea;
     TextView kNumber;
@@ -58,13 +57,8 @@ public class FragmentProfil extends Fragment {
     RecyclerView recyclerViewA;
     List<Module> aList;
     RecyclerViewAdapter adapter;
-    okhttp3.Headers headers;
-    static int page = 1;
-    static int perPage = 10;
-    static String header = null;
     Call callUser;
     Call callAList;
-    Call callPage;
     SharedPreferences sharedPref;
     User user;
     NestedScrollView scrollView;
@@ -102,8 +96,6 @@ public class FragmentProfil extends Fragment {
                 .resize(64, 64);
 
         sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-
         final String authorization = "Basic " + Base64.encodeToString((MySharedPreference.getStringToken(sharedPref) + ":").getBytes(), Base64.NO_WRAP);
 
         callUser = ServiceAdapter.getService().getWhoAmI(authorization);
@@ -144,12 +136,6 @@ public class FragmentProfil extends Fragment {
             @Override
             public void onResponse(Call<List<Module>> call, Response<List<Module>> response) {
 
-
-                //headers = response.headers();
-                //getNext(headers.get("Link"));
-                //header = headers.get("Link");
-                //Log.e("headers", headers.get("Link"));
-
                 if (response.code() == 200) {
                     aList = response.body();
                     adapter = new RecyclerViewAdapter(getActivity(), aList);
@@ -160,11 +146,9 @@ public class FragmentProfil extends Fragment {
                         emptyTitle.setVisibility(View.VISIBLE);
                         emptySubtitle.setVisibility(View.VISIBLE);
 
-
                     }
 
                 }
-
 
             }
 
@@ -180,7 +164,6 @@ public class FragmentProfil extends Fragment {
                 FragmentLoginDialog.userLogout(sharedPref, FragmentProfil.this.getActivity());
             }
         });
-
 
     }
 

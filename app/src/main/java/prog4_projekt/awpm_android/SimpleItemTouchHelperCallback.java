@@ -79,8 +79,6 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
         super.onSelectedChanged(viewHolder, actionState);
 
         if(actionState == 0) {
-            //Log.e(list.get(changedItemId).getName(),String.valueOf(changedItemId+1));
-            //changedItemId = -1;
             list.get(changedItemId).setVotePosition(changedItemId+1);
 
             call = ServiceAdapter.getService().patchVotePosition(list.get(changedItemId).getId(),changedItemId+1,authorization);
@@ -96,7 +94,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
 
                 @Override
                 public void onFailure(Call<Module> call, Throwable t) {
-
+                    Log.e("Update","Error");
                 }
             });
 
